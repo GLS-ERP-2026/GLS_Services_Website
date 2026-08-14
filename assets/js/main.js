@@ -25,6 +25,26 @@
     });
   }
 
+  /* ---- Header logo swap on scroll ----
+     Full wordmark at the top of the page, compact mark once scrolled —
+     both images are already in the DOM (see .nav-logo), this just toggles
+     which is visible via the .is-scrolled class on .site-header. */
+  if (header) {
+    var SCROLL_THRESHOLD = 40;
+    var ticking = false;
+    function updateScrollState() {
+      header.classList.toggle('is-scrolled', window.scrollY > SCROLL_THRESHOLD);
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollState);
+        ticking = true;
+      }
+    });
+    updateScrollState();
+  }
+
   /* ---- Mark current page in nav ---- */
   var currentPath = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link[data-page]').forEach(function (link) {

@@ -28,26 +28,23 @@ content-source/                                             -- drop real Word/PD
 
 There's no templating system, so the header/nav and footer markup is duplicated at the top and bottom of every page. If you change the nav (add a page, rename a link, etc.), update it in every `.html` file — search for `class="site-header"` / `class="site-footer"` to find every instance.
 
-## Placeholder content — what to swap later
+## Real photos — how they're organized
 
-Every image on the site right now is a hand-built **SVG placeholder** (gradient background, simple icon, and a caption naming the exact file it stands in for), so nothing is a broken image link while real content is pending. To swap one in:
+Real GLS photos (logo, equipment, rig backgrounds) live in `content-source/photos/` as originally uploaded, and optimized/resized copies (web-sized JPGs, max ~1920px wide, compressed) are what's actually referenced by the site under `assets/images/`. If you add new photos:
 
-1. Save the real photo using the filename referenced in the placeholder's caption (e.g. `assets/images/hero/hero-home.jpg`).
-2. Update the corresponding `<img src="...">` in the HTML from the `.svg` path to your new `.jpg`/`.png` path.
+1. Drop the original file into `content-source/photos/`.
+2. Resize/compress it before adding it to `assets/images/...` — the originals can be several MB each, which is too heavy to serve directly. (The conversion used `sharp`; see git history for the exact script if you need to repeat it.)
+3. Update the corresponding `<img src="...">` in the HTML.
 
-Placeholder locations:
-- `assets/images/logo/gls-logo.svg` — replace with the real GLS logo when available
-- `assets/images/hero/hero-home.svg` — homepage hero background
-- `assets/images/hero/page-banner.svg` — generic banner reused on every interior page (can be replaced with a single real image, or split into page-specific ones)
-- `assets/images/about/about-team.svg` — About page / homepage team image
-- `assets/images/services/service-*.svg` — one per service (MRO, Jacking & Skidding, Cranes, Used Equipment Supply)
-- `assets/images/certifications/badge-*.svg` — ANAB / CT badge artwork
+A handful of slots still use the original **SVG placeholders** (gradient + icon + caption naming the file it stands in for), because no matching photo was provided yet:
+- `assets/images/services/service-jacking-skidding.svg` — Skidding System subservice (no dedicated skidding photo yet; Jacking System already uses a real photo)
+- `assets/images/services/service-cranes.svg` — Cranes "Repair & Overhaul" subservice (Cranes "Inspection" already uses a real photo)
+- `assets/images/about/about-team.svg` — homepage/About page team split-image
 
-Drop the Word/PDF/JPG/PNG files you're given into `content-source/` so they're versioned in the repo, then use them to update the actual page copy and images above.
+A few uploaded photos aren't used anywhere yet and are sitting in `content-source/photos/` in reserve: `BOP.jpeg`, `Deadline Anchor.jpg`, `DLA2.png`, plus several extra oil-rig/background shots not assigned to a page (there were more good rig photos than page slots).
 
 ## Known gaps / next steps
 
 - **Forms aren't connected yet.** The Contact and Careers forms are fully built (including CV upload on Careers) but only validate on the front end — submitting shows an inline message pointing people to email/phone instead of actually sending anything. When ready, wire them to a service like Formspree, or a small backend, then remove the "not connected yet" note in each page and the corresponding comment in `assets/js/main.js`.
 - **Privacy Policy is a generic draft** (`privacy-policy.html`) — not reviewed by legal, and not copied from the original site. Replace before launch.
-- **Logo is a placeholder wordmark** — swap in the real GLS Services logo file when available.
 - **GitHub Pages isn't enabled yet** — the repo is connected and pushed, but Pages needs to be turned on in the repo's Settings → Pages (source: `main` branch, `/` root) to actually get a live URL.
