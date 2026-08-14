@@ -24,8 +24,8 @@
   --border-dark: rgba(255, 255, 255, 0.12);
 
   /* Type */
-  --font-head: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --font-head: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --font-body: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
 
   /* Layout */
   --container-w: 1240px;
@@ -107,17 +107,19 @@ button { font-family: inherit; }
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-dark);
 }
-.nav {
+.nav-inner {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding: 0 32px;
 }
 .nav-logo {
   position: relative;
   display: block;
   height: 42px;
-  width: 168px;
+  width: 145px;
   flex: none;
 }
 .nav-logo img {
@@ -129,10 +131,16 @@ button { font-family: inherit; }
   width: auto;
   transition: opacity 0.25s ease;
 }
-.nav-logo .logo-mark { height: 34px; opacity: 0; }
+.nav-logo .logo-mark { opacity: 0; }
 .nav-logo .logo-full { opacity: 1; }
 .site-header.is-scrolled .nav-logo .logo-full { opacity: 0; }
 .site-header.is-scrolled .nav-logo .logo-mark { opacity: 1; }
+.nav-primary {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 .nav-links {
   display: flex;
   align-items: center;
@@ -151,8 +159,6 @@ button { font-family: inherit; }
   transition: background 0.15s ease, color 0.15s ease;
 }
 .nav-link:hover, .nav-link.is-active { background: rgba(255, 154, 61, 0.14); color: var(--accent-400); }
-.nav-caret { width: 10px; height: 10px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); margin-top: -4px; transition: transform 0.15s ease; }
-.has-dropdown:hover .nav-caret { transform: rotate(225deg); margin-top: 4px; }
 
 .nav-dropdown {
   position: absolute;
@@ -545,7 +551,9 @@ button { font-family: inherit; }
 }
 
 @media (max-width: 900px) {
-  .nav-links, .nav-cta .btn-outline { display: none; }
+  .nav-inner { padding: 0 20px; }
+  .nav-cta { gap: 6px; }
+  .nav-links { display: none; }
   .nav-toggle { display: flex; }
   .about-split, .subservice, .grid-2 { grid-template-columns: 1fr; }
   .subservice:nth-child(even) .subservice-media { order: 0; }
