@@ -50,4 +50,4 @@ Drop the Word/PDF/JPG/PNG files you're given into `content-source/` so they're v
 - **Forms aren't connected yet.** The Contact and Careers forms are fully built (including CV upload on Careers) but only validate on the front end — submitting shows an inline message pointing people to email/phone instead of actually sending anything. When ready, wire them to a service like Formspree, or a small backend, then remove the "not connected yet" note in each page and the corresponding comment in `assets/js/main.js`.
 - **Privacy Policy is a generic draft** (`privacy-policy.html`) — not reviewed by legal, and not copied from the original site. Replace before launch.
 - **Logo is a placeholder wordmark** — swap in the real GLS Services logo file when available.
-- **GitHub repo isn't connected yet** — this project hasn't been `git init`-ed. Once you're happy with the local build, initialize git, commit, and add your new (non-ERP) repo as the remote to publish via GitHub Pages.
+- **GitHub Pages isn't enabled yet** — the repo is connected and pushed, but Pages needs to be turned on in the repo's Settings → Pages (source: `main` branch, `/` root) to actually get a live URL.
