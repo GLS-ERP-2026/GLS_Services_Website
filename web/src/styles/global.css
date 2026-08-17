@@ -85,7 +85,7 @@ button { font-family: inherit; }
   background: linear-gradient(180deg, var(--stone-950) 0%, var(--stone-700) 100%);
 }
 .site-header::after {
-  background: linear-gradient(180deg, var(--sage-500) 0%, var(--sand-100) 100%);
+  background: linear-gradient(180deg, var(--sage-light) 0%, var(--sand-100) 100%);
   opacity: var(--scroll-t);
 }
 @media (prefers-reduced-motion: no-preference) {
