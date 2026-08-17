@@ -1,4 +1,5 @@
 import { Layout } from '../../components/layout/Layout';
+import { HeroSlideshow } from '../../components/home/HeroSlideshow';
 import { Reveal } from '../../components/ui/Reveal';
 import { ServiceCard } from '../../components/ui/ServiceCard';
 import { ValueCard } from '../../components/ui/ValueCard';
@@ -12,7 +13,7 @@ export function Home() {
     <Layout>
       <section className="hero">
         <div className="hero-media">
-          <img src={asset('/assets/images/hero/hero-home.jpg')} alt="" role="presentation" />
+          <HeroSlideshow />
         </div>
         <div className="container hero-inner">
           <span className="hero-eyebrow">ISO 9001 &middot; ISO 14001 &middot; ISO 45001 Certified</span>
