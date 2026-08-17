@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 72" width="300" height="72" role="img" aria-label="GLS Services logo">
+  <defs>
+    <linearGradient id="markGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff9a3d"/>
+      <stop offset="1" stop-color="#ff7a1f"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(0,8)">
+    <rect x="0" y="0" width="56" height="56" rx="10" fill="url(#markGrad)"/>
+    <g stroke="#0b1b2e" stroke-width="3.4" stroke-linecap="round" fill="none">
+      <line x1="28" y1="12" x2="28" y2="44"/>
+      <line x1="16" y1="20" x2="40" y2="20"/>
+      <path d="M18 44 L38 44 L34 50 L22 50 Z" fill="#0b1b2e" stroke="none"/>
+    </g>
+  </g>
+  <text x="70" y="34" font-family="'Barlow Condensed', Arial, sans-serif" font-weight="700" font-size="28" letter-spacing="1" fill="#f4f6f9">GLS SERVICES</text>
+  <text x="71" y="54" font-family="Arial, sans-serif" font-weight="500" font-size="12" letter-spacing="3" fill="#ff9a3d">DRILLING EQUIPMENT MRO</text>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="92" fill="#0b1b2e" stroke="#ff9a3d" stroke-width="5"/>
+  <circle cx="100" cy="100" r="74" fill="none" stroke="#ff9a3d" stroke-width="2" stroke-dasharray="6 6"/>
+  <text x="100" y="95" text-anchor="middle" font-family="'Barlow Condensed', Arial, sans-serif" font-weight="700" font-size="30" fill="#f4f6f9">CT</text>
+  <text x="100" y="118" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" letter-spacing="1.5" fill="#ff9a3d">CERTIFIED</text>
+  <text x="100" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#ffffff" opacity="0.4">placeholder badge</text>
+</svg>
