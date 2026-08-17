@@ -2,6 +2,7 @@ import { Layout } from '../../../components/layout/Layout';
 import { PageBanner } from '../../../components/layout/PageBanner';
 import { Reveal } from '../../../components/ui/Reveal';
 import { RelatedServices } from '../../../components/ui/RelatedServices';
+import { asset } from '../../../lib/paths';
 
 export function JackingSkidding() {
   return (
@@ -21,7 +22,7 @@ export function JackingSkidding() {
         <div className="container">
           <Reveal className="subservice">
             <div className="subservice-media">
-              <img src="/assets/images/services/jacking-gear.jpg" alt="Jacking system service" />
+              <img src={asset('/assets/images/services/jacking-gear.jpg')} alt="Jacking system service" />
             </div>
             <div className="subservice-copy">
               <span className="eyebrow">Jacking System</span>
@@ -48,7 +49,7 @@ export function JackingSkidding() {
 
           <Reveal className="subservice">
             <div className="subservice-media">
-              <img src="/assets/images/services/service-jacking-skidding.svg" alt="Skidding system service" />
+              <img src={asset('/assets/images/services/service-jacking-skidding.svg')} alt="Skidding system service" />
             </div>
             <div className="subservice-copy">
               <span className="eyebrow">Skidding System</span>
@@ -82,7 +83,7 @@ export function JackingSkidding() {
               <h2>Need Jacking or Skidding Support?</h2>
               <p>Tell us about your system and we'll scope an inspection or overhaul plan.</p>
             </div>
-            <a href="/contact.html" className="btn btn-primary">
+            <a href={asset('/contact.html')} className="btn btn-primary">
               Request a Quote
             </a>
           </Reveal>

@@ -2,6 +2,7 @@ import { Layout } from '../../../components/layout/Layout';
 import { PageBanner } from '../../../components/layout/PageBanner';
 import { Reveal } from '../../../components/ui/Reveal';
 import { RelatedServices } from '../../../components/ui/RelatedServices';
+import { asset } from '../../../lib/paths';
 
 const gallery = [
   { src: '/assets/images/services/crown-block.jpg', label: 'Crown Block' },
@@ -29,7 +30,7 @@ export function DrillingEquipmentMro() {
         <div className="container">
           <Reveal className="subservice">
             <div className="subservice-media">
-              <img src="/assets/images/services/drawworks.jpg" alt="Drawworks MRO" />
+              <img src={asset('/assets/images/services/drawworks.jpg')} alt="Drawworks MRO" />
             </div>
             <div className="subservice-copy">
               <span className="eyebrow">Drawworks</span>
@@ -51,8 +52,8 @@ export function DrillingEquipmentMro() {
 
           <Reveal className="subservice">
             <div className="subservice-media dual-media">
-              <img src="/assets/images/services/mud-pump-1.jpg" alt="Mud pump" />
-              <img src="/assets/images/services/mud-pump-2.jpg" alt="Mud pump installed on a rig" />
+              <img src={asset('/assets/images/services/mud-pump-1.jpg')} alt="Mud pump" />
+              <img src={asset('/assets/images/services/mud-pump-2.jpg')} alt="Mud pump installed on a rig" />
             </div>
             <div className="subservice-copy">
               <span className="eyebrow">Mud Pumps</span>
@@ -80,7 +81,7 @@ export function DrillingEquipmentMro() {
 
           <Reveal className="subservice">
             <div className="subservice-media">
-              <img src="/assets/images/services/top-drive.jpg" alt="Top Drives MRO" />
+              <img src={asset('/assets/images/services/top-drive.jpg')} alt="Top Drives MRO" />
             </div>
             <div className="subservice-copy">
               <span className="eyebrow">Top Drives</span>
@@ -129,7 +130,7 @@ export function DrillingEquipmentMro() {
             <div className="mini-gallery">
               {gallery.map((item) => (
                 <figure key={item.src}>
-                  <img src={item.src} alt={item.label} />
+                  <img src={asset(item.src)} alt={item.label} />
                   <figcaption>{item.label}</figcaption>
                 </figure>
               ))}
@@ -147,7 +148,7 @@ export function DrillingEquipmentMro() {
               <h2>Have Equipment That Needs MRO?</h2>
               <p>Send us your equipment details and requirements &mdash; we'll get back to you within 24 hours.</p>
             </div>
-            <a href="/contact.html" className="btn btn-primary">
+            <a href={asset('/contact.html')} className="btn btn-primary">
               Request a Quote
             </a>
           </Reveal>

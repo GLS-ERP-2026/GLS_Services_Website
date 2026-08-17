@@ -3,6 +3,7 @@ import { PageBanner } from '../../components/layout/PageBanner';
 import { Reveal } from '../../components/ui/Reveal';
 import { ValueCard } from '../../components/ui/ValueCard';
 import { isoCertifications, additionalAccreditation } from '../../data/certifications';
+import { asset } from '../../lib/paths';
 
 export function Certifications() {
   return (
@@ -38,7 +39,7 @@ export function Certifications() {
           <Reveal className="cert-strip">
             {additionalAccreditation.map((item) => (
               <div className="cert-item" key={item.name}>
-                <img src={item.badge} alt={item.name} />
+                <img src={asset(item.badge)} alt={item.name} />
                 <span>{item.name}</span>
               </div>
             ))}
@@ -53,7 +54,7 @@ export function Certifications() {
               <h2>Want to Verify Our Certifications?</h2>
               <p>Reach out and we'll be happy to share certificate copies for your due diligence.</p>
             </div>
-            <a href="/contact.html" className="btn btn-primary">
+            <a href={asset('/contact.html')} className="btn btn-primary">
               Contact Us
             </a>
           </Reveal>

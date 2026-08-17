@@ -3,6 +3,7 @@ import { PageBanner } from '../../../components/layout/PageBanner';
 import { Reveal } from '../../../components/ui/Reveal';
 import { ValueCard } from '../../../components/ui/ValueCard';
 import { RelatedServices } from '../../../components/ui/RelatedServices';
+import { asset } from '../../../lib/paths';
 
 const capabilities = [
   { title: 'Marine Machinery', description: 'Reusable and reconditioned marine machinery sourced from ship-breaking yards worldwide.', icon: 'crate' as const },
@@ -41,7 +42,7 @@ export function UsedEquipmentSupply() {
             </p>
           </Reveal>
           <Reveal className="about-media">
-            <img src="/assets/images/services/used-equipment.jpg" alt="Used equipment supply" />
+            <img src={asset('/assets/images/services/used-equipment.jpg')} alt="Used equipment supply" />
           </Reveal>
         </div>
       </section>
@@ -69,7 +70,7 @@ export function UsedEquipmentSupply() {
               <h2>Looking to Source Equipment or Spares?</h2>
               <p>Tell us what you need and we'll check availability across our network.</p>
             </div>
-            <a href="/contact.html" className="btn btn-primary">
+            <a href={asset('/contact.html')} className="btn btn-primary">
               Request a Quote
             </a>
           </Reveal>

@@ -4,6 +4,7 @@ import { Reveal } from '../../components/ui/Reveal';
 import { ServiceCard } from '../../components/ui/ServiceCard';
 import { ValueCard } from '../../components/ui/ValueCard';
 import { services } from '../../data/services';
+import { asset } from '../../lib/paths';
 
 const whyGls = [
   { title: 'API-Aligned', description: 'Procedures follow applicable API standards on every inspection and overhaul.', icon: 'check' as const },
@@ -53,7 +54,7 @@ export function Services() {
               <h2>Not Sure Which Service You Need?</h2>
               <p>Tell us about your equipment and requirements &mdash; we'll help you scope the right solution.</p>
             </div>
-            <a href="/contact.html" className="btn btn-primary">
+            <a href={asset('/contact.html')} className="btn btn-primary">
               Talk to Our Team
             </a>
           </Reveal>

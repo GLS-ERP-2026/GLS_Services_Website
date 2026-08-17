@@ -1,12 +1,13 @@
 import { useState, type MouseEvent } from 'react';
 import { useHeaderScroll } from '../../hooks/useHeaderScroll';
 import { primaryNav, secondaryNav, servicesNav } from '../../data/nav';
+import { asset, currentPagePath } from '../../lib/paths';
 
 export function Header() {
   const headerRef = useHeaderScroll<HTMLElement>();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+  const currentPath = currentPagePath();
 
   function isActive(href: string) {
     return currentPath === href;
@@ -24,15 +25,15 @@ export function Header() {
   return (
     <header ref={headerRef} className={`site-header${isMenuOpen ? ' is-open' : ''}`}>
       <div className="nav-inner">
-        <a href="/index.html" className="nav-logo">
-          <img src="/assets/images/logo/gls-logo-full.png" alt="GLS Services" className="logo-full" />
-          <img src="/assets/images/logo/gls-logo-mark.png" alt="GLS Services" className="logo-mark" />
+        <a href={asset('/index.html')} className="nav-logo">
+          <img src={asset('/assets/images/logo/gls-logo-full.png')} alt="GLS Services" className="logo-full" />
+          <img src={asset('/assets/images/logo/gls-logo-mark.png')} alt="GLS Services" className="logo-mark" />
         </a>
         <nav aria-label="Primary" className="nav-primary">
           <ul className="nav-links">
             {primaryNav.map((link) => (
               <li key={link.href}>
-                <a className={`nav-link${isActive(link.href) ? ' is-active' : ''}`} href={link.href}>
+                <a className={`nav-link${isActive(link.href) ? ' is-active' : ''}`} href={asset(link.href)}>
                   {link.label}
                 </a>
               </li>
@@ -40,7 +41,7 @@ export function Header() {
             <li className={`has-dropdown${isServicesOpen ? ' is-open' : ''}`}>
               <a
                 className={`nav-link${servicesActive ? ' is-active' : ''}`}
-                href="/services.html"
+                href={asset('/services.html')}
                 onClick={handleServicesLinkClick}
               >
                 Services
@@ -48,14 +49,14 @@ export function Header() {
               <ul className="nav-dropdown">
                 {servicesNav.map((link) => (
                   <li key={link.href}>
-                    <a href={link.href}>{link.label}</a>
+                    <a href={asset(link.href)}>{link.label}</a>
                   </li>
                 ))}
               </ul>
             </li>
             {secondaryNav.map((link) => (
               <li key={link.href}>
-                <a className={`nav-link${isActive(link.href) ? ' is-active' : ''}`} href={link.href}>
+                <a className={`nav-link${isActive(link.href) ? ' is-active' : ''}`} href={asset(link.href)}>
                   {link.label}
                 </a>
               </li>
@@ -63,7 +64,7 @@ export function Header() {
           </ul>
         </nav>
         <div className="nav-cta">
-          <a href="/contact.html" className="btn btn-primary">
+          <a href={asset('/contact.html')} className="btn btn-primary">
             Get a Quote
           </a>
           <button

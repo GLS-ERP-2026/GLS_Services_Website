@@ -3,6 +3,7 @@ import { PageBanner } from '../../components/layout/PageBanner';
 import { Reveal } from '../../components/ui/Reveal';
 import { ValueCard } from '../../components/ui/ValueCard';
 import { aboutCoreValues } from '../../data/values';
+import { asset } from '../../lib/paths';
 
 export function About() {
   return (
@@ -36,7 +37,7 @@ export function About() {
             </p>
           </Reveal>
           <Reveal className="about-media">
-            <img src="/assets/images/about/about-team.svg" alt="GLS Services team on site" />
+            <img src={asset('/assets/images/about/about-team.svg')} alt="GLS Services team on site" />
             <div className="about-badge">
               <strong>11</strong>
               <span>Countries of Operation</span>
@@ -47,7 +48,7 @@ export function About() {
 
       <section className="section photo-section">
         <div className="photo-section-media">
-          <img src="/assets/images/about/vision-goal.jpg" alt="" role="presentation" />
+          <img src={asset('/assets/images/about/vision-goal.jpg')} alt="" role="presentation" />
         </div>
         <Reveal className="container photo-section-inner text-center" style={{ maxWidth: 780, margin: '0 auto' }}>
           <span className="eyebrow">Our Vision</span>
@@ -60,7 +61,7 @@ export function About() {
 
       <section className="section photo-section">
         <div className="photo-section-media">
-          <img src="/assets/images/about/values.jpg" alt="" role="presentation" />
+          <img src={asset('/assets/images/about/values.jpg')} alt="" role="presentation" />
         </div>
         <div className="container photo-section-inner">
           <Reveal className="section-head center">
@@ -85,7 +86,7 @@ export function About() {
               <h2>Certified Across Quality, Environment &amp; Safety</h2>
               <p>ISO 9001, ISO 14001, ISO 45001, plus ANAB and CT accreditation.</p>
             </div>
-            <a href="/certifications.html" className="btn btn-primary">
+            <a href={asset('/certifications.html')} className="btn btn-primary">
               View Certifications
             </a>
           </Reveal>

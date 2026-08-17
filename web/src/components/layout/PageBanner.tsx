@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { asset } from '../../lib/paths';
 
 export interface Crumb {
   label: string;
@@ -19,13 +20,13 @@ export function PageBanner({
   return (
     <section className="page-banner">
       <div className="page-banner-media">
-        <img src={image} alt="" role="presentation" />
+        <img src={asset(image)} alt="" role="presentation" />
       </div>
       <div className="container page-banner-inner">
         <div className="breadcrumb">
           {crumbs.map((crumb, i) => (
             <span key={crumb.label}>
-              {crumb.href ? <a href={crumb.href}>{crumb.label}</a> : <span>{crumb.label}</span>}
+              {crumb.href ? <a href={asset(crumb.href)}>{crumb.label}</a> : <span>{crumb.label}</span>}
               {i < crumbs.length - 1 ? ' / ' : ''}
             </span>
           ))}

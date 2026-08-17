@@ -2,7 +2,13 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
+// GitHub Pages serves this repo at /GLS_Services_Website/, not the domain root,
+// so every asset/link needs that prefix. If a custom domain is ever attached
+// (serving from root), change this back to '/' and rebuild.
+const BASE = '/GLS_Services_Website/';
+
 export default defineConfig({
+  base: BASE,
   plugins: [react()],
   build: {
     rollupOptions: {

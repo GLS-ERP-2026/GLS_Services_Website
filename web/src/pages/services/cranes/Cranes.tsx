@@ -2,6 +2,7 @@ import { Layout } from '../../../components/layout/Layout';
 import { PageBanner } from '../../../components/layout/PageBanner';
 import { Reveal } from '../../../components/ui/Reveal';
 import { RelatedServices } from '../../../components/ui/RelatedServices';
+import { asset } from '../../../lib/paths';
 
 export function Cranes() {
   return (
@@ -17,7 +18,7 @@ export function Cranes() {
         <div className="container">
           <Reveal className="subservice">
             <div className="subservice-media">
-              <img src="/assets/images/services/crane.jpg" alt="Crane inspection service" />
+              <img src={asset('/assets/images/services/crane.jpg')} alt="Crane inspection service" />
             </div>
             <div className="subservice-copy">
               <span className="eyebrow">Inspection</span>
@@ -42,7 +43,7 @@ export function Cranes() {
 
           <Reveal className="subservice">
             <div className="subservice-media">
-              <img src="/assets/images/services/service-cranes.svg" alt="Crane repair and overhaul service" />
+              <img src={asset('/assets/images/services/service-cranes.svg')} alt="Crane repair and overhaul service" />
             </div>
             <div className="subservice-copy">
               <span className="eyebrow">Repair &amp; Overhaul</span>
@@ -76,7 +77,7 @@ export function Cranes() {
               <h2>Due for a Crane Inspection?</h2>
               <p>Get in touch to schedule an annual or five-year special survey inspection.</p>
             </div>
-            <a href="/contact.html" className="btn btn-primary">
+            <a href={asset('/contact.html')} className="btn btn-primary">
               Request a Quote
             </a>
           </Reveal>

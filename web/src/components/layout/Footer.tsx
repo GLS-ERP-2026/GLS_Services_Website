@@ -1,5 +1,6 @@
 import { footerQuickLinks, servicesNav } from '../../data/nav';
 import { contactInfo } from '../../data/contact';
+import { asset } from '../../lib/paths';
 
 export function Footer() {
   return (
@@ -7,8 +8,8 @@ export function Footer() {
       <div className="container footer-top">
         <div className="footer-grid">
           <div className="footer-about">
-            <a href="/index.html" className="footer-logo">
-              <img src="/assets/images/logo/gls-logo-full.png" alt="GLS Services" />
+            <a href={asset('/index.html')} className="footer-logo">
+              <img src={asset('/assets/images/logo/gls-logo-full.png')} alt="GLS Services" />
             </a>
             <p>
               An ISO 9001, 14001 &amp; 45001 certified provider of end-to-end drilling equipment MRO solutions for oil &amp;
@@ -20,7 +21,7 @@ export function Footer() {
             <ul className="footer-links">
               {footerQuickLinks.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href}>{link.label}</a>
+                  <a href={asset(link.href)}>{link.label}</a>
                 </li>
               ))}
             </ul>
@@ -30,7 +31,7 @@ export function Footer() {
             <ul className="footer-links">
               {servicesNav.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href}>{link.label}</a>
+                  <a href={asset(link.href)}>{link.label}</a>
                 </li>
               ))}
             </ul>
@@ -73,7 +74,7 @@ export function Footer() {
       <div className="footer-bottom">
         <div className="container footer-bottom-inner">
           <span>&copy; 2026 GLS Services. All rights reserved.</span>
-          <a href="/privacy-policy.html">Privacy Policy</a>
+          <a href={asset('/privacy-policy.html')}>Privacy Policy</a>
         </div>
       </div>
     </footer>

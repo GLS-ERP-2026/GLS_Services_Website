@@ -5,13 +5,14 @@ import { ValueCard } from '../../components/ui/ValueCard';
 import { StatCounter } from '../../components/ui/StatCounter';
 import { services } from '../../data/services';
 import { homeCoreValues } from '../../data/values';
+import { asset } from '../../lib/paths';
 
 export function Home() {
   return (
     <Layout>
       <section className="hero">
         <div className="hero-media">
-          <img src="/assets/images/hero/hero-home.jpg" alt="" role="presentation" />
+          <img src={asset('/assets/images/hero/hero-home.jpg')} alt="" role="presentation" />
         </div>
         <div className="container hero-inner">
           <span className="hero-eyebrow">ISO 9001 &middot; ISO 14001 &middot; ISO 45001 Certified</span>
@@ -24,10 +25,10 @@ export function Home() {
             across 11 countries.
           </p>
           <div className="hero-actions">
-            <a href="/contact.html" className="btn btn-primary">
+            <a href={asset('/contact.html')} className="btn btn-primary">
               Get a Quote
             </a>
-            <a href="/services.html" className="btn btn-outline">
+            <a href={asset('/services.html')} className="btn btn-outline">
               Explore Services
             </a>
           </div>
@@ -46,7 +47,7 @@ export function Home() {
       <section className="section section-alt">
         <div className="container about-split">
           <Reveal className="about-media">
-            <img src="/assets/images/about/about-team.svg" alt="GLS Services field team" />
+            <img src={asset('/assets/images/about/about-team.svg')} alt="GLS Services field team" />
             <div className="about-badge">
               <strong>15+</strong>
               <span>Years Combined Field Experience</span>
@@ -75,7 +76,7 @@ export function Home() {
               </li>
             </ul>
             <div className="hero-actions" style={{ marginTop: 32 }}>
-              <a href="/about.html" className="btn btn-dark">
+              <a href={asset('/about.html')} className="btn btn-dark">
                 Learn More About Us
               </a>
             </div>
@@ -132,16 +133,16 @@ export function Home() {
               <span className="iso-badge">ISO 45001:2015</span>
             </div>
             <div className="cert-item">
-              <img src="/assets/images/certifications/badge-anab.svg" alt="ANAB Certified" />
+              <img src={asset('/assets/images/certifications/badge-anab.svg')} alt="ANAB Certified" />
               <span>ANAB Certified</span>
             </div>
             <div className="cert-item">
-              <img src="/assets/images/certifications/badge-ct.svg" alt="CT Certified" />
+              <img src={asset('/assets/images/certifications/badge-ct.svg')} alt="CT Certified" />
               <span>CT Certified</span>
             </div>
           </Reveal>
           <div className="text-center" style={{ marginTop: 32 }}>
-            <a href="/certifications.html" className="btn btn-dark">
+            <a href={asset('/certifications.html')} className="btn btn-dark">
               View All Certifications
             </a>
           </div>
@@ -158,7 +159,7 @@ export function Home() {
                 typically respond within 24 hours.
               </p>
             </div>
-            <a href="/contact.html" className="btn btn-primary">
+            <a href={asset('/contact.html')} className="btn btn-primary">
               Get in Touch
             </a>
           </Reveal>
