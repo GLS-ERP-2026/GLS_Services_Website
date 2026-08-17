@@ -72,7 +72,7 @@ export function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <div className="container footer-bottom-inner">
+        <div className="footer-bottom-inner">
           <span>&copy; 2026 GLS Services. All rights reserved.</span>
           <a href={asset('/privacy-policy.html')}>Privacy Policy</a>
         </div>

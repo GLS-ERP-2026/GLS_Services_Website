@@ -1,16 +1,20 @@
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 /**
  * Ports the site's scroll-reveal behavior. Content is visible by default
  * (isPending stays false) unless IntersectionObserver is available, so a
  * slow/broken observer never leaves content permanently hidden.
+ *
+ * Uses useLayoutEffect (not useEffect) so above-the-fold elements get
+ * marked pending/observed before the browser's first paint — otherwise
+ * they'd flash visible, then hidden, then visible again on load.
  */
 export function useReveal<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
   const [isPending, setIsPending] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = ref.current;
     if (!el || !('IntersectionObserver' in window)) return;
 
