@@ -12,15 +12,18 @@ const slides = [
 ];
 
 export function HeroSlideshow() {
-  const activeIndex = useSlideshow(slides.length, SLIDE_INTERVAL_MS);
+  const { activeIndex, prevIndex } = useSlideshow(slides.length, SLIDE_INTERVAL_MS);
 
   return (
     <div className="hero-slideshow">
-      {slides.map((src, i) => (
-        <div key={src} className={`hero-slide${i === activeIndex ? ' is-active' : ''}`}>
-          <img src={asset(src)} alt="" role="presentation" loading={i === 0 ? 'eager' : 'lazy'} />
-        </div>
-      ))}
+      {slides.map((src, i) => {
+        const state = i === activeIndex ? 'active' : i === prevIndex ? 'leaving' : 'idle';
+        return (
+          <div key={src} className={`hero-slide hero-slide--${state}`}>
+            <img src={asset(src)} alt="" role="presentation" loading={i === 0 ? 'eager' : 'lazy'} />
+          </div>
+        );
+      })}
     </div>
   );
 }

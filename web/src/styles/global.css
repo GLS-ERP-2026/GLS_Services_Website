@@ -206,14 +206,30 @@ button { font-family: inherit; }
    Slides are stacked absolutely and crossfaded via opacity; the active
    slide's <img> also gets a slow Ken Burns zoom. Both are gated behind
    prefers-reduced-motion: no-preference, so reduced-motion users just get
-   an instant swap between photos with no zoom. */
+   an instant swap between photos with no zoom.
+
+   --active and --leaving share the exact same `animation` shorthand (name,
+   duration, timing, fill-mode) — only animation-play-state differs. Per the
+   CSS animations spec, an animation only restarts when animation-name
+   changes value, so going active -> leaving just pauses the zoom exactly
+   where it was (instead of snapping back to scale(1)) while the slide
+   fades out at that frozen zoom level. Going idle -> active does change
+   animation-name (none -> hero-kenburns), which is what gives each slide a
+   fresh zoom-from-scratch when its turn comes back around. */
 .hero-slideshow { position: relative; width: 100%; height: 100%; overflow: hidden; }
 .hero-slide { position: absolute; inset: 0; opacity: 0; }
-.hero-slide.is-active { opacity: 1; z-index: 1; }
 .hero-slide img { transform: scale(1); }
+
+.hero-slide--active { opacity: 1; z-index: 2; }
+.hero-slide--leaving { opacity: 0; z-index: 1; }
+
 @media (prefers-reduced-motion: no-preference) {
-  .hero-slide { transition: opacity 1.2s ease; }
-  .hero-slide.is-active img { animation: hero-kenburns 8s ease-out forwards; }
+  .hero-slide { transition: opacity 1.5s ease; }
+  .hero-slide--active img,
+  .hero-slide--leaving img {
+    animation: hero-kenburns 7s ease-out forwards;
+  }
+  .hero-slide--leaving img { animation-play-state: paused; }
 }
 @keyframes hero-kenburns {
   from { transform: scale(1); }
