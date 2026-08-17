@@ -58,10 +58,11 @@ button { font-family: inherit; }
 .btn-block { width: 100%; justify-content: center; }
 
 /* ---- Header / Nav ----
-   Two stacked gradient layers on ::before (dark, top-of-page state) and
-   ::after (light, scrolled state). JS writes --scroll-t (0..1) on the
-   header element as the user scrolls; ::after's opacity tracks it directly,
-   so the crossfade is continuous and reverses automatically on scroll-up. */
+   Two stacked solid-color layers on ::before (--nav-dark, top-of-page state)
+   and ::after (--nav-light, scrolled state). JS writes --scroll-t (0..1) on
+   the header element as the user scrolls; ::after's opacity tracks it
+   directly, so the crossfade is continuous and reverses automatically on
+   scroll-up. */
 .site-header {
   --scroll-t: 0;
   position: sticky;
@@ -82,10 +83,10 @@ button { font-family: inherit; }
   z-index: -1;
 }
 .site-header::before {
-  background: linear-gradient(180deg, var(--stone-950) 0%, var(--stone-700) 100%);
+  background: var(--nav-dark);
 }
 .site-header::after {
-  background: linear-gradient(180deg, var(--sage-light) 0%, var(--sand-100) 100%);
+  background: var(--nav-light);
   opacity: var(--scroll-t);
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -142,14 +143,14 @@ button { font-family: inherit; }
   border-radius: var(--radius-sm);
   transition: background 0.15s ease;
 }
-.nav-link:hover, .nav-link.is-active { background: rgba(126, 154, 108, 0.16); color: var(--accent-600); }
+.nav-link:hover, .nav-link.is-active { background: rgba(238, 146, 71, 0.16); color: var(--accent-600); }
 
 .nav-dropdown {
   position: absolute;
   top: calc(100% + 10px);
   left: 0;
   min-width: 280px;
-  background: var(--stone-800);
+  background: var(--nav-dark);
   border: 1px solid var(--border-dark);
   border-radius: var(--radius-md);
   padding: 10px;
@@ -169,7 +170,7 @@ button { font-family: inherit; }
   font-size: 0.92rem;
   font-weight: 500;
 }
-.nav-dropdown a:hover { background: rgba(126, 154, 108, 0.16); color: var(--accent-400); }
+.nav-dropdown a:hover { background: rgba(238, 146, 71, 0.16); color: var(--accent-400); }
 
 .nav-cta { display: flex; align-items: center; gap: 10px; }
 .nav-toggle {
@@ -294,7 +295,7 @@ button { font-family: inherit; }
 .about-badge span { font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; }
 .about-list { margin-top: 24px; display: grid; gap: 14px; }
 .about-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.98rem; color: var(--ink-700); }
-.check-ico { flex: none; width: 22px; height: 22px; border-radius: 50%; background: rgba(91, 122, 74, 0.14); color: var(--accent-600); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; margin-top: 2px; }
+.check-ico { flex: none; width: 22px; height: 22px; border-radius: 50%; background: rgba(235, 130, 47, 0.14); color: var(--accent-600); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; margin-top: 2px; }
 
 /* ---- Cards / Grids ---- */
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
@@ -470,8 +471,8 @@ button { font-family: inherit; }
   margin-top: 20px;
   padding: 16px 18px;
   border-radius: var(--radius-sm);
-  background: rgba(126, 154, 108, 0.14);
-  border: 1px solid rgba(91, 122, 74, 0.35);
+  background: rgba(238, 146, 71, 0.14);
+  border: 1px solid rgba(235, 130, 47, 0.35);
   color: var(--stone-900);
   font-size: 0.92rem;
 }
@@ -488,7 +489,7 @@ button { font-family: inherit; }
 .info-card h3 { font-size: 1.1rem; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
 .info-card p { color: var(--ink-500); font-size: 0.94rem; margin: 0; }
 .info-card a:hover { color: var(--accent-600); }
-.ico-chip { width: 34px; height: 34px; border-radius: 8px; background: rgba(91, 122, 74, 0.14); color: var(--accent-600); display: inline-flex; align-items: center; justify-content: center; }
+.ico-chip { width: 34px; height: 34px; border-radius: 8px; background: rgba(235, 130, 47, 0.14); color: var(--accent-600); display: inline-flex; align-items: center; justify-content: center; }
 
 /* ---- Careers position pills ---- */
 .pill-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
@@ -560,7 +561,7 @@ button { font-family: inherit; }
     left: 0;
     right: 0;
     height: calc(100vh - var(--header-h));
-    background: var(--stone-900);
+    background: var(--nav-dark);
     padding: 24px;
     overflow-y: auto;
     align-items: stretch;
