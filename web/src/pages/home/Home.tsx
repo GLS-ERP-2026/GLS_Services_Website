@@ -47,7 +47,7 @@ export function Home() {
       <section className="section section-alt">
         <div className="container about-split">
           <Reveal className="about-media">
-            <img src={asset('/assets/images/about/about-team.svg')} alt="GLS Services field team" />
+            <img src={asset('/assets/images/about/who-we-are.jpg')} alt="GLS Services offshore drilling platform" />
             <div className="about-badge">
               <strong>15+</strong>
               <span>Years Combined Field Experience</span>
