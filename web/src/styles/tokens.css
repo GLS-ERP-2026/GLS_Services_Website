@@ -1,5 +1,5 @@
 /* ==========================================================================
-   GLS Services — Design tokens: Terracotta, Sage & Warm Stone
+   GLS Services — Design tokens: Sage & Warm Stone
    ========================================================================== */
 :root {
   /* Colors */
@@ -12,10 +12,10 @@
   --sand-100: #f5f1ea;
   --white: #ffffff;
   --surface: #ffffff;
-  --accent-400: #d68a6a;
-  --accent-500: #c1603d;
-  --accent-600: #a94e2e;
-  --accent-700: #8b3f25;
+  --accent-400: #a6bc97;
+  --accent-500: #7e9a6c;
+  --accent-600: #5b7a4a;
+  --accent-700: #445c38;
   --ink-900: #2e241e;
   --ink-700: #4a3f36;
   --ink-500: #6b5f53;
