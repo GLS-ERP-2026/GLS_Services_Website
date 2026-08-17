@@ -7,16 +7,23 @@ import { StatCounter } from '../../components/ui/StatCounter';
 import { services } from '../../data/services';
 import { homeCoreValues } from '../../data/values';
 import { asset } from '../../lib/paths';
+import { useScrollThreshold } from '../../hooks/useScrollThreshold';
+
+const HERO_ACTIONS_REVEAL_THRESHOLD_PX = 4;
 
 export function Home() {
+  const showHeroActions = useScrollThreshold(HERO_ACTIONS_REVEAL_THRESHOLD_PX);
+
   return (
-    <Layout>
+    <Layout headerVariant="home-hero">
       <section className="hero">
         <div className="hero-media">
           <HeroSlideshow />
         </div>
-        <div className="container hero-inner">
+        <div className="container hero-badge-row">
           <span className="hero-eyebrow">ISO 9001 &middot; ISO 14001 &middot; ISO 45001 Certified</span>
+        </div>
+        <div className="container hero-inner">
           <h1 className="hero-title">
             A Comprehensive Solution for Your <em>Drilling Equipment</em> Requirements
           </h1>
@@ -25,11 +32,15 @@ export function Home() {
             equipment &mdash; backed by API-compliant procedures, experienced field technicians, and a track record
             across 11 countries.
           </p>
-          <div className="hero-actions">
-            <a href={asset('/contact.html')} className="btn btn-primary">
+          <div className={`hero-actions${showHeroActions ? '' : ' is-concealed'}`}>
+            <a href={asset('/contact.html')} className="btn btn-primary" tabIndex={showHeroActions ? undefined : -1}>
               Get a Quote
             </a>
-            <a href={asset('/services.html')} className="btn btn-outline">
+            <a
+              href={asset('/services.html')}
+              className="btn btn-outline"
+              tabIndex={showHeroActions ? undefined : -1}
+            >
               Explore Services
             </a>
           </div>

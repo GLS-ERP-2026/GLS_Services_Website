@@ -4,3 +4,8 @@ Thumbs.db
 .vscode/
 node_modules/
 .claude/
+
+# Stray uploads dropped directly into the deployed assets/ tree that aren't
+# part of the Vite build source (web/public/assets/) — not wired into any
+# page yet, so kept out of the repo until they are.
+assets/images/hero/Top Drive.jpeg

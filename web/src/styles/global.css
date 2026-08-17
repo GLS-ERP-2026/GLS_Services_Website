@@ -190,6 +190,32 @@ button { font-family: inherit; }
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
+/* ---- Home hero header ----
+   On the home page the header starts fully transparent with only the logo
+   showing (moved to the right via `order`) so the slideshow reads
+   unobstructed; everything else fades in once the visitor scrolls past
+   HOME_HERO_REVEAL_THRESHOLD_PX (see Header.tsx), at which point it falls
+   back to the exact same dark-to-light crossfade every other page uses. */
+.site-header--home-hero .nav-logo { order: 2; }
+.site-header--home-hero .nav-cta { order: 1; }
+.site-header--home-hero:not(.is-past-top)::before,
+.site-header--home-hero:not(.is-past-top)::after {
+  opacity: 0;
+}
+.site-header--home-hero:not(.is-past-top) .nav-primary,
+.site-header--home-hero:not(.is-past-top) .nav-cta {
+  opacity: 0;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .site-header--home-hero::before,
+  .site-header--home-hero::after,
+  .site-header--home-hero .nav-primary,
+  .site-header--home-hero .nav-cta {
+    transition: opacity 0.4s ease;
+  }
+}
+
 /* ---- Hero (home) ---- */
 .hero {
   position: relative;
@@ -240,27 +266,53 @@ button { font-family: inherit; }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(60, 51, 44, 0.55) 0%, rgba(46, 36, 30, 0.75) 100%);
+  background: linear-gradient(180deg, rgba(38, 50, 56, 0.55) 0%, rgba(38, 50, 56, 0.78) 100%);
 }
-.hero-inner { position: relative; z-index: 1; max-width: 900px; }
+
+/* Badge sits top-left, independent of the vertically-centered text block,
+   so it lines up under the logo regardless of how tall the headline is. */
+.hero-badge-row {
+  position: absolute;
+  top: calc(var(--header-h) + 24px);
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
 .hero-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  border: 1px solid var(--border-dark);
   border-radius: 999px;
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--accent-400);
-  margin-bottom: 24px;
+  color: var(--stone-900);
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: var(--shadow-sm);
 }
-.hero-title { font-size: clamp(2.6rem, 5.6vw, 4.4rem); color: var(--white); margin-bottom: 20px; }
+
+.hero-inner { position: relative; z-index: 1; max-width: 620px; margin-left: auto; margin-right: 0; }
+.hero-title {
+  font-size: clamp(2.6rem, 5.6vw, 4.4rem);
+  color: var(--white);
+  margin-bottom: 20px;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+}
 .hero-title em { color: var(--accent-500); font-style: normal; }
-.hero-sub { font-size: 1.15rem; color: var(--ink-300); max-width: 620px; margin-bottom: 36px; }
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--white);
+  max-width: 620px;
+  margin-bottom: 36px;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+}
 .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero .hero-actions { transition: opacity 0.4s ease; }
+}
+.hero .hero-actions.is-concealed { opacity: 0; pointer-events: none; }
 
 /* ---- Page banner (interior pages) ---- */
 .page-banner {
@@ -587,6 +639,10 @@ button { font-family: inherit; }
   .dual-media { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
   .cta-banner { flex-direction: column; align-items: flex-start; text-align: left; }
+
+  .hero { flex-direction: column; justify-content: center; padding-top: calc(var(--header-h) + 24px); }
+  .hero-badge-row { position: static; margin-bottom: 24px; }
+  .hero-inner { max-width: 100%; margin-left: 0; margin-right: 0; }
 
   .site-header.is-open .nav-links {
     display: flex;

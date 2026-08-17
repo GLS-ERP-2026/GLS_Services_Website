@@ -2,10 +2,15 @@ import type { ReactNode } from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 
-export function Layout({ children }: { children: ReactNode }) {
+interface LayoutProps {
+  children: ReactNode;
+  headerVariant?: 'default' | 'home-hero';
+}
+
+export function Layout({ children, headerVariant }: LayoutProps) {
   return (
     <>
-      <Header />
+      <Header variant={headerVariant} />
       {children}
       <Footer />
     </>
