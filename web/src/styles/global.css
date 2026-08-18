@@ -193,17 +193,19 @@ button { font-family: inherit; }
 /* ---- Home hero header ----
    On the home page the header starts fully transparent with only the logo
    showing, in its normal top-left spot, so the slideshow reads
-   unobstructed; everything else (background, blur, border, nav links,
-   buttons) fades in once the visitor scrolls past
-   HOME_HERO_REVEAL_THRESHOLD_PX (see Header.tsx), at which point it falls
-   back to the exact same dark-to-light crossfade every other page uses. */
+   unobstructed. The dark ::before layer is disabled entirely for this
+   variant, so the background reduces transparency straight into its final
+   light color (::after tracks --scroll-t continuously, see
+   useHeaderScroll.ts) with no dark intermediate stage. Blur, border and the
+   nav links/buttons stay hidden until the visitor scrolls past the reveal
+   threshold (see useHeroHalfHeight.ts / Header.tsx), at which point they
+   fade in together. */
+.site-header--home-hero::before {
+  opacity: 0;
+}
 .site-header--home-hero:not(.is-past-top) {
   backdrop-filter: none;
   border-bottom-color: transparent;
-}
-.site-header--home-hero:not(.is-past-top)::before,
-.site-header--home-hero:not(.is-past-top)::after {
-  opacity: 0;
 }
 .site-header--home-hero:not(.is-past-top) .nav-primary,
 .site-header--home-hero:not(.is-past-top) .nav-cta {
@@ -214,7 +216,6 @@ button { font-family: inherit; }
   .site-header--home-hero {
     transition: backdrop-filter 0.4s ease, border-color 0.4s ease;
   }
-  .site-header--home-hero::before,
   .site-header--home-hero::after,
   .site-header--home-hero .nav-primary,
   .site-header--home-hero .nav-cta {
@@ -225,7 +226,9 @@ button { font-family: inherit; }
 /* ---- Hero (home) ---- */
 .hero {
   position: relative;
-  min-height: 92vh;
+  min-height: calc(92vh + var(--header-h));
+  margin-top: calc(-1 * var(--header-h));
+  padding-top: var(--header-h);
   display: flex;
   align-items: center;
   color: var(--white);
@@ -280,11 +283,8 @@ button { font-family: inherit; }
 .hero-badge-row {
   position: absolute;
   top: calc(var(--header-h) + 24px);
-  left: 0;
-  right: 0;
+  right: 24px;
   z-index: 1;
-  display: flex;
-  justify-content: flex-end;
 }
 .hero-eyebrow {
   display: inline-flex;
@@ -651,7 +651,7 @@ button { font-family: inherit; }
   .cta-banner { flex-direction: column; align-items: flex-start; text-align: left; }
 
   .hero { flex-direction: column; justify-content: center; padding-top: calc(var(--header-h) + 24px); }
-  .hero-badge-row { position: static; margin-bottom: 24px; justify-content: flex-start; }
+  .hero-badge-row { position: static; margin: 0 24px 24px; }
   .hero-inner { max-width: 100%; margin-left: 0; margin-right: 0; }
 
   .site-header.is-open .nav-links {

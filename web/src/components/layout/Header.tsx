@@ -1,9 +1,13 @@
 import { useState, type MouseEvent } from 'react';
 import { useHeaderScroll } from '../../hooks/useHeaderScroll';
+import { useHeroHalfHeight } from '../../hooks/useHeroHalfHeight';
 import { useScrollThreshold } from '../../hooks/useScrollThreshold';
 import { primaryNav, secondaryNav, servicesNav } from '../../data/nav';
 import { asset, currentPagePath } from '../../lib/paths';
 
+/** Fallback reveal threshold for the home hero header, used only before the
+ * hero has been measured (see useHeroHalfHeight) — otherwise the reveal is
+ * tied to half the hero's actual rendered height. */
 const HOME_HERO_REVEAL_THRESHOLD_PX = 4;
 
 interface HeaderProps {
@@ -13,13 +17,16 @@ interface HeaderProps {
 }
 
 export function Header({ variant = 'default' }: HeaderProps) {
-  const headerRef = useHeaderScroll<HTMLElement>();
+  const isHomeHero = variant === 'home-hero';
+  const heroHalfHeight = useHeroHalfHeight();
+  const revealThresholdPx = isHomeHero && heroHalfHeight ? heroHalfHeight : HOME_HERO_REVEAL_THRESHOLD_PX;
+  const gradientRangePx = isHomeHero && heroHalfHeight ? heroHalfHeight : undefined;
+  const headerRef = useHeaderScroll<HTMLElement>(gradientRangePx);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const currentPath = currentPagePath();
-  const isPastTop = useScrollThreshold(HOME_HERO_REVEAL_THRESHOLD_PX);
+  const isPastTop = useScrollThreshold(revealThresholdPx);
 
-  const isHomeHero = variant === 'home-hero';
   const isConcealed = isHomeHero && !isPastTop;
 
   function isActive(href: string) {

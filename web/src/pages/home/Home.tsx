@@ -20,7 +20,7 @@ export function Home() {
         <div className="hero-media">
           <HeroSlideshow />
         </div>
-        <div className="container hero-badge-row">
+        <div className="hero-badge-row">
           <span className="hero-eyebrow">ISO 9001 &middot; ISO 14001 &middot; ISO 45001 Certified</span>
         </div>
         <div className="container hero-inner">
