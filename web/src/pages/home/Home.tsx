@@ -21,7 +21,7 @@ export function Home() {
           <HeroSlideshow />
         </div>
         <div className="hero-badge-row">
-          <span className="hero-eyebrow">ISO 9001 &middot; ISO 14001 &middot; ISO 45001 Certified</span>
+          <span className="hero-eyebrow">ISO 9001 &middot; ISO 14001 &middot; ISO 45001</span>
         </div>
         <div className="container hero-inner">
           <h1 className="hero-title">
