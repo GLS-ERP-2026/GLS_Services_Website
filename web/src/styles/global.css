@@ -282,7 +282,7 @@ button { font-family: inherit; }
    so it stays put regardless of how tall the headline is. */
 .hero-badge-row {
   position: absolute;
-  top: 35px;
+  top: 20px;
   right: 24px;
   z-index: 1;
 }
@@ -303,7 +303,7 @@ button { font-family: inherit; }
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
 }
 
-.hero-inner { position: relative; z-index: 1; max-width: 850px; margin-left: 0; margin-right: auto; }
+.hero-inner { position: relative; z-index: 1; max-width: 1000px; margin-left: 0; margin-right: auto; }
 .hero-title {
   font-size: clamp(2.6rem, 5.6vw, 4.4rem);
   color: var(--white);
@@ -314,7 +314,7 @@ button { font-family: inherit; }
 .hero-sub {
   font-size: 1.15rem;
   color: var(--white);
-  max-width: 850px;
+  max-width: 1000px;
   margin-bottom: 36px;
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
 }
