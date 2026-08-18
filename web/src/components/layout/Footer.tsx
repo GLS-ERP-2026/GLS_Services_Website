@@ -5,7 +5,7 @@ import { asset } from '../../lib/paths';
 export function Footer() {
   return (
     <footer className="site-footer">
-      <div className="container footer-top">
+      <div className="footer-top">
         <div className="footer-grid">
           <div className="footer-about">
             <a href={asset('/index.html')} className="footer-logo">

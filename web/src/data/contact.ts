@@ -1,7 +1,7 @@
 export const contactInfo = {
   headOffice: {
     lines: ['GLS Services DMCC', 'Tiffany Towers, Room 508', 'Jumeirah Lakes Towers', 'Dubai, United Arab Emirates'],
-    short: 'GLS Services DMCC, Tiffany Towers, Room 508, Jumeirah Lakes Towers, Dubai, UAE',
+    short: 'GLS Services DMCC, Tiffany Towers, Jumeirah Lakes Towers, Dubai, UAE',
   },
   workshop: {
     lines: ['GLS Services FZE', 'LV-30-B, Hamriyah Free Zone, Phase II', 'Sharjah, United Arab Emirates'],
