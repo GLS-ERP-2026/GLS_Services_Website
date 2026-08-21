@@ -412,6 +412,16 @@ button { font-family: inherit; }
 .about-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.98rem; color: var(--ink-700); }
 .check-ico { flex: none; width: 22px; height: 22px; border-radius: 50%; background: rgba(235, 130, 47, 0.14); color: var(--accent-600); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; margin-top: 2px; }
 
+/* ---- World map ---- */
+.world-map-section { background: var(--sand-100); }
+.world-map { width: 100%; max-width: 980px; margin: 0 auto; }
+.world-map svg { width: 100%; height: auto; display: block; }
+.world-map-country { fill: var(--panel-light); stroke: var(--white); stroke-width: 0.75; outline: none; transition: fill 0.2s ease; }
+.world-map-country.is-active { fill: var(--accent-600); }
+.world-map-marker { fill: var(--accent-600); stroke: var(--white); stroke-width: 1.5; }
+.world-map-countries { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 32px 0 0; padding: 0; }
+.world-map-chip { font-size: 0.85rem; font-weight: 600; color: var(--accent-700); background: rgba(235, 130, 47, 0.1); border: 1px solid rgba(235, 130, 47, 0.25); border-radius: 999px; padding: 6px 16px; }
+
 /* ---- Cards / Grids ---- */
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }

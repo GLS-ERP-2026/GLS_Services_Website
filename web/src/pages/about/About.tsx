@@ -2,7 +2,9 @@ import { Layout } from '../../components/layout/Layout';
 import { PageBanner } from '../../components/layout/PageBanner';
 import { Reveal } from '../../components/ui/Reveal';
 import { ValueCard } from '../../components/ui/ValueCard';
+import { WorldMap } from '../../components/ui/WorldMap';
 import { aboutCoreValues } from '../../data/values';
+import { operatingCountries } from '../../data/operatingCountries';
 import { asset } from '../../lib/paths';
 
 export function About() {
@@ -42,6 +44,28 @@ export function About() {
               <strong>11</strong>
               <span>Countries of Operation</span>
             </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section world-map-section">
+        <div className="container">
+          <Reveal className="section-head center">
+            <span className="eyebrow">Global Footprint</span>
+            <h2 className="section-title">Where GLS Operates</h2>
+            <p className="section-sub">
+              Field-proven drilling equipment MRO experience across {operatingCountries.length} countries.
+            </p>
+          </Reveal>
+          <Reveal>
+            <WorldMap />
+            <ul className="world-map-countries">
+              {operatingCountries.map((country) => (
+                <li key={country.isoNumeric} className="world-map-chip">
+                  {country.name}
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </section>
