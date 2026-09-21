@@ -9,7 +9,7 @@ export const primaryNav: NavLink[] = [
 ];
 
 export const servicesNav: NavLink[] = [
-  { label: 'Drilling Equipment MRO', href: '/services/drilling-equipment-mro.html' },
+  { label: 'Drilling Equipment', href: '/services/drilling-equipment-mro.html' },
   { label: 'Jacking & Skidding', href: '/services/jacking-skidding.html' },
   { label: 'Cranes', href: '/services/cranes.html' },
   { label: 'Used Equipment Supply', href: '/services/used-equipment-supply.html' },
