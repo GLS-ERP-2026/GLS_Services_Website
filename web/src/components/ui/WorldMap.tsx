@@ -1,10 +1,12 @@
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
-import worldTopology from 'world-atlas/countries-50m.json';
+// 110m resolution, not 50m: at the ~940px rendered width the coastline detail is
+// indistinguishable, and it cuts ~650 kB off the page bundle.
+import worldTopology from 'world-atlas/countries-110m.json';
 import { operatingCountries, operatingCountryIds } from '../../data/operatingCountries';
 
 export function WorldMap() {
   return (
-    <div className="world-map">
+    <div className="world-map" role="img" aria-label={`Map highlighting the ${operatingCountries.length} countries GLS Services has worked in`}>
       <ComposableMap projection="geoNaturalEarth1" projectionConfig={{ scale: 165 }}>
         <Geographies geography={worldTopology}>
           {({ geographies }) =>

@@ -1,17 +1,91 @@
+/**
+ * Company values and the "why clients use GLS" points.
+ *
+ * Deliberately practical rather than abstract — each value states what it
+ * actually means for how work is carried out, not an aspiration.
+ */
 export interface CoreValue {
   title: string;
   description: string;
-  icon: 'shield' | 'target' | 'heart';
+  icon: 'shield' | 'target' | 'check' | 'gear';
 }
 
-export const homeCoreValues: CoreValue[] = [
-  { title: 'Integrity', description: 'Conducting business with honesty and fairness across every stakeholder relationship, on every project.', icon: 'shield' },
-  { title: 'Mindfulness', description: "Understanding and respecting each customer's operational needs, constraints and priorities.", icon: 'target' },
-  { title: 'Humility', description: 'Maintaining modesty and respect for all individuals we work with, at every level.', icon: 'heart' },
+export const coreValues: CoreValue[] = [
+  {
+    title: 'Safety',
+    description:
+      'Work is planned so that workshop and site activities are carried out under the health and safety management system, with the applicable controls in place before work starts.',
+    icon: 'shield',
+  },
+  {
+    title: 'Quality',
+    description:
+      'Repair decisions follow inspection findings rather than assumption, and the work is carried out against the applicable job requirements.',
+    icon: 'check',
+  },
+  {
+    title: 'Accountability',
+    description:
+      'Inspection, repair and testing activities are recorded, so what was found and what was done to the equipment can be traced after it leaves the workshop.',
+    icon: 'target',
+  },
+  {
+    title: 'Continuous Improvement',
+    description:
+      'Findings from completed jobs feed back into procedures and inspection practice, so recurring issues are addressed rather than repeated.',
+    icon: 'gear',
+  },
 ];
 
-export const aboutCoreValues: CoreValue[] = [
-  { title: 'Integrity', description: 'Conducting business with honesty and fairness across all stakeholder relationships, without exception.', icon: 'shield' },
-  { title: 'Mindfulness', description: "Understanding and respecting each customer's needs, constraints and operational realities.", icon: 'target' },
-  { title: 'Humility', description: 'Maintaining modesty and respect for all individuals we work alongside, at every level.', icon: 'heart' },
+/** Home page — four reasons clients engage GLS. Each says something different. */
+export interface ReasonPoint {
+  title: string;
+  description: string;
+}
+
+export const whyClientsUseGls: ReasonPoint[] = [
+  {
+    title: 'Technical Inspection',
+    description:
+      'Inspection is used to establish equipment condition before repair decisions are made, so scope and cost reflect the actual state of the equipment.',
+  },
+  {
+    title: 'Workshop Execution',
+    description:
+      'Equipment can move through inspection, repair, assembly and testing within a controlled workshop process where the scope allows.',
+  },
+  {
+    title: 'Documented Work',
+    description:
+      'Applicable inspection, dimensional, repair and testing records form part of the project documentation supplied with the equipment.',
+  },
+  {
+    title: 'Field Support',
+    description:
+      'Support is available for equipment and service requirements that need site-based execution, where applicable to the scope.',
+  },
+];
+
+/** Careers — what GLS looks for. */
+export const careerCriteria: ReasonPoint[] = [
+  {
+    title: 'Technical Knowledge',
+    description:
+      'Working understanding of the mechanical, hydraulic or electrical systems relevant to the equipment you would be assigned to.',
+  },
+  {
+    title: 'Safety Awareness',
+    description:
+      'Able to work to the applicable permit, isolation and lifting controls in a workshop or on a live site without being reminded.',
+  },
+  {
+    title: 'Attention to Detail',
+    description:
+      'Measurements, findings and repair activity recorded accurately, because the inspection record is what the repair decision rests on.',
+  },
+  {
+    title: 'Teamwork',
+    description:
+      'Comfortable handing work over between shifts, disciplines and workshop or field teams without losing information along the way.',
+  },
 ];
