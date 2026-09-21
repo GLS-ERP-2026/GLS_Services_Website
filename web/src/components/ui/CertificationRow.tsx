@@ -12,12 +12,15 @@ export function CertificationRow({
   size = 'sm',
   heading = 'Certifications',
   showIcon = true,
+  useFullName = false,
 }: {
   badges: CertificationBadge[];
   /** 'sm' for the strip under the hero, 'lg' for the Certifications section. */
   size?: 'sm' | 'lg';
   heading?: string;
   showIcon?: boolean;
+  /** Show the edition (ISO 45001:2018) rather than the short name (ISO 45001). */
+  useFullName?: boolean;
 }) {
   return (
     <div className={`cert-row cert-row--${size}`}>
@@ -26,17 +29,20 @@ export function CertificationRow({
         <span>{heading}</span>
       </p>
       <ul className="cert-row-list">
-        {badges.map((badge) => (
-          <li key={badge.name}>
-            {badge.image ? (
-              <img src={asset(badge.image)} alt={badge.name} className="cert-logo" />
-            ) : (
-              <span className="cert-slot" aria-label={badge.name}>
-                <span className="cert-slot-name">{badge.name}</span>
-              </span>
-            )}
-          </li>
-        ))}
+        {badges.map((badge) => {
+          const label = useFullName ? badge.fullName : badge.name;
+          return (
+            <li key={badge.name}>
+              {badge.image ? (
+                <img src={asset(badge.image)} alt={label} className="cert-logo" />
+              ) : (
+                <span className="cert-slot" aria-label={label}>
+                  <span className="cert-slot-name">{label}</span>
+                </span>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

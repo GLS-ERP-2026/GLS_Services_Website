@@ -2,7 +2,8 @@ import { Layout } from '../../components/layout/Layout';
 import { PageBanner } from '../../components/layout/PageBanner';
 import { Reveal } from '../../components/ui/Reveal';
 import { ValueCard } from '../../components/ui/ValueCard';
-import { isoCertifications, additionalAccreditation } from '../../data/certifications';
+import { CertificationRow } from '../../components/ui/CertificationRow';
+import { certificationBadges, additionalAccreditation } from '../../data/certifications';
 import { asset } from '../../lib/paths';
 
 export function Certifications() {
@@ -12,18 +13,27 @@ export function Certifications() {
         image="/assets/images/hero/banner-certifications.jpg"
         crumbs={[{ label: 'Home', href: '/index.html' }, { label: 'Certifications' }]}
         title="Certifications"
-        description="GLS Services is an ISO 9001-2015, ISO 14001-2015 and ISO 45001-2015 certified company providing various services to Oil & Gas drilling contractors."
+        description="GLS Services is an ISO 9001:2015, ISO 14001:2015, ISO 45001:2018 and API Q2 2nd Edition certified company providing services to oil & gas drilling contractors."
       />
 
       <section className="section">
         <div className="container">
           <Reveal className="section-head center">
             <span className="eyebrow">Quality, Environment &amp; Safety</span>
-            <h2 className="section-title">Our ISO Certifications</h2>
+            <h2 className="section-title">Our Certifications</h2>
+            <p className="section-sub">
+              Four certified management systems govern how work is planned, carried out and recorded.
+            </p>
           </Reveal>
-          <div className="grid-3">
-            {isoCertifications.map((cert) => (
-              <ValueCard key={cert.title} title={cert.title} description={cert.description} icon={cert.icon as 'check' | 'leaf' | 'shield'} centered />
+
+          {/* Same logo row as the home page, with editions rather than short names. */}
+          <Reveal>
+            <CertificationRow badges={certificationBadges} size="lg" showIcon={false} useFullName />
+          </Reveal>
+
+          <div className="grid-4" style={{ marginTop: 56 }}>
+            {certificationBadges.map((cert) => (
+              <ValueCard key={cert.name} title={cert.fullName} description={cert.description} icon={cert.icon} centered />
             ))}
           </div>
         </div>
@@ -34,7 +44,7 @@ export function Certifications() {
           <Reveal className="section-head center">
             <span className="eyebrow">Additional Accreditation</span>
             <h2 className="section-title">Independently Verified</h2>
-            <p className="section-sub">Alongside our ISO certifications, GLS Services holds the following accreditations.</p>
+            <p className="section-sub">Alongside our certifications, GLS Services holds the following accreditations.</p>
           </Reveal>
           <Reveal className="cert-strip">
             {additionalAccreditation.map((item) => (
