@@ -395,40 +395,62 @@ button { font-family: inherit; }
 .stat-icon { display: flex; justify-content: center; color: var(--accent-600); margin-bottom: 14px; }
 .stat-icon .svg-ico { width: 32px; height: 32px; stroke-width: 1.6; }
 
-/* ---- Certifications strip (under the home stats) ---- */
+/* ---- Certification logo row ----
+   Used twice: as the strip under the home stats (--sm) and in the home
+   Certifications section (--lg). A badge with no artwork yet renders a
+   reserved slot at the logo's aspect ratio, so the layout is already final. */
 .cert-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 14px 26px;
   margin-top: 44px;
   padding-top: 36px;
   border-top: 1px solid rgba(46, 36, 30, 0.13);
 }
-.cert-bar-label {
-  display: inline-flex;
+.cert-row { text-align: center; }
+.cert-row-heading {
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+  margin: 0 0 22px;
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--ink-500);
 }
-.cert-bar-label .svg-ico { width: 26px; height: 26px; stroke-width: 1.6; color: var(--accent-600); }
-.cert-bar-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.cert-bar-list li {
+.cert-row-heading .svg-ico { width: 24px; height: 24px; stroke-width: 1.6; color: var(--accent-600); }
+.cert-row-list { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px; }
+
+.cert-slot,
+.cert-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 92px;
+  padding: 10px 14px;
+}
+.cert-slot {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  text-align: center;
+}
+.cert-slot-name {
   font-family: var(--font-head);
   font-weight: 700;
   font-size: 0.95rem;
+  letter-spacing: 0.3px;
   color: var(--stone-900);
-  background: var(--sand-100);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  padding: 8px 16px;
-  white-space: nowrap;
 }
+.cert-logo { object-fit: contain; }
+
+.cert-row--lg .cert-slot,
+.cert-row--lg .cert-logo { width: 200px; height: 120px; }
+.cert-row--lg .cert-slot-name { font-size: 1.1rem; }
+.cert-row--lg .cert-row-heading { font-size: 0.85rem; margin-bottom: 28px; }
+
+/* Secondary accreditation, below the main certification row. */
+.cert-secondary { margin-top: 52px; padding-top: 40px; border-top: 1px solid var(--border); }
 
 /* ---- About split ---- */
 .about-split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
@@ -485,6 +507,101 @@ button { font-family: inherit; }
 .service-card-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; font-weight: 700; color: var(--accent-600); font-size: 0.92rem; letter-spacing: 0.3px; }
 .service-card-link .arrow { transition: transform 0.15s ease; }
 .service-card:hover .service-card-link .arrow { transform: translateX(4px); }
+
+/* ---- Expandable service cards (home "What We Do") ----
+   Two-stage motion. Stage one is sideways: the container animates
+   grid-template-columns off the `data-active` index, so the hovered card
+   widens while its neighbours compress. Stage two is downward: the detail
+   panel has its own transition carrying a delay, so it only drops open once
+   the widening has settled.
+
+   grid-template-columns is animatable in current Chrome, Safari and Firefox;
+   older engines snap between the two layouts instead, which degrades fine.
+   The sideways stage is desktop-only — narrower viewports get a plain
+   vertical expand (see the responsive block at the end of this file). */
+.service-expander { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (prefers-reduced-motion: no-preference) {
+  .service-expander { transition: grid-template-columns 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+}
+.service-expander[data-active='0'] { grid-template-columns: 2.35fr 0.55fr 0.55fr 0.55fr; }
+.service-expander[data-active='1'] { grid-template-columns: 0.55fr 2.35fr 0.55fr 0.55fr; }
+.service-expander[data-active='2'] { grid-template-columns: 0.55fr 0.55fr 2.35fr 0.55fr; }
+.service-expander[data-active='3'] { grid-template-columns: 0.55fr 0.55fr 0.55fr 2.35fr; }
+
+.service-exp-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition: box-shadow 0.3s ease;
+}
+.service-exp-card.is-active { box-shadow: var(--shadow-md); }
+.service-exp-media { height: 190px; flex: none; overflow: hidden; }
+.service-exp-media img { width: 100%; height: 100%; object-fit: cover; }
+.service-exp-body { padding: 24px 22px 26px; display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.service-exp-toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+.service-exp-toggle h3 { font-size: 1.25rem; margin: 0 0 10px; }
+.service-exp-blurb { color: var(--ink-500); font-size: 0.95rem; margin: 0; }
+
+/* Collapsible regions. The inner wrapper is what actually clips, which is what
+   makes the 0fr <-> 1fr row transition work. */
+.service-exp-summary { display: grid; grid-template-rows: 1fr; opacity: 1; }
+.service-exp-detail { display: grid; grid-template-rows: 0fr; opacity: 0; }
+.service-exp-collapse-inner { overflow: hidden; min-height: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .service-exp-summary,
+  .service-exp-detail { transition: grid-template-rows 0.35s ease, opacity 0.25s ease; }
+}
+/* Both carry the same delay, so the summary gives way to the detail in one
+   movement once the sideways stage has finished. */
+.service-exp-card.is-active .service-exp-summary {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition-delay: 0.3s;
+}
+.service-exp-card.is-active .service-exp-detail {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition-delay: 0.3s;
+}
+.service-exp-detail p {
+  margin: 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--ink-500);
+  font-size: 0.95rem;
+}
+.service-exp-detail .service-card-link { margin-top: 16px; }
+
+/* Compressed neighbours: supporting copy drops out and the title turns
+   vertical so each card stays identifiable at ~150px wide. */
+.service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-summary {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+.service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-body {
+  align-items: center;
+  padding: 24px 10px;
+}
+.service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-toggle { width: auto; }
+.service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-toggle h3 {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  font-size: 1.05rem;
+  margin: 0;
+}
 
 .value-card {
   background: var(--surface);
@@ -701,6 +818,29 @@ button { font-family: inherit; }
    ========================================================================== */
 @media (max-width: 1080px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  /* Four columns get too narrow to widen usefully here, so the sideways stage
+     is dropped and the cards simply expand downward. */
+  .service-expander,
+  .service-expander[data-active='0'],
+  .service-expander[data-active='1'],
+  .service-expander[data-active='2'],
+  .service-expander[data-active='3'] { grid-template-columns: repeat(2, 1fr); }
+  .service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-summary {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  .service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-body {
+    align-items: stretch;
+    padding: 24px 22px 26px;
+  }
+  .service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-toggle { width: 100%; }
+  .service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-toggle h3 {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 1.25rem;
+    margin: 0 0 10px;
+  }
+  .service-exp-card.is-active .service-exp-detail { transition-delay: 0s; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   /* Three stats stay 3-up here; two columns would leave an orphan. */
   .stat-grid { gap: 40px 24px; }
@@ -749,6 +889,14 @@ button { font-family: inherit; }
 
 @media (max-width: 640px) {
   .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .service-expander,
+  .service-expander[data-active='0'],
+  .service-expander[data-active='1'],
+  .service-expander[data-active='2'],
+  .service-expander[data-active='3'] { grid-template-columns: 1fr; }
+  .cert-slot, .cert-logo,
+  .cert-row--lg .cert-slot, .cert-row--lg .cert-logo { width: 140px; height: 84px; }
+  .cert-row--lg .cert-slot-name { font-size: 0.95rem; }
   .section { padding: 64px 0; }
   .stat-grid { grid-template-columns: 1fr; gap: 36px; }
   .cta-banner { padding: 40px 28px; }

@@ -22,8 +22,32 @@ export const additionalAccreditation = [
 ];
 
 /**
- * Certifications named in the home page credibility strip, below the hero.
- * Bare standard names (no edition years) by design — the strip is a quick
- * credibility scan, and the full detail lives on the Certifications page.
+ * Certifications shown as a logo row — in the credibility strip below the home
+ * hero and again, larger, in the home Certifications section.
+ *
+ * Bare standard names (no edition years) by design: a logo needs a short label,
+ * and the full detail belongs on the Certifications page.
+ *
+ * `image` is undefined until the real logo file is supplied. While it is unset
+ * the row renders a reserved slot at the logo's aspect ratio with the name in
+ * it, so the layout is final but no broken image can ever appear. To publish a
+ * logo, drop the file at the path below and set `image` — nothing else changes:
+ *
+ *   web/public/assets/images/certifications/iso-9001.png
+ *                                           iso-14001.png
+ *                                           iso-45001.png
+ *                                           api-q2.png
+ *
+ * Transparent PNG or SVG reads best on the light background.
  */
-export const homeCertifications = ['ISO 9001', 'ISO 14001', 'ISO 45001', 'API Q2'];
+export interface CertificationBadge {
+  name: string;
+  image?: string;
+}
+
+export const certificationBadges: CertificationBadge[] = [
+  { name: 'ISO 9001' },
+  { name: 'ISO 14001' },
+  { name: 'ISO 45001' },
+  { name: 'API Q2' },
+];

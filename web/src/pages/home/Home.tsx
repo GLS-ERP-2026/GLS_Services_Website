@@ -1,12 +1,12 @@
 import { Layout } from '../../components/layout/Layout';
 import { HeroSlideshow } from '../../components/home/HeroSlideshow';
 import { Reveal } from '../../components/ui/Reveal';
-import { ServiceCard } from '../../components/ui/ServiceCard';
+import { ServiceExpander } from '../../components/ui/ServiceExpander';
+import { CertificationRow } from '../../components/ui/CertificationRow';
 import { ValueCard } from '../../components/ui/ValueCard';
 import { StatCounter } from '../../components/ui/StatCounter';
-import { CertificateIcon } from '../../components/ui/icons';
 import { services } from '../../data/services';
-import { homeCertifications } from '../../data/certifications';
+import { certificationBadges, additionalAccreditation } from '../../data/certifications';
 import { homeCoreValues } from '../../data/values';
 import { asset } from '../../lib/paths';
 import { useScrollThreshold } from '../../hooks/useScrollThreshold';
@@ -56,15 +56,7 @@ export function Home() {
             <StatCounter target={24} suffix="-Hr" label="Average Response Time" icon="clock" />
           </div>
           <Reveal className="cert-bar">
-            <span className="cert-bar-label">
-              <CertificateIcon />
-              Certifications
-            </span>
-            <ul className="cert-bar-list">
-              {homeCertifications.map((name) => (
-                <li key={name}>{name}</li>
-              ))}
-            </ul>
+            <CertificationRow badges={certificationBadges} size="sm" />
           </Reveal>
         </div>
       </section>
@@ -80,11 +72,12 @@ export function Home() {
           </Reveal>
           <Reveal>
             <span className="eyebrow">Who We Are</span>
-            <h2 className="section-title">Trusted MRO Partner for Oil &amp; Gas Drilling Contractors</h2>
+            <h2 className="section-title">Trusted MRO Partner for Drilling Contractors</h2>
             <p className="section-sub">
-              GLS Services is an ISO 9001-2015, ISO 14001-2015 and ISO 45001-2015 certified company providing an
-              end-to-end service solution for the maintenance and upkeep of drilling equipment &mdash; combining
-              modern technologies with a genuinely solution-oriented approach.
+              GLS Services provides servicing and technical support for drilling equipment across the oil &amp; gas
+              industry. From inspection and maintenance through to repair and overhaul, our work is focused on
+              equipment reliability and long-term performance. Operations are supported by ISO 9001, ISO 14001, ISO
+              45001 and API Q2 (2nd Edition) certifications.
             </p>
             <ul className="about-list">
               <li>
@@ -97,7 +90,7 @@ export function Home() {
                 <span className="check-ico">&#10003;</span> Experienced, trained field technicians
               </li>
               <li>
-                <span className="check-ico">&#10003;</span> Operations spanning 11 countries worldwide
+                <span className="check-ico">&#10003;</span> Operations spanning 17 countries worldwide
               </li>
             </ul>
             <div className="hero-actions" style={{ marginTop: 32 }}>
@@ -119,11 +112,7 @@ export function Home() {
               equipment to crane certification and used equipment sourcing.
             </p>
           </Reveal>
-          <div className="grid-4">
-            {services.map((service) => (
-              <ServiceCard key={service.slug} service={service} />
-            ))}
-          </div>
+          <ServiceExpander services={services} />
         </div>
       </section>
 
@@ -151,26 +140,22 @@ export function Home() {
               and overhaul.
             </p>
           </Reveal>
-          <Reveal className="cert-strip">
-            <div className="iso-badges">
-              <span className="iso-badge">ISO 9001:2015</span>
-              <span className="iso-badge">ISO 14001:2015</span>
-              <span className="iso-badge">ISO 45001:2015</span>
-            </div>
-            <div className="cert-item">
-              <img src={asset('/assets/images/certifications/badge-anab.svg')} alt="ANAB Certified" />
-              <span>ANAB Certified</span>
-            </div>
-            <div className="cert-item">
-              <img src={asset('/assets/images/certifications/badge-ct.svg')} alt="CT Certified" />
-              <span>CT Certified</span>
+          <Reveal>
+            <CertificationRow badges={certificationBadges} size="lg" showIcon={false} />
+          </Reveal>
+          <Reveal className="cert-secondary">
+            <p className="cert-row-heading">
+              <span>Additional Accreditation</span>
+            </p>
+            <div className="cert-strip">
+              {additionalAccreditation.map((item) => (
+                <div className="cert-item" key={item.name}>
+                  <img src={asset(item.badge)} alt={item.name} />
+                  <span>{item.name}</span>
+                </div>
+              ))}
             </div>
           </Reveal>
-          <div className="text-center" style={{ marginTop: 32 }}>
-            <a href={asset('/certifications.html')} className="btn btn-dark">
-              View All Certifications
-            </a>
-          </div>
         </div>
       </section>
 
