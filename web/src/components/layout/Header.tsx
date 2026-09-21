@@ -107,7 +107,7 @@ export function Header({ variant = 'default' }: HeaderProps) {
         </nav>
         <div className="nav-cta" aria-hidden={isConcealed || undefined}>
           <a href={asset('/contact.html')} className="btn btn-primary" tabIndex={concealedTabIndex}>
-            Get a Quote
+            Request a Quote
           </a>
           <button
             className="nav-toggle"

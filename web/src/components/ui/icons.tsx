@@ -48,10 +48,38 @@ export function ClockIcon() {
   );
 }
 
+/* Note: `.svg-ico` sets `stroke: currentColor` in CSS, which overrides the
+   `stroke="#fff"` presentation attribute on the older icons above — so every
+   icon already takes its colour from the surrounding `color`. New icons leave
+   the attribute off rather than carry it as dead weight. */
+
 export function GlobeIcon() {
   return (
-    <svg className="svg-ico" viewBox="0 0 24 24" stroke="#fff">
-      <path d="M3 12h18M12 3v18" />
+    <svg className="svg-ico" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" />
+      <path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3Z" />
+    </svg>
+  );
+}
+
+/** Works/plant silhouette — used for the equipment-serviced figure. */
+export function FactoryIcon() {
+  return (
+    <svg className="svg-ico" viewBox="0 0 24 24">
+      <path d="M3 21V10l6 3.5V10l6 3.5V6l6 3.5V21H3z" />
+      <path d="M7 17.5h2M13 17.5h2" />
+    </svg>
+  );
+}
+
+/** Certificate document with a seal and ribbon. */
+export function CertificateIcon() {
+  return (
+    <svg className="svg-ico" viewBox="0 0 24 24">
+      <path d="M19 11.5V5.5A1.5 1.5 0 0 0 17.5 4h-11A1.5 1.5 0 0 0 5 5.5v13A1.5 1.5 0 0 0 6.5 20H12" />
+      <path d="M8.5 8.5h8M8.5 12h5" />
+      <circle cx="17" cy="16" r="2.8" />
+      <path d="m15.3 18.3-.8 3.4 2.5-1.3 2.5 1.3-.8-3.4" />
     </svg>
   );
 }
@@ -84,4 +112,8 @@ export const iconMap = {
   globe: GlobeIcon,
   crate: CrateIcon,
   gear: GearIcon,
+  factory: FactoryIcon,
+  certificate: CertificateIcon,
 };
+
+export type IconName = keyof typeof iconMap;

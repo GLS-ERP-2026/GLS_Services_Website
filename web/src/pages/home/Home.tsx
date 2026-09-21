@@ -4,7 +4,9 @@ import { Reveal } from '../../components/ui/Reveal';
 import { ServiceCard } from '../../components/ui/ServiceCard';
 import { ValueCard } from '../../components/ui/ValueCard';
 import { StatCounter } from '../../components/ui/StatCounter';
+import { CertificateIcon } from '../../components/ui/icons';
 import { services } from '../../data/services';
+import { homeCertifications } from '../../data/certifications';
 import { homeCoreValues } from '../../data/values';
 import { asset } from '../../lib/paths';
 import { useScrollThreshold } from '../../hooks/useScrollThreshold';
@@ -28,13 +30,12 @@ export function Home() {
             A Comprehensive Solution for Your <em>Drilling Equipment</em> Requirements
           </h1>
           <p className="hero-sub">
-            GLS Services delivers end-to-end inspection, maintenance, repair &amp; overhaul solutions for drilling
-            equipment &mdash; backed by API-compliant procedures, experienced field technicians, and a track record
-            across 11 countries.
+            GLS Services supports drilling contractors with inspection, maintenance, repair, overhaul, jacking &amp;
+            skidding, crane services, and used equipment supply across multiple operating regions.
           </p>
           <div className={`hero-actions${showHeroActions ? '' : ' is-concealed'}`}>
             <a href={asset('/contact.html')} className="btn btn-primary" tabIndex={showHeroActions ? undefined : -1}>
-              Get a Quote
+              Request a Quote
             </a>
             <a
               href={asset('/services.html')}
@@ -48,11 +49,23 @@ export function Home() {
       </section>
 
       <section className="stats-bar section-sm">
-        <div className="container stat-grid">
-          <StatCounter target={11} suffix="+" label="Countries Served" />
-          <StatCounter target={200} suffix="+" label="Rigs Overhauled" />
-          <StatCounter target={3} label="ISO Certifications" />
-          <StatCounter target={24} suffix="-Hr" label="Average Response Time" />
+        <div className="container">
+          <div className="stat-grid">
+            <StatCounter target={17} suffix="+" label="Countries Served" icon="globe" />
+            <StatCounter target={200} suffix="+" label="Equipment Serviced & Inspected" icon="factory" />
+            <StatCounter target={24} suffix="-Hr" label="Average Response Time" icon="clock" />
+          </div>
+          <Reveal className="cert-bar">
+            <span className="cert-bar-label">
+              <CertificateIcon />
+              Certifications
+            </span>
+            <ul className="cert-bar-list">
+              {homeCertifications.map((name) => (
+                <li key={name}>{name}</li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
       </section>
 

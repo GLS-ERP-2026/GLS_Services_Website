@@ -384,12 +384,51 @@ button { font-family: inherit; }
 .stats-bar { background: var(--panel-light); color: var(--stone-900); }
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px;
   text-align: center;
 }
 .stat-number { font-family: var(--font-head); font-size: clamp(2.2rem, 4vw, 3rem); font-weight: 700; color: var(--accent-600); display: flex; align-items: baseline; justify-content: center; gap: 4px; }
 .stat-label { color: var(--ink-500); font-size: 0.92rem; margin-top: 6px; letter-spacing: 0.3px; }
+/* Line icon above each figure. `.svg-ico` already inherits `currentColor`, so
+   the accent colour is set here rather than on the icon components. */
+.stat-icon { display: flex; justify-content: center; color: var(--accent-600); margin-bottom: 14px; }
+.stat-icon .svg-ico { width: 32px; height: 32px; stroke-width: 1.6; }
+
+/* ---- Certifications strip (under the home stats) ---- */
+.cert-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px 26px;
+  margin-top: 44px;
+  padding-top: 36px;
+  border-top: 1px solid rgba(46, 36, 30, 0.13);
+}
+.cert-bar-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink-500);
+}
+.cert-bar-label .svg-ico { width: 26px; height: 26px; stroke-width: 1.6; color: var(--accent-600); }
+.cert-bar-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.cert-bar-list li {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--stone-900);
+  background: var(--sand-100);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  white-space: nowrap;
+}
 
 /* ---- About split ---- */
 .about-split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
@@ -663,7 +702,8 @@ button { font-family: inherit; }
 @media (max-width: 1080px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 24px; }
+  /* Three stats stay 3-up here; two columns would leave an orphan. */
+  .stat-grid { gap: 40px 24px; }
   .mini-gallery { grid-template-columns: repeat(3, 1fr); }
 }
 
@@ -710,7 +750,7 @@ button { font-family: inherit; }
 @media (max-width: 640px) {
   .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .section { padding: 64px 0; }
-  .stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-grid { grid-template-columns: 1fr; gap: 36px; }
   .cta-banner { padding: 40px 28px; }
   .footer-grid { grid-template-columns: 1fr; gap: 36px; }
   .about-badge { position: static; margin-top: -40px; margin-left: 24px; display: inline-block; }
