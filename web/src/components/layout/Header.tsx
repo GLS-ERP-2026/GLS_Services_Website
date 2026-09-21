@@ -1,163 +1,125 @@
-import { useEffect, useState, type MouseEvent } from 'react';
+import { useState, type MouseEvent } from 'react';
 import { useHeaderScroll } from '../../hooks/useHeaderScroll';
+import { useHeroHalfHeight } from '../../hooks/useHeroHalfHeight';
 import { useScrollThreshold } from '../../hooks/useScrollThreshold';
-import { primaryNav, servicesNav } from '../../data/nav';
-import { contactInfo } from '../../data/contact';
+import { primaryNav, secondaryNav, servicesNav } from '../../data/nav';
 import { asset, currentPagePath } from '../../lib/paths';
-import { CaretDownIcon, MailIcon, PhoneIcon } from '../ui/icons';
 
-/** Scroll distance over which the transparent hero header solidifies. */
-const HERO_SOLIDIFY_RANGE_PX = 140;
-/** Scroll distance over which an interior page header is considered "scrolled". */
-const SCROLLED_THRESHOLD_PX = 8;
+/** Fallback reveal threshold for the home hero header, used only before the
+ * hero has been measured (see useHeroHalfHeight) — otherwise the reveal is
+ * tied to half the hero's actual rendered height. */
+const HOME_HERO_REVEAL_THRESHOLD_PX = 4;
 
 interface HeaderProps {
-  /** 'over-hero' starts the bar transparent above the home hero photo and fades
-   * the solid charcoal in on scroll. The navigation itself is always visible. */
-  variant?: 'default' | 'over-hero';
+  /** 'home-hero' hides everything but the logo until the visitor scrolls
+   * past the top of the page, so the hero slideshow shows through unobstructed. */
+  variant?: 'default' | 'home-hero';
 }
 
 export function Header({ variant = 'default' }: HeaderProps) {
-  const isOverHero = variant === 'over-hero';
-  const headerRef = useHeaderScroll<HTMLElement>(HERO_SOLIDIFY_RANGE_PX);
+  const isHomeHero = variant === 'home-hero';
+  const heroHalfHeight = useHeroHalfHeight();
+  const revealThresholdPx = isHomeHero && heroHalfHeight ? heroHalfHeight : HOME_HERO_REVEAL_THRESHOLD_PX;
+  const gradientRangePx = isHomeHero && heroHalfHeight ? heroHalfHeight : undefined;
+  const headerRef = useHeaderScroll<HTMLElement>(gradientRangePx);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const isScrolled = useScrollThreshold(SCROLLED_THRESHOLD_PX);
   const currentPath = currentPagePath();
+  const isPastTop = useScrollThreshold(revealThresholdPx);
 
-  // Stop the page scrolling behind the full-screen mobile panel.
-  useEffect(() => {
-    if (!isMenuOpen) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = previous;
-    };
-  }, [isMenuOpen]);
+  const isConcealed = isHomeHero && !isPastTop;
+
+  function isActive(href: string) {
+    return currentPath === href;
+  }
+
+  function handleServicesLinkClick(e: MouseEvent<HTMLAnchorElement>) {
+    if (window.innerWidth <= 900) {
+      e.preventDefault();
+      setIsServicesOpen((open) => !open);
+    }
+  }
 
   const servicesActive = currentPath === '/services.html' || currentPath.startsWith('/services/');
-  const isActive = (href: string) => currentPath === href;
-
-  function toggleServices(e: MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-    setIsServicesOpen((open) => !open);
-  }
+  const concealedTabIndex = isConcealed ? -1 : undefined;
 
   return (
     <header
       ref={headerRef}
       className={[
         'site-header',
-        isOverHero ? 'site-header--over-hero' : '',
-        isScrolled ? 'is-scrolled' : '',
+        isHomeHero ? 'site-header--home-hero' : '',
+        isPastTop ? 'is-past-top' : '',
         isMenuOpen ? 'is-open' : '',
       ]
         .filter(Boolean)
         .join(' ')}
     >
       <div className="nav-inner">
-        <a href={asset('/index.html')} className="nav-logo" aria-label="GLS Services — home">
-          <img src={asset('/assets/images/logo/gls-logo-full.png')} alt="GLS Services" />
+        <a href={asset('/index.html')} className="nav-logo">
+          <img src={asset('/assets/images/logo/gls-logo-full.png')} alt="GLS Services" className="logo-full" />
+          <img src={asset('/assets/images/logo/gls-logo-mark.png')} alt="GLS Services" className="logo-mark" />
         </a>
-
-        <nav aria-label="Primary" className="nav-primary">
+        <nav aria-label="Primary" className="nav-primary" aria-hidden={isConcealed || undefined}>
           <ul className="nav-links">
-            <li className="has-dropdown">
+            {primaryNav.map((link) => (
+              <li key={link.href}>
+                <a
+                  className={`nav-link${isActive(link.href) ? ' is-active' : ''}`}
+                  href={asset(link.href)}
+                  tabIndex={concealedTabIndex}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li className={`has-dropdown${isServicesOpen ? ' is-open' : ''}`}>
               <a
                 className={`nav-link${servicesActive ? ' is-active' : ''}`}
                 href={asset('/services.html')}
-                aria-haspopup="true"
+                onClick={handleServicesLinkClick}
+                tabIndex={concealedTabIndex}
               >
-                Capabilities
-                <CaretDownIcon className="nav-caret" />
+                Services
               </a>
               <ul className="nav-dropdown">
                 {servicesNav.map((link) => (
                   <li key={link.href}>
-                    <a href={asset(link.href)}>{link.label}</a>
+                    <a href={asset(link.href)} tabIndex={concealedTabIndex}>
+                      {link.label}
+                    </a>
                   </li>
                 ))}
               </ul>
             </li>
-            {primaryNav
-              .filter((link) => link.label !== 'Capabilities')
-              .map((link) => (
-                <li key={link.href}>
-                  <a className={`nav-link${isActive(link.href) ? ' is-active' : ''}`} href={asset(link.href)}>
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+            {secondaryNav.map((link) => (
+              <li key={link.href}>
+                <a
+                  className={`nav-link${isActive(link.href) ? ' is-active' : ''}`}
+                  href={asset(link.href)}
+                  tabIndex={concealedTabIndex}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </nav>
-
-        <div className="nav-cta">
-          <a href={asset('/contact.html#rfq')} className="btn btn-primary btn-sm">
-            Request a Technical Quote
+        <div className="nav-cta" aria-hidden={isConcealed || undefined}>
+          <a href={asset('/contact.html')} className="btn btn-primary" tabIndex={concealedTabIndex}>
+            Get a Quote
           </a>
           <button
             className="nav-toggle"
-            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-label="Toggle menu"
             aria-expanded={isMenuOpen}
             onClick={() => setIsMenuOpen((open) => !open)}
+            tabIndex={concealedTabIndex}
           >
             <span></span>
             <span></span>
             <span></span>
           </button>
-        </div>
-      </div>
-
-      <div className="mobile-panel" id="mobile-menu">
-        <div className="mobile-link-row">
-          <a href={asset('/services.html')} className={`mobile-link${servicesActive ? ' is-active' : ''}`}>
-            Capabilities
-          </a>
-          <button
-            type="button"
-            className="mobile-expand"
-            onClick={toggleServices}
-            aria-expanded={isServicesOpen}
-            aria-controls="mobile-capabilities"
-            aria-label="Show capability pages"
-          >
-            <CaretDownIcon className={isServicesOpen ? 'is-open' : undefined} />
-          </button>
-        </div>
-        {isServicesOpen && (
-          <div id="mobile-capabilities">
-            {servicesNav.map((link) => (
-              <a key={link.href} href={asset(link.href)} className="mobile-sublink">
-                {link.label}
-              </a>
-            ))}
-          </div>
-        )}
-        {primaryNav
-          .filter((link) => link.label !== 'Capabilities')
-          .map((link) => (
-            <a
-              key={link.href}
-              href={asset(link.href)}
-              className={`mobile-link${isActive(link.href) ? ' is-active' : ''}`}
-            >
-              {link.label}
-            </a>
-          ))}
-
-        <a href={asset('/contact.html#rfq')} className="btn btn-primary btn-block">
-          Request a Technical Quote
-        </a>
-
-        <div className="mobile-contact">
-          <a href={`mailto:${contactInfo.emails[0]}`}>
-            <MailIcon />
-            {contactInfo.emails[0]}
-          </a>
-          <a href={contactInfo.phoneHref}>
-            <PhoneIcon />
-            {contactInfo.phone}
-          </a>
         </div>
       </div>
     </header>

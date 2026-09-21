@@ -16,8 +16,6 @@ export default defineConfig({
         home: resolve(__dirname, 'index.html'),
         about: resolve(__dirname, 'about.html'),
         services: resolve(__dirname, 'services.html'),
-        equipment: resolve(__dirname, 'equipment.html'),
-        projects: resolve(__dirname, 'projects.html'),
         servicesCranes: resolve(__dirname, 'services/cranes.html'),
         servicesDrillingMro: resolve(__dirname, 'services/drilling-equipment-mro.html'),
         servicesJackingSkidding: resolve(__dirname, 'services/jacking-skidding.html'),

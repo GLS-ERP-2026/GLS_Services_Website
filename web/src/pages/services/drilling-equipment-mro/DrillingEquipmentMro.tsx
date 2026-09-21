@@ -1,250 +1,159 @@
 import { Layout } from '../../../components/layout/Layout';
-import { PageHeader } from '../../../components/layout/PageHeader';
+import { PageBanner } from '../../../components/layout/PageBanner';
 import { Reveal } from '../../../components/ui/Reveal';
-import { SectionHead } from '../../../components/ui/SectionHead';
-import { EquipmentRow } from '../../../components/ui/EquipmentCard';
-import { CheckList } from '../../../components/ui/CheckList';
-import { CapabilityTable } from '../../../components/ui/CapabilityTable';
-import { ProcessTimeline } from '../../../components/ui/ProcessTimeline';
-import { DocumentGrid } from '../../../components/ui/DocumentCard';
-import { ValueBlock } from '../../../components/ui/ValueBlock';
-import { ProjectCard, ProjectsPending } from '../../../components/ui/ProjectCard';
 import { RelatedServices } from '../../../components/ui/RelatedServices';
-import { TechnicalCTA } from '../../../components/ui/TechnicalCTA';
-import { equipmentForService } from '../../../data/equipment';
-import { mroProcess } from '../../../data/process';
-import { projectDocuments } from '../../../data/certifications';
-import { projectsForService } from '../../../data/projects';
 import { asset } from '../../../lib/paths';
 
-const mroEquipment = equipmentForService('drilling-equipment-mro');
-const mroProjects = projectsForService('drilling-equipment-mro');
-
-const scopeLeft = [
-  'Equipment receipt and identification',
-  'Disassembly',
-  'Cleaning',
-  'Visual inspection',
-  'Dimensional inspection',
-];
-
-const scopeRight = [
-  'Repair and remedial work',
-  'Component replacement',
-  'Refurbishment',
-  'Assembly',
-  'Testing within the agreed scope',
-  'Preservation and packaging',
-];
-
-const inspectionTypes = [
-  {
-    title: 'Visual Inspection',
-    icon: 'eye' as const,
-    description:
-      'Wear, damage, pitting, scoring and general condition are recorded across the assembly and its components before any repair decision is made.',
-  },
-  {
-    title: 'Dimensional Inspection',
-    icon: 'ruler' as const,
-    description:
-      'Critical measurements are taken and verified against the applicable tolerances, so component condition is established against a requirement rather than by judgement.',
-  },
-  {
-    title: 'Category Inspection',
-    icon: 'clipboard' as const,
-    description:
-      'CAT III and CAT IV inspection is carried out where the equipment and project requirements call for it, including mud pumps, rotary tables, iron roughnecks and hoisting assemblies.',
-  },
+const gallery = [
+  { src: '/assets/images/services/crown-block.jpg', label: 'Crown Block' },
+  { src: '/assets/images/services/travelling-block.jpg', label: 'Travelling Block' },
+  { src: '/assets/images/services/rotary-table.jpg', label: 'Rotary Table' },
+  { src: '/assets/images/services/iron-roughneck.jpg', label: 'Iron Roughneck' },
+  { src: '/assets/images/services/casing-stabbing-board.jpg', label: 'Casing Stabbing Board' },
 ];
 
 export function DrillingEquipmentMro() {
   return (
     <Layout>
-      <PageHeader
+      <PageBanner
         image="/assets/images/hero/banner-mro.jpg"
         crumbs={[
           { label: 'Home', href: '/index.html' },
-          { label: 'Capabilities', href: '/services.html' },
+          { label: 'Services', href: '/services.html' },
           { label: 'Drilling Equipment MRO' },
         ]}
-        eyebrow="Drilling Equipment MRO"
-        title="Inspection, Repair & Overhaul of Drilling Equipment"
-        description="GLS supports the inspection, repair, overhaul, assembly and testing of drilling and rig equipment within the defined project scope."
-        actions={
-          <>
-            <a href={asset('/contact.html#rfq')} className="btn btn-primary">
-              Request a Technical Quote
-            </a>
-            <a href="#equipment" className="btn btn-outline-light">
-              View Equipment
-            </a>
-          </>
-        }
+        title="Drilling Equipment MRO"
+        description="Inspection, repair & overhaul for the equipment that keeps your rig running — delivered under ISO 9001, 14001 & 45001 certified processes."
       />
 
-      {/* ---- Equipment coverage ---- */}
-      <section className="section" id="equipment">
-        <div className="container">
-          <SectionHead
-            eyebrow="Equipment Coverage"
-            title="Equipment We Support"
-            description="Each equipment group carries its own inspection category and scope of work."
-          />
-          <div className="equip-rows">
-            {mroEquipment.map((item) => (
-              <EquipmentRow key={item.slug} item={item} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---- MRO scope ---- */}
-      <section className="section section-muted">
-        <div className="container">
-          <SectionHead
-            eyebrow="Scope of Work"
-            title="Our MRO Scope"
-            description="The activities below make up a full MRO scope. A given job may use all of them or a defined subset, depending on the equipment and the requirement."
-          />
-          <Reveal className="check-cols">
-            <CheckList items={scopeLeft} />
-            <CheckList items={scopeRight} />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ---- Inspection ---- */}
-      <section className="section" id="inspection">
-        <div className="container">
-          <SectionHead
-            eyebrow="Inspection"
-            title="Inspection & Condition Assessment"
-            description="Inspection comes first, because it is what the repair scope is built from."
-          />
-          <div className="grid-3">
-            {inspectionTypes.map((item) => (
-              <ValueBlock key={item.title} title={item.title} description={item.description} icon={item.icon} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ---- Capability matrix ---- */}
-      <section className="section section-muted">
-        <div className="container">
-          <SectionHead
-            eyebrow="Service Capability"
-            title="Scope by Equipment Type"
-            description="Published MRO scope for each supported equipment group."
-          />
-          <Reveal>
-            <CapabilityTable items={mroEquipment} caption="MRO service capability by equipment type" />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ---- Repair & testing ---- */}
-      <section className="section">
-        <div className="container split split--top">
-          <Reveal>
-            <span className="eyebrow eyebrow--ruled">Repair</span>
-            <h2>Repair &amp; Remedial Work</h2>
-            <p>
-              Repair scope follows the inspection record. Components are repaired, refurbished or replaced according
-              to what the inspection established and what the job scope allows, rather than replaced by default.
-            </p>
-            <div style={{ marginTop: 20 }}>
-              <CheckList
-                items={[
-                  'Component repair and corrective work',
-                  'Component replacement where repair is not viable',
-                  'Refurbishment of assemblies and sub-assemblies',
-                  'Reassembly to the applicable job requirements',
-                ]}
-              />
-            </div>
-          </Reveal>
-          <Reveal>
-            <span className="eyebrow eyebrow--ruled">Testing</span>
-            <h2>Assembly &amp; Testing</h2>
-            <p>
-              Once reassembled, applicable functional or performance testing is carried out according to the agreed
-              scope for that equipment. Testing is not a blanket capability &mdash; what is performed depends on the
-              equipment and the project requirement.
-            </p>
-            <div style={{ marginTop: 20 }}>
-              <CheckList
-                items={[
-                  'Reassembly against the applicable job requirements',
-                  'Applicable functional testing within scope',
-                  'In-house PLC, VFD and software test capability for top drives',
-                  'Preservation and packaging before dispatch',
-                ]}
-              />
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ---- Process ---- */}
-      <section className="section section-dark">
-        <div className="container">
-          <SectionHead
-            eyebrow="Workshop Process"
-            title="From Receipt to Dispatch"
-            description="The sequence equipment follows through the workshop, with the scope at each stage set by the job requirements and the previous stage's findings."
-            onDark
-          />
-          <ProcessTimeline steps={mroProcess} />
-        </div>
-      </section>
-
-      {/* ---- Documentation ---- */}
       <section className="section">
         <div className="container">
-          <SectionHead
-            eyebrow="Project Documentation"
-            title="What You Receive"
-            description="The records applicable to the scope are compiled and issued with the equipment. Which of these apply depends on the job."
-          />
-          <DocumentGrid documents={projectDocuments} />
-        </div>
-      </section>
+          <Reveal className="subservice">
+            <div className="subservice-media">
+              <img src={asset('/assets/images/services/drawworks.jpg')} alt="Drawworks MRO" />
+            </div>
+            <div className="subservice-copy">
+              <span className="eyebrow">Drawworks</span>
+              <h3>Inspection, Repair &amp; Overhaul</h3>
+              <p>
+                Full inspection, repair and overhaul services for drawworks, alongside dedicated maintenance and
+                troubleshooting support to keep hoisting systems reliable.
+              </p>
+              <ul>
+                <li>
+                  <span className="check-ico">&#10003;</span> Inspection, Repair &amp; Overhaul
+                </li>
+                <li>
+                  <span className="check-ico">&#10003;</span> Maintenance &amp; Troubleshooting
+                </li>
+              </ul>
+            </div>
+          </Reveal>
 
-      {/* ---- Projects ---- */}
-      <section className="section section-muted">
-        <div className="container">
-          <SectionHead
-            eyebrow="Project Experience"
-            title="Related MRO Projects"
-            description="Equipment-specific references covering scope of work, inspection findings and the documentation issued."
-          />
-          {mroProjects.length > 0 ? (
-            <div className="project-grid">
-              {mroProjects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
+          <Reveal className="subservice">
+            <div className="subservice-media dual-media">
+              <img src={asset('/assets/images/services/mud-pump-1.jpg')} alt="Mud pump" />
+              <img src={asset('/assets/images/services/mud-pump-2.jpg')} alt="Mud pump installed on a rig" />
+            </div>
+            <div className="subservice-copy">
+              <span className="eyebrow">Mud Pumps</span>
+              <h3>CAT III &amp; CAT IV Inspection, Refurbishment &amp; Overhaul</h3>
+              <p>
+                Comprehensive mud pump services spanning inspection through complete refurbishment, backed by CAT III
+                and CAT IV inspection capability.
+              </p>
+              <ul>
+                <li>
+                  <span className="check-ico">&#10003;</span> Inspection, Repair &amp; Overhaul
+                </li>
+                <li>
+                  <span className="check-ico">&#10003;</span> Maintenance &amp; Troubleshooting
+                </li>
+                <li>
+                  <span className="check-ico">&#10003;</span> CAT III &amp; CAT IV inspection
+                </li>
+                <li>
+                  <span className="check-ico">&#10003;</span> Complete refurbishment and overhaul
+                </li>
+              </ul>
+            </div>
+          </Reveal>
+
+          <Reveal className="subservice">
+            <div className="subservice-media">
+              <img src={asset('/assets/images/services/top-drive.jpg')} alt="Top Drives MRO" />
+            </div>
+            <div className="subservice-copy">
+              <span className="eyebrow">Top Drives</span>
+              <h3>CAT III Inspection with In-House PLC &amp; VFD Testing</h3>
+              <p>
+                CAT III and condition inspection for top drives, with mechanical and electrical troubleshooting
+                supported by in-house PLC, VFD and software test capabilities.
+              </p>
+              <ul>
+                <li>
+                  <span className="check-ico">&#10003;</span> CAT III inspection and condition inspection
+                </li>
+                <li>
+                  <span className="check-ico">&#10003;</span> Mechanical &amp; Electrical troubleshooting
+                </li>
+                <li>
+                  <span className="check-ico">&#10003;</span> In-house PLC, VFD and software test capabilities
+                </li>
+                <li>
+                  <span className="check-ico">&#10003;</span> Assistance with overhaul
+                </li>
+              </ul>
+            </div>
+          </Reveal>
+
+          <Reveal className="subservice-full">
+            <div className="subservice-copy">
+              <span className="eyebrow">Rig Floor Equipment</span>
+              <h3>Crown Block, Travelling Block, Rotary Table, Iron Roughneck &amp; Casing Stabbing Board</h3>
+              <p>
+                Consistent CAT III &amp; CAT IV inspection, refurbishment, overhaul, installation and removal
+                services across this equipment group.
+              </p>
+              <ul>
+                <li>
+                  <span className="check-ico">&#10003;</span> CAT III &amp; CAT IV inspection
+                </li>
+                <li>
+                  <span className="check-ico">&#10003;</span> Refurbishment and Overhaul
+                </li>
+                <li>
+                  <span className="check-ico">&#10003;</span> Installation &amp; Removal
+                </li>
+              </ul>
+            </div>
+            <div className="mini-gallery">
+              {gallery.map((item) => (
+                <figure key={item.src}>
+                  <img src={asset(item.src)} alt={item.label} />
+                  <figcaption>{item.label}</figcaption>
+                </figure>
               ))}
             </div>
-          ) : (
-            <ProjectsPending
-              action={
-                <a href={asset('/contact.html#rfq')} className="btn btn-primary btn-sm">
-                  Request Project References
-                </a>
-              }
-            />
-          )}
+          </Reveal>
         </div>
       </section>
 
       <RelatedServices excludeSlug="drilling-equipment-mro" />
 
-      <TechnicalCTA
-        eyebrow="Next Step"
-        title="Need an Equipment Evaluation?"
-        description="Send us the equipment make, model and serial number along with the scope of work, and our team will review the requirement and respond with the appropriate service approach."
-      />
+      <section className="section">
+        <div className="container">
+          <Reveal className="cta-banner">
+            <div>
+              <h2>Have Equipment That Needs MRO?</h2>
+              <p>Send us your equipment details and requirements &mdash; we'll get back to you within 24 hours.</p>
+            </div>
+            <a href={asset('/contact.html')} className="btn btn-primary">
+              Request a Quote
+            </a>
+          </Reveal>
+        </div>
+      </section>
     </Layout>
   );
 }

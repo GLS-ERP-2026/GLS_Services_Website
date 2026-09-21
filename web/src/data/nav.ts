@@ -3,37 +3,28 @@ export interface NavLink {
   href: string;
 }
 
-/** Primary desktop navigation, left to right. Capabilities carries the services dropdown. */
 export const primaryNav: NavLink[] = [
-  { label: 'Company', href: '/about.html' },
-  { label: 'Capabilities', href: '/services.html' },
-  { label: 'Equipment', href: '/equipment.html' },
-  { label: 'Projects', href: '/projects.html' },
-  { label: 'Quality & QHSE', href: '/certifications.html' },
-  { label: 'Careers', href: '/careers.html' },
+  { label: 'Home', href: '/index.html' },
+  { label: 'About Us', href: '/about.html' },
 ];
 
-/** Dropdown under Capabilities. */
 export const servicesNav: NavLink[] = [
   { label: 'Drilling Equipment MRO', href: '/services/drilling-equipment-mro.html' },
   { label: 'Jacking & Skidding', href: '/services/jacking-skidding.html' },
-  { label: 'Crane Services', href: '/services/cranes.html' },
-  { label: 'Used Equipment', href: '/services/used-equipment-supply.html' },
+  { label: 'Cranes', href: '/services/cranes.html' },
+  { label: 'Used Equipment Supply', href: '/services/used-equipment-supply.html' },
 ];
 
-export const footerCapabilities: NavLink[] = servicesNav;
-
-export const footerCompany: NavLink[] = [
-  { label: 'About GLS', href: '/about.html' },
-  { label: 'Workshop & Facilities', href: '/about.html#workshop' },
-  { label: 'Projects', href: '/projects.html' },
+export const secondaryNav: NavLink[] = [
   { label: 'Careers', href: '/careers.html' },
-];
-
-export const footerQuality: NavLink[] = [
   { label: 'Certifications', href: '/certifications.html' },
-  { label: 'Inspection & Testing', href: '/services/drilling-equipment-mro.html#inspection' },
-  { label: 'QHSE', href: '/certifications.html#qhse' },
+  { label: 'Contact Us', href: '/contact.html' },
 ];
 
-export const footerLegal: NavLink[] = [{ label: 'Privacy Policy', href: '/privacy-policy.html' }];
+export const footerQuickLinks: NavLink[] = [
+  { label: 'About Us', href: '/about.html' },
+  { label: 'Services', href: '/services.html' },
+  { label: 'Careers', href: '/careers.html' },
+  { label: 'Certifications', href: '/certifications.html' },
+  { label: 'Contact Us', href: '/contact.html' },
+];

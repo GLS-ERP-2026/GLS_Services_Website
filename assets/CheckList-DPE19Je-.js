@@ -1,1 +1,0 @@
-import{j as s,C as i}from"./global-CKWZ79Sg.js";function n({items:e,cols:a}){return s.jsx("ul",{className:`check-list${a?" check-cols":""}`,children:e.map(c=>s.jsxs("li",{children:[s.jsx(i,{className:"check-ico"}),s.jsx("span",{children:c})]},c))})}export{n as C};

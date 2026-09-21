@@ -1,31 +1,21 @@
 import { Layout } from '../../components/layout/Layout';
 import { HeroSlideshow } from '../../components/home/HeroSlideshow';
 import { Reveal } from '../../components/ui/Reveal';
-import { SectionHead } from '../../components/ui/SectionHead';
-import { TrustStrip } from '../../components/ui/TrustStrip';
-import { EquipmentCard } from '../../components/ui/EquipmentCard';
-import { ServiceRowList } from '../../components/ui/ServiceSection';
-import { ProcessTimeline } from '../../components/ui/ProcessTimeline';
-import { CapabilityTable } from '../../components/ui/CapabilityTable';
-import { ReasonList } from '../../components/ui/ValueBlock';
-import { FigureBlock } from '../../components/ui/CompanyFact';
-import { DocumentGrid } from '../../components/ui/DocumentCard';
-import { ProjectCard, ProjectsPending } from '../../components/ui/ProjectCard';
-import { TechnicalCTA } from '../../components/ui/TechnicalCTA';
+import { ServiceCard } from '../../components/ui/ServiceCard';
+import { ValueCard } from '../../components/ui/ValueCard';
+import { StatCounter } from '../../components/ui/StatCounter';
 import { services } from '../../data/services';
-import { featuredEquipment, equipment } from '../../data/equipment';
-import { mroProcess } from '../../data/process';
-import { whyClientsUseGls } from '../../data/values';
-import { projectDocuments } from '../../data/certifications';
-import { projects } from '../../data/projects';
-import { companyStats, workshopFacts } from '../../data/company';
-import { operatingRegions, countriesByRegion } from '../../data/operatingCountries';
+import { homeCoreValues } from '../../data/values';
 import { asset } from '../../lib/paths';
+import { useScrollThreshold } from '../../hooks/useScrollThreshold';
+
+const HERO_ACTIONS_REVEAL_THRESHOLD_PX = 4;
 
 export function Home() {
+  const showHeroActions = useScrollThreshold(HERO_ACTIONS_REVEAL_THRESHOLD_PX);
+
   return (
-    <Layout headerVariant="over-hero">
-      {/* ---- Hero — slideshow, Ken Burns zoom and copy kept as-is ---- */}
+    <Layout headerVariant="home-hero">
       <section className="hero">
         <div className="hero-media">
           <HeroSlideshow />
@@ -40,227 +30,153 @@ export function Home() {
           <p className="hero-sub">
             GLS Services delivers end-to-end inspection, maintenance, repair &amp; overhaul solutions for drilling
             equipment &mdash; backed by API-compliant procedures, experienced field technicians, and a track record
-            across {companyStats.countriesServed} countries.
+            across 11 countries.
           </p>
-          <div className="hero-actions">
-            <a href={asset('/contact.html#rfq')} className="btn btn-primary">
-              Request a Technical Quote
+          <div className={`hero-actions${showHeroActions ? '' : ' is-concealed'}`}>
+            <a href={asset('/contact.html')} className="btn btn-primary" tabIndex={showHeroActions ? undefined : -1}>
+              Get a Quote
             </a>
-            <a href={asset('/services.html')} className="btn btn-outline-light">
-              View Our Capabilities
+            <a
+              href={asset('/services.html')}
+              className="btn btn-outline"
+              tabIndex={showHeroActions ? undefined : -1}
+            >
+              Explore Services
             </a>
-          </div>
-          <p className="hero-credibility">
-            Workshop Services &nbsp;&bull;&nbsp; Equipment Inspection &nbsp;&bull;&nbsp; Repair &amp; Overhaul
-            &nbsp;&bull;&nbsp; Field Support
-          </p>
-        </div>
-      </section>
-
-      <TrustStrip />
-
-      {/* ---- 3. Equipment we support ---- */}
-      <section className="section">
-        <div className="container">
-          <SectionHead
-            eyebrow="Drilling Equipment MRO"
-            title="Equipment We Support"
-            description="GLS provides inspection, repair, overhaul and service support for a range of drilling and rig equipment."
-            action={
-              <a href={asset('/equipment.html')} className="btn btn-outline btn-sm">
-                View All Equipment
-              </a>
-            }
-          />
-          <Reveal className="equip-grid">
-            {featuredEquipment.map((item) => (
-              <EquipmentCard key={item.slug} item={item} />
-            ))}
-            <article className="equip-card equip-card--action">
-              <h3>All Equipment</h3>
-              <p>
-                Crown blocks, travelling blocks, casing stabbing boards and skidding systems are supported too. See
-                the full list with the published scope for each.
-              </p>
-              <a href={asset('/equipment.html')} className="link-action">
-                View All Equipment <span className="arrow">&rarr;</span>
-              </a>
-            </article>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ---- 4. Core capabilities ---- */}
-      <section className="section section-muted">
-        <div className="container">
-          <SectionHead
-            eyebrow="Engineering Capabilities"
-            title="Engineering &amp; MRO Capabilities"
-            description="Four capability areas covering the equipment lifecycle, from condition assessment through to supply."
-          />
-          <ServiceRowList services={services} />
-        </div>
-      </section>
-
-      {/* ---- 5. How we work ---- */}
-      <section className="section section-dark">
-        <div className="container">
-          <SectionHead
-            eyebrow="Workshop Process"
-            title="From Inspection to Return to Service"
-            description="Equipment moves through a defined sequence, with the scope at each stage set by the job requirements and the findings of the stage before it."
-            onDark
-          />
-          <ProcessTimeline steps={mroProcess} />
-        </div>
-      </section>
-
-      {/* ---- 6. Capability matrix ---- */}
-      <section className="section">
-        <div className="container">
-          <SectionHead
-            eyebrow="Service Capability"
-            title="What We Do, By Equipment"
-            description="Published service scope by equipment type. Use it to check a requirement before sending an enquiry."
-          />
-          <Reveal>
-            <CapabilityTable items={equipment} caption="Service capability by equipment type" />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ---- 7. Why clients use GLS ---- */}
-      <section className="section section-muted">
-        <div className="container">
-          <SectionHead eyebrow="Why GLS" title="Why Clients Use GLS" />
-          <ReasonList points={whyClientsUseGls} />
-        </div>
-      </section>
-
-      {/* ---- 8. Workshop ---- */}
-      <section className="section" id="workshop">
-        <div className="container split split--wide-left">
-          <Reveal className="split-media">
-            <img src={asset('/assets/images/services/jacking-gear.jpg')} alt="Jacking gear units under refurbishment" />
-            <span className="media-caption">Jacking gear units under refurbishment</span>
-          </Reveal>
-          <div>
-            <Reveal>
-              <span className="eyebrow eyebrow--ruled">Workshop &amp; Facilities</span>
-              <h2>Workshop Execution, Backed by Field Support</h2>
-              <p>
-                Equipment is received, stripped, inspected, repaired, reassembled and tested within a controlled
-                workshop process, with site-based support available where the scope requires it.
-              </p>
-            </Reveal>
-            <Reveal style={{ marginTop: 36 }}>
-              {workshopFacts.map((fact) => (
-                <FigureBlock key={fact.label} label={fact.label} value={fact.value} />
-              ))}
-            </Reveal>
-            <Reveal className="btn-row" style={{ marginTop: 36 }}>
-              <a href={asset('/about.html#workshop')} className="btn btn-outline">
-                Explore Our Facilities
-              </a>
-            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ---- 9. Project experience ---- */}
-      <section className="section section-muted">
-        <div className="container">
-          <SectionHead
-            eyebrow="Project Experience"
-            title="Selected Project Experience"
-            description="Equipment-specific references covering scope of work, inspection findings and the documentation issued."
-            action={
-              <a href={asset('/projects.html')} className="btn btn-outline btn-sm">
-                View Projects
-              </a>
-            }
-          />
-          {projects.length > 0 ? (
-            <div className="project-grid">
-              {projects.slice(0, 3).map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
+      <section className="stats-bar section-sm">
+        <div className="container stat-grid">
+          <StatCounter target={11} suffix="+" label="Countries Served" />
+          <StatCounter target={200} suffix="+" label="Rigs Overhauled" />
+          <StatCounter target={3} label="ISO Certifications" />
+          <StatCounter target={24} suffix="-Hr" label="Average Response Time" />
+        </div>
+      </section>
+
+      <section className="section section-alt">
+        <div className="container about-split">
+          <Reveal className="about-media">
+            <img src={asset('/assets/images/about/who-we-are.jpg')} alt="GLS Services offshore drilling platform" />
+            <div className="about-badge">
+              <strong>15+</strong>
+              <span>Years Combined Field Experience</span>
             </div>
-          ) : (
-            <ProjectsPending
-              action={
-                <a href={asset('/contact.html#rfq')} className="btn btn-primary btn-sm">
-                  Request Project References
-                </a>
-              }
-            />
-          )}
+          </Reveal>
+          <Reveal>
+            <span className="eyebrow">Who We Are</span>
+            <h2 className="section-title">Trusted MRO Partner for Oil &amp; Gas Drilling Contractors</h2>
+            <p className="section-sub">
+              GLS Services is an ISO 9001-2015, ISO 14001-2015 and ISO 45001-2015 certified company providing an
+              end-to-end service solution for the maintenance and upkeep of drilling equipment &mdash; combining
+              modern technologies with a genuinely solution-oriented approach.
+            </p>
+            <ul className="about-list">
+              <li>
+                <span className="check-ico">&#10003;</span> End-to-end inspection, repair &amp; overhaul solutions
+              </li>
+              <li>
+                <span className="check-ico">&#10003;</span> Procedures aligned with applicable API standards
+              </li>
+              <li>
+                <span className="check-ico">&#10003;</span> Experienced, trained field technicians
+              </li>
+              <li>
+                <span className="check-ico">&#10003;</span> Operations spanning 11 countries worldwide
+              </li>
+            </ul>
+            <div className="hero-actions" style={{ marginTop: 32 }}>
+              <a href={asset('/about.html')} className="btn btn-dark">
+                Learn More About Us
+              </a>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* ---- 10. Quality & documentation ---- */}
       <section className="section">
         <div className="container">
-          <SectionHead
-            eyebrow="Quality &amp; QHSE"
-            title="Quality Is Documented"
-            description="Engineering work is supported by structured inspection, repair and testing records appropriate to the project scope."
-            action={
-              <a href={asset('/certifications.html')} className="btn btn-outline btn-sm">
-                View Quality &amp; Certifications
-              </a>
-            }
-          />
-          <DocumentGrid documents={projectDocuments} />
-        </div>
-      </section>
-
-      {/* ---- 11. Global footprint ---- */}
-      <section className="section section-dark">
-        <div className="container">
-          <SectionHead
-            eyebrow="Global Footprint"
-            title="Projects Across Multiple Markets"
-            onDark
-          />
-          <div className="split split--wide-right split--top" style={{ gap: 56 }}>
-            <Reveal>
-              <span className="metric-value">{companyStats.countriesServed}</span>
-              <span className="metric-label">Countries Served</span>
-              <p className="metric-definition">
-                Countries in which GLS has delivered equipment or field services.
-              </p>
-              <p style={{ marginTop: 26 }}>
-                Project activity across the Middle East, Europe, Asia and Africa.
-              </p>
-              <div className="btn-row" style={{ marginTop: 26 }}>
-                <a href={asset('/about.html#footprint')} className="btn btn-outline-light btn-sm">
-                  View Global Footprint
-                </a>
-              </div>
-            </Reveal>
-            <Reveal className="region-grid">
-              {operatingRegions.map((region) => (
-                <div className="region-block" key={region}>
-                  <h3>{region}</h3>
-                  <ul>
-                    {countriesByRegion(region).map((country) => (
-                      <li key={country.isoNumeric}>{country.name}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </Reveal>
+          <Reveal className="section-head center">
+            <span className="eyebrow">What We Do</span>
+            <h2 className="section-title">Our Services</h2>
+            <p className="section-sub">
+              A full suite of equipment MRO capabilities purpose-built for drilling contractors, from rig-floor
+              equipment to crane certification and used equipment sourcing.
+            </p>
+          </Reveal>
+          <div className="grid-4">
+            {services.map((service) => (
+              <ServiceCard key={service.slug} service={service} />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ---- 12. Final CTA ---- */}
-      <TechnicalCTA
-        eyebrow="Next Step"
-        title="Have Equipment Requiring Inspection, Repair or Overhaul?"
-        description="Send us your equipment details and scope of work. Our team can review the requirement and respond with the appropriate service approach."
-      />
+      <section className="section section-dark">
+        <div className="container">
+          <Reveal className="section-head center">
+            <span className="eyebrow">What Drives Us</span>
+            <h2 className="section-title">Our Core Values</h2>
+          </Reveal>
+          <div className="grid-3">
+            {homeCoreValues.map((value) => (
+              <ValueCard key={value.title} title={value.title} description={value.description} icon={value.icon} onDark />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section section-alt">
+        <div className="container">
+          <Reveal className="section-head center">
+            <span className="eyebrow">Certified &amp; Compliant</span>
+            <h2 className="section-title">Certifications</h2>
+            <p className="section-sub">
+              Our processes are independently certified so you can trust the quality behind every inspection, repair
+              and overhaul.
+            </p>
+          </Reveal>
+          <Reveal className="cert-strip">
+            <div className="iso-badges">
+              <span className="iso-badge">ISO 9001:2015</span>
+              <span className="iso-badge">ISO 14001:2015</span>
+              <span className="iso-badge">ISO 45001:2015</span>
+            </div>
+            <div className="cert-item">
+              <img src={asset('/assets/images/certifications/badge-anab.svg')} alt="ANAB Certified" />
+              <span>ANAB Certified</span>
+            </div>
+            <div className="cert-item">
+              <img src={asset('/assets/images/certifications/badge-ct.svg')} alt="CT Certified" />
+              <span>CT Certified</span>
+            </div>
+          </Reveal>
+          <div className="text-center" style={{ marginTop: 32 }}>
+            <a href={asset('/certifications.html')} className="btn btn-dark">
+              View All Certifications
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section className="section">
+        <div className="container">
+          <Reveal className="cta-banner">
+            <div>
+              <h2>Need a Reliable MRO Partner for Your Rig?</h2>
+              <p>
+                Talk to our team about inspection, repair, overhaul or used equipment requirements &mdash; we
+                typically respond within 24 hours.
+              </p>
+            </div>
+            <a href={asset('/contact.html')} className="btn btn-primary">
+              Get in Touch
+            </a>
+          </Reveal>
+        </div>
+      </section>
     </Layout>
   );
 }
