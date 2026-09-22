@@ -80,7 +80,6 @@ export function About() {
               {operatingCountries.map((country) => (
                 <li key={country.isoNumeric} className={`world-map-chip${country.isHq ? ' is-hq' : ''}`}>
                   {country.name}
-                  {country.isHq && <span className="world-map-chip-tag">HQ</span>}
                 </li>
               ))}
             </ul>

@@ -6,6 +6,13 @@ import { hqCountry, operatingCountries, operatingCountryIds } from '../../data/o
 /** How far each arc bows away from a straight line, as a share of its length. */
 const ARC_BEND = 0.22;
 
+/** Gap between one line starting to draw and the next. */
+const DRAW_STAGGER_S = 0.25;
+
+/** When the repeating pulses begin: once every line has finished drawing. The
+ * 5s repeat itself lives in the CSS (world-map-flow / world-map-ping). */
+const pulseDelay = { animationDelay: '6s' };
+
 /**
  * Curved lines from the head office out to every other country, with a pulse
  * travelling along each one. Rendered inside ComposableMap so it can use the
@@ -29,38 +36,26 @@ function Connections() {
           const cx = (x1 + x2) / 2 + sign * dy * ARC_BEND;
           const cy = (y1 + y2) / 2 - sign * dx * ARC_BEND;
           const d = `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`;
-          // Lines draw one after another; each endpoint appears as its line
-          // arrives; pulses start once the lines are drawn, staggered so they
-          // don't all leave the HQ at once.
-          const drawDelay = i * 0.18;
+          // Lines draw one after another and each endpoint appears as its line
+          // arrives. Pulses all leave together once the lines are drawn.
+          const drawDelay = i * DRAW_STAGGER_S;
           return (
             <g key={country.isoNumeric}>
               <path d={d} pathLength={1} className="world-map-link" style={{ animationDelay: `${drawDelay}s` }} />
-              <path
-                d={d}
-                pathLength={1}
-                className="world-map-pulse"
-                style={{ animationDelay: `${4 + i * 0.37}s` }}
-              />
+              <path d={d} pathLength={1} className="world-map-pulse" style={pulseDelay} />
               <circle
                 cx={x2}
                 cy={y2}
                 r={3.5}
                 className="world-map-point"
-                style={{ animationDelay: `${drawDelay + 1.1}s` }}
+                style={{ animationDelay: `${drawDelay + 1.8}s` }}
               />
             </g>
           );
         })}
       <g className="world-map-hq" transform={`translate(${hq[0]},${hq[1]})`}>
-        <circle r={7} className="world-map-hq-ring" />
+        <circle r={7} className="world-map-hq-ring" style={pulseDelay} />
         <circle r={6.5} className="world-map-hq-dot" />
-        <g transform="translate(10,-10)">
-          <rect x={0} y={-8} width={26} height={15} rx={3} className="world-map-hq-tag" />
-          <text x={13} y={3} textAnchor="middle" className="world-map-hq-text">
-            HQ
-          </text>
-        </g>
       </g>
     </g>
   );
