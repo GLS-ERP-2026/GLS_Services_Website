@@ -23,7 +23,7 @@ export function Home() {
           <HeroSlideshow />
         </div>
         <div className="hero-badge-row">
-          <span className="hero-eyebrow">ISO 9001 &middot; ISO 14001 &middot; ISO 45001</span>
+          <span className="hero-eyebrow">ISO 9001:2015 &middot; ISO 14001:2015 &middot; ISO 45001:2018</span>
         </div>
         <div className="container hero-inner">
           <h1 className="hero-title">
@@ -56,7 +56,7 @@ export function Home() {
             <StatCounter target={24} suffix="-Hr" label="Average Response Time" icon="clock" />
           </div>
           <Reveal className="cert-bar">
-            <CertificationRow badges={certificationBadges} size="sm" />
+            <CertificationRow badges={certificationBadges} size="sm" useFullName />
           </Reveal>
         </div>
       </section>
@@ -76,8 +76,8 @@ export function Home() {
             <p className="section-sub">
               GLS Services provides servicing and technical support for drilling equipment across the oil &amp; gas
               industry. From inspection and maintenance through to repair and overhaul, our work is focused on
-              equipment reliability and long-term performance. Operations are supported by ISO 9001, ISO 14001, ISO
-              45001 and API Q2 (2nd Edition) certifications.
+              equipment reliability and long-term performance. Operations are supported by ISO 9001:2015, ISO 14001:2015, ISO
+              45001:2018 and API Q2 (2nd Edition) certifications.
             </p>
             <ul className="about-list">
               <li>

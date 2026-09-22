@@ -8,7 +8,6 @@ export function PrivacyPolicy() {
     <Layout>
       <PageBanner
         image="/assets/images/hero/banner-privacy.jpg"
-        crumbs={[{ label: 'Home', href: '/index.html' }, { label: 'Privacy Policy' }]}
         title="Privacy Policy"
         description="Last updated: 14 August 2026"
       />

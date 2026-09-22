@@ -9,7 +9,6 @@ export function Cranes() {
     <Layout>
       <PageBanner
         image="/assets/images/hero/banner-cranes.jpg"
-        crumbs={[{ label: 'Home', href: '/index.html' }, { label: 'Services', href: '/services.html' }, { label: 'Cranes' }]}
         title="Cranes"
         description="Crane inspection, repair and overhaul services, backed by a strong engineering and technical background and API-approved field technicians."
       />

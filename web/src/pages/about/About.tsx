@@ -12,7 +12,6 @@ export function About() {
     <Layout>
       <PageBanner
         image="/assets/images/hero/banner-about.jpg"
-        crumbs={[{ label: 'Home', href: '/index.html' }, { label: 'About Us' }]}
         title="About GLS Services"
         description="An ISO-certified partner for drilling equipment maintenance, repair & overhaul — built on integrity, mindfulness and humility."
       />
@@ -23,7 +22,7 @@ export function About() {
             <span className="eyebrow">Company Overview</span>
             <h2 className="section-title">Consolidated MRO, Delivered With Discipline</h2>
             <p>
-              GLS Services is an ISO 9001-2015, ISO 14001-2015 and ISO 45001-2015 certified organization serving the
+              GLS Services is an ISO 9001:2015, ISO 14001:2015 and ISO 45001:2018 certified organization serving the
               oil and gas drilling sector. The company was established to provide comprehensive maintenance and
               equipment management solutions for drilling contractors across multiple regions.
             </p>
@@ -48,21 +47,40 @@ export function About() {
         </div>
       </section>
 
+      <section className="section section-alt">
+        <div className="container about-split about-split--reverse">
+          <Reveal>
+            <span className="eyebrow">Where We Operate</span>
+            <h2 className="section-title">At Our Workshop or On Your Site</h2>
+            <p>
+              With dedicated workshop capabilities and experienced field teams, GLS Services supports customers both
+              at our facilities and at their operational sites. Our services extend to onshore and offshore
+              locations, including drilling rigs, shipyards, dry docks and other customer facilities, so we can
+              provide flexible equipment support wherever it's needed.
+            </p>
+          </Reveal>
+          <Reveal className="about-media">
+            <img
+              src={asset('/assets/images/about/where-we-operate.jpg')}
+              alt="Jack-up drilling rig alongside a shipyard quay"
+            />
+          </Reveal>
+        </div>
+      </section>
+
       <section className="section world-map-section">
         <div className="container">
           <Reveal className="section-head center">
             <span className="eyebrow">Global Footprint</span>
-            <h2 className="section-title">Where GLS Operates</h2>
-            <p className="section-sub">
-              Field-proven drilling equipment MRO experience across 17+ countries.
-            </p>
+            <p className="section-sub">Drilling equipment MRO support delivered across 17+ countries.</p>
           </Reveal>
           <Reveal>
             <WorldMap />
             <ul className="world-map-countries">
               {operatingCountries.map((country) => (
-                <li key={country.isoNumeric} className="world-map-chip">
+                <li key={country.isoNumeric} className={`world-map-chip${country.isHq ? ' is-hq' : ''}`}>
                   {country.name}
+                  {country.isHq && <span className="world-map-chip-tag">HQ</span>}
                 </li>
               ))}
             </ul>
@@ -108,7 +126,7 @@ export function About() {
           <Reveal className="cta-banner">
             <div>
               <h2>Certified Across Quality, Environment &amp; Safety</h2>
-              <p>ISO 9001, ISO 14001, ISO 45001, plus ANAB and CT accreditation.</p>
+              <p>ISO 9001:2015, ISO 14001:2015, ISO 45001:2018, plus ANAB and CT accreditation.</p>
             </div>
             <a href={asset('/certifications.html')} className="btn btn-primary">
               View Certifications

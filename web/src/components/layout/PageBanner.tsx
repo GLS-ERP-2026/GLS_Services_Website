@@ -1,19 +1,12 @@
 import type { ReactNode } from 'react';
 import { asset } from '../../lib/paths';
 
-export interface Crumb {
-  label: string;
-  href?: string;
-}
-
 export function PageBanner({
   image,
-  crumbs,
   title,
   description,
 }: {
   image: string;
-  crumbs: Crumb[];
   title: string;
   description: ReactNode;
 }) {
@@ -23,14 +16,6 @@ export function PageBanner({
         <img src={asset(image)} alt="" role="presentation" />
       </div>
       <div className="container page-banner-inner">
-        <div className="breadcrumb">
-          {crumbs.map((crumb, i) => (
-            <span key={crumb.label}>
-              {crumb.href ? <a href={asset(crumb.href)}>{crumb.label}</a> : <span>{crumb.label}</span>}
-              {i < crumbs.length - 1 ? ' / ' : ''}
-            </span>
-          ))}
-        </div>
         <h1>{title}</h1>
         <p>{description}</p>
       </div>

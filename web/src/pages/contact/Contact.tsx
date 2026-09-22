@@ -13,7 +13,6 @@ export function Contact() {
     <Layout>
       <PageBanner
         image="/assets/images/hero/banner-contact.jpg"
-        crumbs={[{ label: 'Home', href: '/index.html' }, { label: 'Contact Us' }]}
         title="Contact Us"
         description="Drop us a message and we will get back to you within 24 hours."
       />

@@ -17,11 +17,6 @@ export function UsedEquipmentSupply() {
     <Layout>
       <PageBanner
         image="/assets/images/hero/banner-used-equipment.jpg"
-        crumbs={[
-          { label: 'Home', href: '/index.html' },
-          { label: 'Services', href: '/services.html' },
-          { label: 'Used Equipment Supply' },
-        ]}
         title="Used Equipment Supply"
         description="Reusable, reconditioned and used marine machinery and spare parts, sourced through a global network of ship-breaking yards."
       />

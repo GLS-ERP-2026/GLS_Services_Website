@@ -8,7 +8,7 @@ import { asset } from '../../lib/paths';
 
 const whyGls = [
   { title: 'API-Aligned', description: 'Procedures follow applicable API standards on every inspection and overhaul.', icon: 'check' as const },
-  { title: 'ISO Certified', description: 'ISO 9001, 14001 & 45001 certified quality, environmental and safety management.', icon: 'shield' as const },
+  { title: 'ISO Certified', description: 'ISO 9001:2015, ISO 14001:2015 & ISO 45001:2018 certified quality, environmental and safety management.', icon: 'shield' as const },
   { title: '24-Hr Response', description: 'We aim to respond to every enquiry within 24 hours.', icon: 'clock' as const },
   { title: '17+ Countries', description: 'Field-proven experience delivering services across global regions.', icon: 'globe' as const },
 ];
@@ -18,7 +18,6 @@ export function Services() {
     <Layout>
       <PageBanner
         image="/assets/images/hero/banner-services.jpg"
-        crumbs={[{ label: 'Home', href: '/index.html' }, { label: 'Services' }]}
         title="Our Services"
         description="Full-scope equipment MRO capabilities for drilling contractors — from rig-floor equipment to crane certification and used equipment sourcing."
       />

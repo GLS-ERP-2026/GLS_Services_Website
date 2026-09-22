@@ -12,7 +12,7 @@ export function Footer() {
               <img src={asset('/assets/images/logo/gls-logo-full.png')} alt="GLS Services" />
             </a>
             <p>
-              An ISO 9001, 14001 &amp; 45001 certified provider of end-to-end drilling equipment MRO solutions for oil &amp;
+              An ISO 9001:2015, ISO 14001:2015 &amp; ISO 45001:2018 certified provider of end-to-end drilling equipment MRO solutions for oil &amp;
               gas drilling contractors across 17+ countries.
             </p>
           </div>

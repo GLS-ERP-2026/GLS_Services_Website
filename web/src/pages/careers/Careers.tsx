@@ -13,7 +13,6 @@ export function Careers() {
     <Layout>
       <PageBanner
         image="/assets/images/hero/banner-careers.jpg"
-        crumbs={[{ label: 'Home', href: '/index.html' }, { label: 'Careers' }]}
         title="Careers at GLS Services"
         description="Thank you for your interest in career opportunities at GLS Services. Fill in the form below and we will get back to you soon."
       />
@@ -24,7 +23,7 @@ export function Careers() {
             <span className="eyebrow">Why GLS</span>
             <h2 className="section-title">Build Your Career in Drilling Equipment MRO</h2>
             <p>
-              We're an ISO 9001, ISO 14001, ISO 45001 and API Q2 certified company serving oil &amp; gas drilling
+              We're an ISO 9001:2015, ISO 14001:2015, ISO 45001:2018 and API Q2 certified company serving oil &amp; gas drilling
               contractors across 17+ countries. We look for people who share our values of integrity, mindfulness and
               humility.
             </p>

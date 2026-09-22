@@ -11,7 +11,6 @@ export function Certifications() {
     <Layout>
       <PageBanner
         image="/assets/images/hero/banner-certifications.jpg"
-        crumbs={[{ label: 'Home', href: '/index.html' }, { label: 'Certifications' }]}
         title="Certifications"
         description="GLS Services is an ISO 9001:2015, ISO 14001:2015, ISO 45001:2018 and API Q2 2nd Edition certified company providing services to oil & gas drilling contractors."
       />

@@ -26,7 +26,7 @@ export const whyGls: Differentiator[] = [
   {
     title: 'Certified Quality Systems',
     description:
-      'Certified to ISO 9001, ISO 14001, ISO 45001 and API Q2 (2nd Edition), our quality, environmental and safety systems are independently audited.',
+      'Certified to ISO 9001:2015, ISO 14001:2015, ISO 45001:2018 and API Q2 (2nd Edition), our quality, environmental and safety systems are independently audited.',
     icon: 'certificate',
   },
   {

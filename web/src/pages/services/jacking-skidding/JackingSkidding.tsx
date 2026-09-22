@@ -9,11 +9,6 @@ export function JackingSkidding() {
     <Layout>
       <PageBanner
         image="/assets/images/hero/banner-jacking-skidding.jpg"
-        crumbs={[
-          { label: 'Home', href: '/index.html' },
-          { label: 'Services', href: '/services.html' },
-          { label: 'Jacking & Skidding' },
-        ]}
         title="Jacking & Skidding"
         description="Inspection, repair and complete overhaul of jacking and skidding systems, backed by experience overhauling 200+ rigs worldwide."
       />
