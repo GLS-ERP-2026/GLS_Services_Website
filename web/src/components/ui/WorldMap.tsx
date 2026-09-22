@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { geoCentroid } from 'd3-geo';
 import { ComposableMap, Geographies, Geography, useMapContext } from 'react-simple-maps';
 import worldTopology from 'world-atlas/countries-50m.json';
 import { hqCountry, operatingCountries, operatingCountryIds } from '../../data/operatingCountries';
@@ -20,6 +21,21 @@ const PULSE_CYCLE_S = 5;
 /** world-atlas id for India, whose outline there follows the de facto line of
  * control and leaves out parts of Jammu & Kashmir and Ladakh. */
 const INDIA_ID = '356';
+
+/** world-atlas id for Antarctica, which is left off the map. */
+const ANTARCTICA_ID = '010';
+
+/**
+ * The map shows Europe, Africa, Asia and Australia/Oceania only. The Americas
+ * (and Greenland) are the countries whose centre lies between 170°W and 25°W;
+ * that band holds no country from the other continents. Pacific islands just
+ * west of 170°W (Samoa, Tonga) stay, as they sit with Oceania.
+ */
+function isShown(geo: GeoJSON.Feature & { id?: string | number }) {
+  if (geo.id === ANTARCTICA_ID) return false;
+  const [lon] = geoCentroid(geo);
+  return !(lon > -170 && lon < -25);
+}
 
 /**
  * India drawn with its official boundary, including all of Jammu & Kashmir and
@@ -112,19 +128,21 @@ export function WorldMap() {
 
   return (
     <div ref={ref} className={`world-map${isLive ? ' is-live' : ''}`}>
-      {/* A wide frame for the full-width layout. Top to bottom it fits every
-          operating country in full, Denmark to Angola, with a margin; the extra
-          width shows the surrounding regions either side. */}
+      {/* Europe, Africa, Asia and Australia shown complete: west to 27°W
+          (Cape Verde, Iceland), east to 168°W (the tip of Russia beyond the
+          date line), north to 82°N (the Arctic islands), south to 48°S (New
+          Zealand). The globe is rotated to centre on 82.5°E, which moves the
+          map's seam into the Americas, so Russia is not split at 180°. */}
       <ComposableMap
         projection="geoMercator"
-        width={1100}
-        height={495}
-        projectionConfig={{ center: [50, 28.4], scale: 258 }}
+        width={600}
+        height={584}
+        projectionConfig={{ rotate: [-82.5, 0, 0], center: [0, 43.8], scale: 157 }}
       >
         <Geographies geography={worldTopology}>
           {({ geographies }) =>
             geographies
-              .filter((geo) => geo.id !== INDIA_ID)
+              .filter((geo) => geo.id !== INDIA_ID && isShown(geo))
               .map((geo) => {
                 const active = operatingCountryIds.has(geo.id as string);
                 return (

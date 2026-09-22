@@ -75,7 +75,7 @@ export function About() {
             <p className="section-sub">Drilling equipment MRO support delivered across 17+ countries.</p>
           </Reveal>
         </div>
-        {/* The map runs the full width of the screen, outside the content column. */}
+        {/* The map sits outside the content column so it can use the full width. */}
         <Reveal>
           <WorldMap />
         </Reveal>
