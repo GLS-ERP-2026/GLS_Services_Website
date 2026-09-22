@@ -10,9 +10,12 @@ const ARC_BEND = 0.22;
 /** Gap between one line starting to draw and the next. */
 const DRAW_STAGGER_S = 0.25;
 
-/** When the repeating pulses begin: once every line has finished drawing. The
- * 5s repeat itself lives in the CSS (world-map-flow / world-map-ping). */
-const pulseDelay = { animationDelay: '6s' };
+/** When the repeating pulses begin: once every line has finished drawing. */
+const PULSE_START_S = 6;
+
+/** One full round of pulses. Must match the world-map-flow / world-map-ping
+ * durations in global.css. */
+const PULSE_CYCLE_S = 5;
 
 /** world-atlas id for India, whose outline there follows the de facto line of
  * control and leaves out parts of Jammu & Kashmir and Ladakh. */
@@ -36,41 +39,47 @@ function OfficialIndia() {
  */
 function Connections() {
   const { projection } = useMapContext();
-  const hq = projection(hqCountry.point) as [number, number];
+  const [x1, y1] = projection(hqCountry.point) as [number, number];
+
+  // Ordered clockwise around the HQ, starting from the west, so the draw-in
+  // and the pulses sweep round the map rather than jumping between countries.
+  const links = operatingCountries
+    .filter((country) => !country.isHq)
+    .map((country) => {
+      const [x2, y2] = projection(country.point) as [number, number];
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      // Bow each arc upward (toward the top of the map), whichever way it runs.
+      const sign = dx >= 0 ? -1 : 1;
+      const cx = (x1 + x2) / 2 + sign * dy * ARC_BEND;
+      const cy = (y1 + y2) / 2 - sign * dx * ARC_BEND;
+      return { id: country.isoNumeric, d: `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`, angle: Math.atan2(dy, dx) };
+    })
+    .sort((l1, l2) => l1.angle - l2.angle);
+
+  // Pulses leave one line at a time, spread evenly across each cycle.
+  const pulseGap = PULSE_CYCLE_S / links.length;
 
   return (
     <g className="world-map-links">
-      {operatingCountries
-        .filter((country) => !country.isHq)
-        .map((country, i) => {
-          const [x2, y2] = projection(country.point) as [number, number];
-          const [x1, y1] = hq;
-          const dx = x2 - x1;
-          const dy = y2 - y1;
-          // Bow each arc upward (toward the top of the map), whichever way it runs.
-          const sign = dx >= 0 ? -1 : 1;
-          const cx = (x1 + x2) / 2 + sign * dy * ARC_BEND;
-          const cy = (y1 + y2) / 2 - sign * dx * ARC_BEND;
-          const d = `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`;
-          // Lines draw one after another and each endpoint appears as its line
-          // arrives. Pulses all leave together once the lines are drawn.
-          const drawDelay = i * DRAW_STAGGER_S;
-          return (
-            <g key={country.isoNumeric}>
-              <path d={d} pathLength={1} className="world-map-link" style={{ animationDelay: `${drawDelay}s` }} />
-              <path d={d} pathLength={1} className="world-map-pulse" style={pulseDelay} />
-              <circle
-                cx={x2}
-                cy={y2}
-                r={3.5}
-                className="world-map-point"
-                style={{ animationDelay: `${drawDelay + 1.8}s` }}
-              />
-            </g>
-          );
-        })}
-      <g className="world-map-hq" transform={`translate(${hq[0]},${hq[1]})`}>
-        <circle r={7} className="world-map-hq-ring" style={pulseDelay} />
+      {links.map((link, i) => (
+        <g key={link.id}>
+          <path
+            d={link.d}
+            pathLength={1}
+            className="world-map-link"
+            style={{ animationDelay: `${i * DRAW_STAGGER_S}s` }}
+          />
+          <path
+            d={link.d}
+            pathLength={1}
+            className="world-map-pulse"
+            style={{ animationDelay: `${PULSE_START_S + i * pulseGap}s` }}
+          />
+        </g>
+      ))}
+      <g className="world-map-hq" transform={`translate(${x1},${y1})`}>
+        <circle r={7} className="world-map-hq-ring" style={{ animationDelay: `${PULSE_START_S}s` }} />
         <circle r={6.5} className="world-map-hq-dot" />
       </g>
     </g>
