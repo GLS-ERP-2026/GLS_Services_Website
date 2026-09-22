@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ComposableMap, Geographies, Geography, useMapContext } from 'react-simple-maps';
 import worldTopology from 'world-atlas/countries-50m.json';
 import { hqCountry, operatingCountries, operatingCountryIds } from '../../data/operatingCountries';
+import indiaOfficial from '../../data/india-official.json';
 
 /** How far each arc bows away from a straight line, as a share of its length. */
 const ARC_BEND = 0.22;
@@ -12,6 +13,21 @@ const DRAW_STAGGER_S = 0.25;
 /** When the repeating pulses begin: once every line has finished drawing. The
  * 5s repeat itself lives in the CSS (world-map-flow / world-map-ping). */
 const pulseDelay = { animationDelay: '6s' };
+
+/** world-atlas id for India, whose outline there follows the de facto line of
+ * control and leaves out parts of Jammu & Kashmir and Ladakh. */
+const INDIA_ID = '356';
+
+/**
+ * India drawn with its official boundary, including all of Jammu & Kashmir and
+ * Ladakh. The outline comes from Natural Earth's India point-of-view dataset
+ * (src/data/india-official.json). Drawn after the other countries, so it covers
+ * the areas world-atlas assigns to neighbouring countries.
+ */
+function OfficialIndia() {
+  const { path } = useMapContext();
+  return <path d={path(indiaOfficial as GeoJSON.Feature) ?? undefined} className="world-map-country is-active" />;
+}
 
 /**
  * Curved lines from the head office out to every other country, with a pulse
@@ -97,19 +113,22 @@ export function WorldMap() {
       >
         <Geographies geography={worldTopology}>
           {({ geographies }) =>
-            geographies.map((geo) => {
-              const active = operatingCountryIds.has(geo.id as string);
-              return (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  className={active ? 'world-map-country is-active' : 'world-map-country'}
-                  tabIndex={-1}
-                />
-              );
-            })
+            geographies
+              .filter((geo) => geo.id !== INDIA_ID)
+              .map((geo) => {
+                const active = operatingCountryIds.has(geo.id as string);
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    className={active ? 'world-map-country is-active' : 'world-map-country'}
+                    tabIndex={-1}
+                  />
+                );
+              })
           }
         </Geographies>
+        <OfficialIndia />
         <Connections />
       </ComposableMap>
     </div>
