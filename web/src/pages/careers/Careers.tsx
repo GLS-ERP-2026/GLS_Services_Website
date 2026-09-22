@@ -25,7 +25,7 @@ export function Careers() {
             <h2 className="section-title">Build Your Career in Drilling Equipment MRO</h2>
             <p>
               We're an ISO 9001, ISO 14001, ISO 45001 and API Q2 certified company serving oil &amp; gas drilling
-              contractors across 17 countries. We look for people who share our values of integrity, mindfulness and
+              contractors across 17+ countries. We look for people who share our values of integrity, mindfulness and
               humility.
             </p>
             <p className="pill-row" style={{ marginTop: 24 }}>

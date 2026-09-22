@@ -13,7 +13,7 @@ export function Footer() {
             </a>
             <p>
               An ISO 9001, 14001 &amp; 45001 certified provider of end-to-end drilling equipment MRO solutions for oil &amp;
-              gas drilling contractors across 11 countries.
+              gas drilling contractors across 17+ countries.
             </p>
           </div>
           <div>

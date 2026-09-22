@@ -366,6 +366,8 @@ button { font-family: inherit; }
 .section-alt { background: var(--surface); }
 .section-head { max-width: 680px; margin-bottom: 56px; }
 .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+/* A second block inside one section, set off by a rule. */
+.section-block-divided { margin-top: 80px; padding-top: 80px; border-top: 1px solid var(--border); }
 .eyebrow {
   display: inline-block;
   font-size: 0.8rem;
@@ -941,6 +943,7 @@ button { font-family: inherit; }
 
 @media (max-width: 640px) {
   .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .section-block-divided { margin-top: 56px; padding-top: 56px; }
   .cert-slot, .cert-logo,
   .cert-row--lg .cert-slot, .cert-row--lg .cert-logo { width: 140px; height: 84px; }
   .cert-row--lg .cert-slot-name { font-size: 0.95rem; }

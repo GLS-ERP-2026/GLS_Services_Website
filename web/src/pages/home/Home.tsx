@@ -7,7 +7,7 @@ import { ValueCard } from '../../components/ui/ValueCard';
 import { StatCounter } from '../../components/ui/StatCounter';
 import { services } from '../../data/services';
 import { certificationBadges, additionalAccreditation } from '../../data/certifications';
-import { homeCoreValues } from '../../data/values';
+import { homeCoreValues, whyGls } from '../../data/values';
 import { asset } from '../../lib/paths';
 import { useScrollThreshold } from '../../hooks/useScrollThreshold';
 
@@ -90,7 +90,7 @@ export function Home() {
                 <span className="check-ico">&#10003;</span> Experienced, trained field technicians
               </li>
               <li>
-                <span className="check-ico">&#10003;</span> Operations spanning 17 countries worldwide
+                <span className="check-ico">&#10003;</span> Operations spanning 17+ countries worldwide
               </li>
             </ul>
             <div className="hero-actions" style={{ marginTop: 32 }}>
@@ -119,13 +119,23 @@ export function Home() {
       <section className="section section-dark">
         <div className="container">
           <Reveal className="section-head center">
-            <span className="eyebrow">What Drives Us</span>
-            <h2 className="section-title">Our Core Values</h2>
+            <h2 className="section-title">Why GLS Services</h2>
           </Reveal>
-          <div className="grid-3">
-            {homeCoreValues.map((value) => (
-              <ValueCard key={value.title} title={value.title} description={value.description} icon={value.icon} onDark />
+          <div className="grid-4">
+            {whyGls.map((item) => (
+              <ValueCard key={item.title} title={item.title} description={item.description} icon={item.icon} onDark />
             ))}
+          </div>
+
+          <div className="section-block-divided">
+            <Reveal className="section-head center">
+              <h2 className="section-title">Our Core Values</h2>
+            </Reveal>
+            <div className="grid-3">
+              {homeCoreValues.map((value) => (
+                <ValueCard key={value.title} title={value.title} description={value.description} icon={value.icon} onDark />
+              ))}
+            </div>
           </div>
         </div>
       </section>

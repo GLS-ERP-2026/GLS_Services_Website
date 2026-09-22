@@ -33,7 +33,7 @@ export function About() {
               safety and environmental standards &mdash; without compromising on quality.
             </p>
             <p>
-              <strong>GLS provides services across 11 countries</strong>, tailoring its approach to each customer's
+              <strong>GLS provides services across 17+ countries</strong>, tailoring its approach to each customer's
               requirements. Our team undergoes comprehensive training in equipment inspection and overhaul
               procedures, working in compliance with applicable API standards and rigorous safety protocols.
             </p>
@@ -41,7 +41,7 @@ export function About() {
           <Reveal className="about-media">
             <img src={asset('/assets/images/about/about-team.svg')} alt="GLS Services team on site" />
             <div className="about-badge">
-              <strong>11</strong>
+              <strong>17+</strong>
               <span>Countries of Operation</span>
             </div>
           </Reveal>
@@ -54,7 +54,7 @@ export function About() {
             <span className="eyebrow">Global Footprint</span>
             <h2 className="section-title">Where GLS Operates</h2>
             <p className="section-sub">
-              Field-proven drilling equipment MRO experience across {operatingCountries.length} countries.
+              Field-proven drilling equipment MRO experience across 17+ countries.
             </p>
           </Reveal>
           <Reveal>

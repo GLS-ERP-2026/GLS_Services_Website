@@ -10,7 +10,7 @@ const whyGls = [
   { title: 'API-Aligned', description: 'Procedures follow applicable API standards on every inspection and overhaul.', icon: 'check' as const },
   { title: 'ISO Certified', description: 'ISO 9001, 14001 & 45001 certified quality, environmental and safety management.', icon: 'shield' as const },
   { title: '24-Hr Response', description: 'We aim to respond to every enquiry within 24 hours.', icon: 'clock' as const },
-  { title: '11 Countries', description: 'Field-proven experience delivering services across global regions.', icon: 'globe' as const },
+  { title: '17+ Countries', description: 'Field-proven experience delivering services across global regions.', icon: 'globe' as const },
 ];
 
 export function Services() {
