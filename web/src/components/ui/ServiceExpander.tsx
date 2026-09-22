@@ -28,7 +28,7 @@ import { asset } from '../../lib/paths';
 const HOVER_INTENT_MS = 120;
 
 /** How long the last card stays open after the cursor leaves the row. */
-const LINGER_MS = 750;
+const LINGER_MS = 150;
 
 /**
  * True on devices with a real hover (a mouse or trackpad). There, hover already

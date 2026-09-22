@@ -6,7 +6,7 @@ import { CertificationRow } from '../../components/ui/CertificationRow';
 import { ValueCard } from '../../components/ui/ValueCard';
 import { StatCounter } from '../../components/ui/StatCounter';
 import { services } from '../../data/services';
-import { certificationBadges, additionalAccreditation } from '../../data/certifications';
+import { certificationBadges } from '../../data/certifications';
 import { homeCoreValues, whyGls } from '../../data/values';
 import { asset } from '../../lib/paths';
 import { useScrollThreshold } from '../../hooks/useScrollThreshold';
@@ -137,35 +137,6 @@ export function Home() {
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="section section-alt">
-        <div className="container">
-          <Reveal className="section-head center">
-            <span className="eyebrow">Certified &amp; Compliant</span>
-            <h2 className="section-title">Certifications</h2>
-            <p className="section-sub">
-              Our processes are independently certified so you can trust the quality behind every inspection, repair
-              and overhaul.
-            </p>
-          </Reveal>
-          <Reveal>
-            <CertificationRow badges={certificationBadges} size="lg" showIcon={false} />
-          </Reveal>
-          <Reveal className="cert-secondary">
-            <p className="cert-row-heading">
-              <span>Additional Accreditation</span>
-            </p>
-            <div className="cert-strip">
-              {additionalAccreditation.map((item) => (
-                <div className="cert-item" key={item.name}>
-                  <img src={asset(item.badge)} alt={item.name} />
-                  <span>{item.name}</span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
         </div>
       </section>
 
