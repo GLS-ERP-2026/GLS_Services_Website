@@ -1,108 +1,139 @@
-import { useEffect, useRef, useState } from "react";
-import { Reveal } from "./Reveal";
-import { CheckIcon } from "./icons";
-import type { ServiceSummary } from "../../data/services";
-import { asset } from "../../lib/paths";
+import { useEffect, useRef, useState } from 'react';
+import { Reveal } from './Reveal';
+import { CheckIcon } from './icons';
+import type { ServiceSummary } from '../../data/services';
+import { asset } from '../../lib/paths';
 
 /**
- * Service cards that open on hover (tap and keyboard focus also work, so the
- * row is usable without a mouse).
+ * Service cards that open on hover. Click/tap and Enter open a card too, and
+ * Escape closes it, so the row is usable without a mouse.
  *
- * The motion is two-stage and direction-dependent, timed in CSS: opening runs
- * sideways first and then down over 2s total, closing runs down first and then
- * sideways over 1.5s. See the `.service-expander` block in global.css.
+ * On desktop the row has two heights — idle and open — and every card fills
+ * it. Each card's photo covers the whole card and its text sits in a panel
+ * pinned to the bottom. That means:
  *
- * A card that is not the open one collapses to its photo alone — no title, no
- * copy — so the row reads as one wide panel between cropped images.
+ *   idle -> open    the row grows taller while the hovered card widens
+ *   switching       only widths change; panels cross-fade, nothing collapses
+ *                   vertically
+ *   open -> idle    after the cursor has been away for LINGER_MS
  *
- * Below 1080px the sideways stage is dropped entirely: cards stack and simply
- * expand downward.
+ * Below 1081px there is no sideways stage: cards stack, expand downward, and
+ * open and close by click/tap only.
  */
 
 /**
  * Hover has to settle before a card opens. Without this, sweeping the cursor
- * across the row starts all four expansions in turn, and at a 2s open that
- * looks far worse than a short pause before anything moves.
+ * across the row starts every expansion in turn.
  */
 const HOVER_INTENT_MS = 120;
+
+/** How long the last card stays open after the cursor leaves the row. */
+const LINGER_MS = 2000;
+
+/**
+ * True on devices with a real hover (a mouse or trackpad). There, hover already
+ * opens and closes cards, so a click on the open card must not close it again.
+ * On touch there is no hover, so a second tap is how a card gets closed.
+ */
+function canHover() {
+  return typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
+}
+
+/**
+ * Hover-to-open and the auto-close after leaving only apply to the side-by-side
+ * desktop row. In the stacked layout an opening card pushes the cards below it
+ * down, which slides a different card under a stationary cursor — hover would
+ * then open that one instead. Must match the min-width breakpoint in global.css.
+ */
+function isSideBySide() {
+  return typeof window !== 'undefined' && window.matchMedia('(min-width: 1081px)').matches;
+}
 
 export function ServiceExpander({ services }: { services: ServiceSummary[] }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const intentTimer = useRef<number | null>(null);
+  const lingerTimer = useRef<number | null>(null);
 
-  function clearIntent() {
-    if (intentTimer.current !== null) {
-      window.clearTimeout(intentTimer.current);
-      intentTimer.current = null;
-    }
+  function clearTimers() {
+    if (intentTimer.current !== null) window.clearTimeout(intentTimer.current);
+    if (lingerTimer.current !== null) window.clearTimeout(lingerTimer.current);
+    intentTimer.current = null;
+    lingerTimer.current = null;
   }
 
   /** Hover: wait for the pointer to settle. */
   function hoverCard(index: number) {
-    clearIntent();
-    intentTimer.current = window.setTimeout(
-      () => setActiveIndex(index),
-      HOVER_INTENT_MS,
-    );
+    if (!isSideBySide()) return;
+    clearTimers();
+    intentTimer.current = window.setTimeout(() => setActiveIndex(index), HOVER_INTENT_MS);
   }
 
-  /** Tap, click and focus are deliberate, so they act immediately. */
+  /** Cursor left the row: keep the last card open for a moment, then close. */
+  function leaveRow() {
+    if (!isSideBySide()) return;
+    clearTimers();
+    lingerTimer.current = window.setTimeout(() => setActiveIndex(null), LINGER_MS);
+  }
+
+  /**
+   * Tap, click and keys are deliberate, so they act immediately. (Focus does not
+   * open a card: pressing the mouse on a title focuses it before the click
+   * lands, so opening on focus meant the click immediately closed it again.)
+   */
   function selectCard(index: number | null) {
-    clearIntent();
+    clearTimers();
     setActiveIndex(index);
   }
 
-  useEffect(() => clearIntent, []);
+  useEffect(() => clearTimers, []);
 
-  // The grid lives on an inner element, not on Reveal itself: `.reveal` sets its
-  // own `transition` at equal specificity and later in the stylesheet, so sharing
-  // one element silently drops the grid-template-columns transition and the row
-  // snaps instead of sliding.
+  // The row lives on an inner element, not on Reveal itself: `.reveal` sets its
+  // own `transition` at equal specificity and later in the stylesheet, so
+  // sharing one element silently drops the row's transitions.
   return (
     <Reveal>
       <div
         className="service-expander"
-        // A data attribute rather than a class, so the column sizing stays pure
-        // CSS and can be overridden wholesale in the mobile media query.
+        // A data attribute rather than a class, so the open/idle sizing stays
+        // pure CSS and can be overridden wholesale in the mobile media query.
         data-active={activeIndex === null ? undefined : activeIndex}
-        onMouseLeave={() => selectCard(null)}
+        onMouseLeave={leaveRow}
       >
         {services.map((service, i) => {
           const isActive = activeIndex === i;
           return (
             <article
               key={service.slug}
-              className={`service-exp-card${isActive ? " is-active" : ""}`}
+              className={`service-exp-card${isActive ? ' is-active' : ''}`}
               onMouseEnter={() => hoverCard(i)}
             >
               <div className="service-exp-media">
                 <img src={asset(service.image)} alt={service.title} />
               </div>
 
-              {/* Collapses to nothing on a compressed card, leaving just the photo. */}
               <div className="service-exp-panel">
-                <div className="service-exp-clip">
-                  <div className="service-exp-body">
-                    <button
-                      type="button"
-                      className="service-exp-toggle"
-                      aria-expanded={isActive}
-                      onClick={() => selectCard(isActive ? null : i)}
-                      onFocus={() => selectCard(i)}
-                    >
-                      <h3>{service.title}</h3>
-                    </button>
+                <button
+                  type="button"
+                  className="service-exp-toggle"
+                  aria-expanded={isActive}
+                  onClick={() => selectCard(isActive && !canHover() ? null : i)}
+                  onKeyDown={(e) => e.key === 'Escape' && selectCard(null)}
+                >
+                  <h3>{service.title}</h3>
+                </button>
 
-                    {/* Summary and detail swap on the same delay, so an open card
-                      never shows a description and its item list at once. */}
-                    <div className="service-exp-summary">
-                      <div className="service-exp-clip">
-                        <p className="service-exp-blurb">{service.homeBlurb}</p>
-                      </div>
+                {/* On desktop summary and detail occupy the same grid cell and
+                    cross-fade, so swapping them never changes the panel's height. */}
+                <div className="service-exp-stack">
+                  <div className="service-exp-summary">
+                    <div className="service-exp-clip">
+                      <p className="service-exp-blurb">{service.homeBlurb}</p>
                     </div>
+                  </div>
 
-                    <div className="service-exp-detail">
-                      <div className="service-exp-clip">
+                  <div className="service-exp-detail" aria-hidden={!isActive}>
+                    <div className="service-exp-clip">
+                      <div className="service-exp-detail-inner">
                         <ul className="service-exp-items">
                           {service.items.map((item) => (
                             <li key={item}>
@@ -111,12 +142,8 @@ export function ServiceExpander({ services }: { services: ServiceSummary[] }) {
                             </li>
                           ))}
                         </ul>
-                        <a
-                          href={asset(service.href)}
-                          className="service-card-link"
-                        >
-                          Explore {service.title}{" "}
-                          <span className="arrow">&rarr;</span>
+                        <a href={asset(service.href)} className="service-card-link" tabIndex={isActive ? 0 : -1}>
+                          Explore {service.title} <span className="arrow">&rarr;</span>
                         </a>
                       </div>
                     </div>

@@ -509,37 +509,22 @@ button { font-family: inherit; }
 .service-card:hover .service-card-link .arrow { transform: translateX(4px); }
 
 /* ---- Expandable service cards (home "What We Do") ----
-   The card grows sideways and downwards as one movement: every animated
-   region starts at t=0 and shares the same duration and curve.
-
-     opening  2.0s
-     closing  1.5s
-
-   The two durations are expressed without JS by putting the opening values on
-   the active-state rules and the closing values on the base rules: a transition
-   is read from the state being moved *to*, so each direction picks up its own.
-
-   The row is flex, not grid, and the width animates via flex-grow. An earlier
-   pass used a grid-template-columns transition, which reads as though it should
-   work — the computed `transition` even lists the property — but Chromium
-   creates no transition for it at all (element.getAnimations() comes back
-   empty) and the columns snap. flex-grow is a plain number and interpolates
-   everywhere. */
+   Mobile-first. The base rules below are the narrow-screen behaviour: cards
+   stack, and an opened card expands downward. Everything to do with the
+   sideways stage lives in the min-width: 1081px block that follows. */
 .service-expander {
-  /* One curve shared by every animated region, so nothing drifts out of step.
-     Deliberately an ease-in-out rather than a sharp ease-out: over a 2s move a
-     front-loaded curve does ~90% of its travel in the first 800ms and then
-     creeps imperceptibly, which reads as a fast card that is somehow still
-     settling. This spreads the movement across the whole duration. */
+  /* One curve shared by every animated property so nothing drifts out of step.
+     An ease-in-out spreads a long move across its whole duration; a sharp
+     ease-out would do ~90% of the travel early and then creep. */
   --exp-ease: cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
-  align-items: stretch;
 }
-
 .service-exp-card {
-  flex: 1 1 0;
-  min-width: 0;
+  position: relative;
+  flex: 1 1 calc(50% - 10px);
+  min-width: calc(50% - 10px);
   background: var(--surface);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -547,35 +532,11 @@ button { font-family: inherit; }
   display: flex;
   flex-direction: column;
 }
-/* ~4.3 : 1 puts the open card at roughly 665px and its neighbours at 155px
-   inside the 1180px container. */
-.service-exp-card.is-active { flex-grow: 4.3; box-shadow: var(--shadow-md); }
-
-@media (prefers-reduced-motion: no-preference) {
-  /* closing */
-  .service-exp-card { transition: flex-grow 1.5s var(--exp-ease), box-shadow 0.6s ease; }
-  /* opening, and re-targeting from one open card to another */
-  .service-expander[data-active] .service-exp-card {
-    transition: flex-grow 2s var(--exp-ease), box-shadow 0.6s ease;
-  }
-}
-
-/* The photo grows into whatever height the collapsing panel gives back, so a
-   compressed card becomes a single cropped image filling the card.
-   The basis is pinned rather than `auto`: with `auto` the base size resolves to
-   the image's own scaled height, which on the widened card is ~500px and makes
-   the whole row absurdly tall. */
-.service-exp-media { flex: 1 1 220px; min-height: 220px; overflow: hidden; }
+.service-exp-card.is-active { box-shadow: var(--shadow-md); }
+.service-exp-media { height: 200px; overflow: hidden; }
 .service-exp-media img { width: 100%; height: 100%; object-fit: cover; }
 
-/* Every collapsible region uses the same grid-template-rows 1fr <-> 0fr
-   technique; .service-exp-clip is the part that actually clips. */
-.service-exp-clip { overflow: hidden; min-height: 0; }
-.service-exp-panel,
-.service-exp-summary { display: grid; grid-template-rows: 1fr; opacity: 1; }
-.service-exp-detail { display: grid; grid-template-rows: 0fr; opacity: 0; }
-
-.service-exp-body { padding: 24px 22px 26px; display: flex; flex-direction: column; min-width: 0; }
+.service-exp-panel { background: var(--surface); padding: 24px 22px 26px; }
 .service-exp-toggle {
   background: none;
   border: none;
@@ -585,8 +546,14 @@ button { font-family: inherit; }
   color: inherit;
   cursor: pointer;
 }
-.service-exp-toggle h3 { font-size: 1.25rem; margin: 0 0 10px; white-space: nowrap; }
+.service-exp-toggle h3 { font-size: 1.25rem; margin: 0 0 10px; }
 .service-exp-blurb { color: var(--ink-500); font-size: 0.95rem; margin: 0; }
+
+.service-exp-clip { overflow: hidden; min-height: 0; }
+.service-exp-summary { display: grid; grid-template-rows: 1fr; }
+.service-exp-detail { display: grid; grid-template-rows: 0fr; opacity: 0; visibility: hidden; }
+.service-exp-card.is-active .service-exp-summary { grid-template-rows: 0fr; opacity: 0; }
+.service-exp-card.is-active .service-exp-detail { grid-template-rows: 1fr; opacity: 1; visibility: visible; }
 
 .service-exp-items {
   display: grid;
@@ -607,28 +574,110 @@ button { font-family: inherit; }
 .service-exp-detail .service-card-link { margin-top: 18px; }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Every region runs the full duration from t=0 on the same curve as the
-     width, so the card grows outwards and downwards as one movement. The
-     opacity fade is shorter so content is not left half-transparent for the
-     whole two seconds — it still starts at t=0, it just settles sooner. */
   .service-exp-summary,
-  .service-exp-detail,
-  .service-exp-panel { transition: grid-template-rows 1.5s var(--exp-ease), opacity 0.9s ease; }
-  .service-exp-card.is-active .service-exp-summary,
-  .service-exp-card.is-active .service-exp-detail,
-  .service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-panel {
-    transition: grid-template-rows 2s var(--exp-ease), opacity 1.2s ease;
+  .service-exp-detail {
+    transition: grid-template-rows 0.8s var(--exp-ease), opacity 0.5s ease, visibility 0s linear 0.8s;
+  }
+  .service-exp-card.is-active .service-exp-detail {
+    transition: grid-template-rows 0.8s var(--exp-ease), opacity 0.5s ease, visibility 0s linear 0s;
   }
 }
 
-.service-exp-card.is-active .service-exp-summary { grid-template-rows: 0fr; opacity: 0; }
-.service-exp-card.is-active .service-exp-detail { grid-template-rows: 1fr; opacity: 1; }
-
-/* Compressed neighbours: photo only. */
-.service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-panel {
-  grid-template-rows: 0fr;
-  opacity: 0;
+@media (max-width: 640px) {
+  .service-exp-card { flex-basis: 100%; min-width: 100%; }
 }
+
+/* ---- Desktop: the sideways stage ----
+   The row has two heights, idle and open, and every card fills it. Each photo
+   covers its whole card and the text sits in a panel pinned to the bottom, so
+   no card's height ever depends on its own contents. That is what lets a
+   switch from one open card to another be purely horizontal:
+
+     idle -> open    row height 400 -> 460 while the hovered card widens (2.0s)
+     switching       widths change; panels cross-fade; nothing moves vertically
+     open -> idle    row height back to 400, widths even out (1.5s), after the
+                     cursor has been away for 2s (see ServiceExpander.tsx)
+
+   Widths animate via flex-grow. A grid-template-columns transition would look
+   neater, but Chromium creates no transition for it at all — getAnimations()
+   comes back empty and the columns snap. */
+@media (min-width: 1081px) {
+  .service-expander { flex-wrap: nowrap; height: 400px; }
+  .service-expander[data-active] { height: 460px; }
+
+  .service-exp-card { flex: 1 1 0; min-width: 0; }
+  /* ~4.3 : 1 puts the open card at roughly 665px and its neighbours at 155px
+     inside the 1180px container. */
+  .service-exp-card.is-active { flex-grow: 4.3; }
+
+  .service-exp-media { position: absolute; inset: 0; height: auto; }
+  /* A shared minimum height keeps titles and photo edges level across all four
+     cards, whatever the length of each blurb or item list (tallest measured
+     content is ~200px). */
+  .service-exp-panel { position: absolute; left: 0; right: 0; bottom: 0; min-height: 210px; }
+  /* nowrap: a title that re-wrapped as its card widened would change the
+     panel's height mid-move. */
+  .service-exp-toggle h3 { font-size: 1.15rem; white-space: nowrap; }
+
+  /* Summary and detail share one grid cell and cross-fade. The cell is always
+     as tall as the taller of the two, so swapping them moves nothing. */
+  .service-exp-stack { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .service-exp-summary,
+  .service-exp-detail,
+  .service-exp-card.is-active .service-exp-summary,
+  .service-exp-card.is-active .service-exp-detail { grid-area: 1 / 1; grid-template-rows: 1fr; }
+  .service-exp-card.is-active .service-exp-summary { visibility: hidden; }
+
+  /* Each text block is pinned to the exact width it has at rest — the summary
+     to an idle card's content width, the detail to an open card's — so text
+     never re-wraps while its card changes width; the card just clips it.
+     A min-width is not enough: a blurb re-flowing to fewer lines as its card
+     widened still shrank the panel mid-move (measured: 179px -> 165px snap).
+     cqw resolves against the row, so these track the container at any
+     desktop width. 60px = three 20px gaps; 44px = panel padding; 4.3 / 7.3 is
+     the open card's share of the flex-grow total. */
+  .service-expander { container-type: inline-size; }
+  .service-exp-blurb { width: calc((100cqw - 60px) / 4 - 44px); }
+  .service-exp-detail-inner { width: calc((100cqw - 60px) * 4.3 / 7.3 - 44px); }
+
+  /* Compressed neighbours: the panel fades away, leaving the photo alone. */
+  .service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-panel {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+  }
+}
+
+@media (min-width: 1081px) and (prefers-reduced-motion: no-preference) {
+  /* Each property is given the timing of the state it is moving *to*: the
+     open values sit on the open-state rules, the close values on the base. */
+  .service-expander { transition: height 1.5s var(--exp-ease); }
+  .service-expander[data-active] { transition: height 2s var(--exp-ease); }
+  .service-exp-card { transition: flex-grow 1.5s var(--exp-ease), box-shadow 0.6s ease; }
+  .service-expander[data-active] .service-exp-card { transition: flex-grow 2s var(--exp-ease), box-shadow 0.6s ease; }
+
+  /* Text never animates height here — only opacity. Appearing content waits a
+     beat so it is not seen squeezed into a narrow card; disappearing content
+     goes at once. Visibility flips after a fade-out so hidden links cannot be
+     clicked, and immediately on a fade-in. */
+  .service-exp-panel,
+  .service-exp-summary,
+  .service-exp-card.is-active .service-exp-detail {
+    transition:
+      opacity 0.8s ease 0.3s,
+      transform 0.8s var(--exp-ease) 0.3s,
+      visibility 0s linear 0s;
+  }
+  .service-exp-detail,
+  .service-exp-card.is-active .service-exp-summary,
+  .service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-panel {
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease,
+      visibility 0s linear 0.4s;
+  }
+}
+
 .value-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -844,28 +893,6 @@ button { font-family: inherit; }
    ========================================================================== */
 @media (max-width: 1080px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
-  /* Four across gets too narrow to widen usefully here, so the sideways stage
-     is dropped: the row wraps to two per line and every card keeps an equal
-     share, open or not. */
-  .service-expander { flex-wrap: wrap; }
-  .service-exp-card,
-  .service-exp-card.is-active,
-  .service-expander[data-active] .service-exp-card { flex: 1 1 calc(50% - 10px); min-width: calc(50% - 10px); }
-  /* No sideways stage here, so nothing compresses to a bare photo and the
-     detail has nothing to wait for — the delays go, and the cards just
-     expand downward. */
-  .service-expander[data-active] .service-exp-card:not(.is-active) .service-exp-panel {
-    grid-template-rows: 1fr;
-    opacity: 1;
-  }
-  .service-exp-media { flex: none; height: 200px; min-height: 0; }
-  @media (prefers-reduced-motion: no-preference) {
-    /* Nothing moves sideways here, so the vertical expand can be quicker. */
-    .service-exp-card.is-active .service-exp-summary,
-    .service-exp-card.is-active .service-exp-detail {
-      transition: grid-template-rows 0.8s var(--exp-ease), opacity 0.5s ease;
-    }
-  }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   /* Three stats stay 3-up here; two columns would leave an orphan. */
   .stat-grid { gap: 40px 24px; }
@@ -914,9 +941,6 @@ button { font-family: inherit; }
 
 @media (max-width: 640px) {
   .grid-3, .grid-4 { grid-template-columns: 1fr; }
-  .service-exp-card,
-  .service-exp-card.is-active,
-  .service-expander[data-active] .service-exp-card { flex: 1 1 100%; min-width: 100%; }
   .cert-slot, .cert-logo,
   .cert-row--lg .cert-slot, .cert-row--lg .cert-logo { width: 140px; height: 84px; }
   .cert-row--lg .cert-slot-name { font-size: 0.95rem; }
