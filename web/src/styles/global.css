@@ -173,6 +173,10 @@ button { font-family: inherit; }
 .nav-dropdown a:hover { background: rgba(238, 146, 71, 0.16); color: var(--accent-400); }
 
 .nav-cta { display: flex; align-items: center; gap: 10px; }
+/* Hidden while a quote button on the page itself is on screen (Header.tsx).
+   Faded rather than removed, so the header layout does not shift. */
+.nav-quote { transition: opacity 0.3s ease, visibility 0.3s; }
+.nav-quote.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 .nav-toggle {
   display: none;
   flex-direction: column;

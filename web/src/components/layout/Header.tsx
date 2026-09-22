@@ -2,6 +2,7 @@ import { useState, type MouseEvent } from 'react';
 import { useHeaderScroll } from '../../hooks/useHeaderScroll';
 import { useHeroHalfHeight } from '../../hooks/useHeroHalfHeight';
 import { useScrollThreshold } from '../../hooks/useScrollThreshold';
+import { useAnyInView } from '../../hooks/useAnyInView';
 import { primaryNav, secondaryNav, servicesNav } from '../../data/nav';
 import { asset, currentPagePath } from '../../lib/paths';
 
@@ -9,6 +10,10 @@ import { asset, currentPagePath } from '../../lib/paths';
  * hero has been measured (see useHeroHalfHeight) — otherwise the reveal is
  * tied to half the hero's actual rendered height. */
 const HOME_HERO_REVEAL_THRESHOLD_PX = 4;
+
+/** The page's own quote buttons. While one is on screen the header's quote
+ * button steps aside, so only one is ever visible at a time. */
+const PAGE_CTA_SELECTOR = '.cta-banner .btn, .hero .hero-actions .btn';
 
 interface HeaderProps {
   /** 'home-hero' hides everything but the logo until the visitor scrolls
@@ -28,6 +33,7 @@ export function Header({ variant = 'default' }: HeaderProps) {
   const isPastTop = useScrollThreshold(revealThresholdPx);
 
   const isConcealed = isHomeHero && !isPastTop;
+  const isQuoteHidden = useAnyInView(PAGE_CTA_SELECTOR);
 
   function isActive(href: string) {
     return currentPath === href;
@@ -106,7 +112,12 @@ export function Header({ variant = 'default' }: HeaderProps) {
           </ul>
         </nav>
         <div className="nav-cta" aria-hidden={isConcealed || undefined}>
-          <a href={asset('/contact.html')} className="btn btn-primary" tabIndex={concealedTabIndex}>
+          <a
+            href={asset('/contact.html')}
+            className={`btn btn-primary nav-quote${isQuoteHidden ? ' is-hidden' : ''}`}
+            tabIndex={isQuoteHidden ? -1 : concealedTabIndex}
+            aria-hidden={isQuoteHidden || undefined}
+          >
             Request a Quote
           </a>
           <button
