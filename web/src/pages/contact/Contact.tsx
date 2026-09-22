@@ -84,7 +84,7 @@ export function Contact() {
                     id="ct-message"
                     name="message"
                     required
-                    placeholder="Tell us about your equipment or requirement"
+                    placeholder="Share your equipment details and service requirements with our team"
                   />
                 </div>
               </div>

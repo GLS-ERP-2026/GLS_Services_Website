@@ -144,14 +144,13 @@ export function Home() {
         <div className="container">
           <Reveal className="cta-banner">
             <div>
-              <h2>Need a Reliable MRO Partner for Your Rig?</h2>
+              <h2>Looking for a Reliable Service Partner?</h2>
               <p>
-                Talk to our team about inspection, repair, overhaul or used equipment requirements &mdash; we
-                typically respond within 24 hours.
+                Speak with our team about equipment inspection, maintenance, repair, overhaul or supply requirements.
               </p>
             </div>
             <a href={asset('/contact.html')} className="btn btn-primary">
-              Get in Touch
+              Request a Quote
             </a>
           </Reveal>
         </div>
