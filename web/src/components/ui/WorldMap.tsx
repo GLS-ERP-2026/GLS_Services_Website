@@ -112,13 +112,14 @@ export function WorldMap() {
 
   return (
     <div ref={ref} className={`world-map${isLive ? ' is-live' : ''}`}>
-      {/* Framed on the region GLS works in (UK to Vietnam, Denmark to Angola)
-          rather than the whole globe, so the countries and lines read clearly. */}
+      {/* A wide frame for the full-width layout. Top to bottom it fits every
+          operating country in full, Denmark to Angola, with a margin; the extra
+          width shows the surrounding regions either side. */}
       <ComposableMap
         projection="geoMercator"
-        width={800}
-        height={560}
-        projectionConfig={{ center: [51, 27], scale: 330 }}
+        width={1100}
+        height={495}
+        projectionConfig={{ center: [50, 28.4], scale: 258 }}
       >
         <Geographies geography={worldTopology}>
           {({ geographies }) =>

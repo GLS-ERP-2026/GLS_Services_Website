@@ -482,16 +482,18 @@ button { font-family: inherit; }
 
 /* ---- World map ---- */
 .world-map-section { background: var(--sand-100); }
-.world-map { width: 100%; max-width: 1040px; margin: 0 auto; }
+/* Full screen width. On very wide screens the height is capped and the map
+   stays centred, rather than growing taller than the window. */
+.world-map { width: 100%; }
 .world-map svg {
   width: 100%;
   height: auto;
+  max-height: 80vh;
   display: block;
-  /* The map is cropped to a region; fade its edges so land does not end in a hard line. */
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent), linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent), linear-gradient(to bottom, transparent, #000 6%, #000 94%, transparent);
-  mask-composite: intersect;
+  /* Fade the left and right edges into the page, where the map meets the edge
+     of the screen. Top and bottom are not faded, so no country is cut off. */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
 .world-map-country { fill: var(--panel-light); stroke: var(--white); stroke-width: 0.75; outline: none; transition: fill 0.2s ease; }
 .world-map-country.is-active { fill: var(--accent-600); }

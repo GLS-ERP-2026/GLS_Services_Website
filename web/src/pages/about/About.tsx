@@ -13,14 +13,14 @@ export function About() {
       <PageBanner
         image="/assets/images/hero/banner-about.jpg"
         title="About GLS Services"
-        description="An ISO-certified partner for drilling equipment maintenance, repair & overhaul — built on integrity, mindfulness and humility."
+        description="A trusted ISO-certified partner for drilling equipment MRO, supporting contractors across 17+ countries with disciplined execution, technical capability and a strong safety culture."
       />
 
       <section className="section">
         <div className="container about-split">
           <Reveal>
             <span className="eyebrow">Company Overview</span>
-            <h2 className="section-title">Consolidated MRO, Delivered With Discipline</h2>
+            <h2 className="section-title">Built Around Reliability. Driven by Service.</h2>
             <p>
               GLS Services is an ISO 9001:2015, ISO 14001:2015 and ISO 45001:2018 certified organization serving the
               oil and gas drilling sector. The company was established to provide comprehensive maintenance and
@@ -74,8 +74,13 @@ export function About() {
             <span className="eyebrow">Global Footprint</span>
             <p className="section-sub">Drilling equipment MRO support delivered across 17+ countries.</p>
           </Reveal>
+        </div>
+        {/* The map runs the full width of the screen, outside the content column. */}
+        <Reveal>
+          <WorldMap />
+        </Reveal>
+        <div className="container">
           <Reveal>
-            <WorldMap />
             <ul className="world-map-countries">
               {operatingCountries.map((country) => (
                 <li key={country.isoNumeric} className={`world-map-chip${country.isHq ? ' is-hq' : ''}`}>
