@@ -1,5 +1,6 @@
 import { footerQuickLinks, servicesNav } from '../../data/nav';
 import { contactInfo } from '../../data/contact';
+import { LinkedInIcon } from '../ui/icons';
 import { asset } from '../../lib/paths';
 
 export function Footer() {
@@ -15,6 +16,16 @@ export function Footer() {
               An ISO 9001:2015, ISO 14001:2015 &amp; ISO 45001:2018 certified provider of end-to-end drilling equipment MRO solutions for oil &amp;
               gas drilling contractors across 17+ countries.
             </p>
+            <div className="footer-social">
+              <a
+                href={contactInfo.linkedIn}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GLS Services on LinkedIn"
+              >
+                <LinkedInIcon />
+              </a>
+            </div>
           </div>
           <div>
             <div className="footer-heading">Quick Links</div>

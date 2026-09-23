@@ -10,4 +10,5 @@ export const contactInfo = {
   emails: ['contact@glsserv.com', 'admin@glsserv.com'],
   phone: '+971 52 608 5036',
   phoneHref: 'tel:+971526085036',
+  linkedIn: 'https://www.linkedin.com/company/glsserv',
 };

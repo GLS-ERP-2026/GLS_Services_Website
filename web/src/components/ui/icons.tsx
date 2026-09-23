@@ -102,6 +102,16 @@ export function GearIcon() {
   );
 }
 
+/** Brand mark, so it is filled rather than stroked like the `.svg-ico` set
+ * above — it is not part of iconMap for that reason. */
+export function LinkedInIcon() {
+  return (
+    <svg className="brand-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm6.5 0h3.8v1.64h.06c.53-.95 1.83-1.95 3.76-1.95 4.02 0 4.76 2.5 4.76 5.76V21h-4v-5.84c0-1.4-.03-3.2-2-3.2-2 0-2.3 1.52-2.3 3.1V21h-4V9z" />
+    </svg>
+  );
+}
+
 export const iconMap = {
   shield: ShieldIcon,
   target: TargetIcon,
