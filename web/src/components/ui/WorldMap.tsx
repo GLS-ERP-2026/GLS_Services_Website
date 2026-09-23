@@ -128,16 +128,18 @@ export function WorldMap() {
 
   return (
     <div ref={ref} className={`world-map${isLive ? ' is-live' : ''}`}>
-      {/* Europe, Africa, Asia and Australia shown complete: west to 27°W
-          (Cape Verde, Iceland), east to 168°W (the tip of Russia beyond the
-          date line), north to 82°N (the Arctic islands), south to 48°S (New
-          Zealand). The globe is rotated to centre on 82.5°E, which moves the
-          map's seam into the Americas, so Russia is not split at 180°. */}
+      {/* Framed tightly on the countries GLS operates in: west to 14.5°W (past
+          Ireland), east to 125.5°E (past Malaysian Borneo), north to 63.5°N
+          (past Shetland and Denmark), south to 26.5°S (past Angola). Every
+          marked country sits inside that frame with room to spare; northern
+          and eastern Russia and most of Australia fall outside it and are cut
+          off. The globe is rotated to centre on 55.5°E, which moves the map's
+          seam into the Americas, so Russia is not split at 180°. */}
       <ComposableMap
         projection="geoMercator"
-        width={600}
-        height={584}
-        projectionConfig={{ rotate: [-82.5, 0, 0], center: [0, 43.8], scale: 157 }}
+        width={760}
+        height={600}
+        projectionConfig={{ rotate: [-55.5, 0, 0], center: [0, 26.92], scale: 311 }}
       >
         <Geographies geography={worldTopology}>
           {({ geographies }) =>

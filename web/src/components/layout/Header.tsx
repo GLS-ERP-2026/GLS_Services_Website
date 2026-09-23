@@ -1,9 +1,9 @@
-import { useState, type MouseEvent } from 'react';
+import { useState } from 'react';
 import { useHeaderScroll } from '../../hooks/useHeaderScroll';
 import { useHeroHalfHeight } from '../../hooks/useHeroHalfHeight';
 import { useScrollThreshold } from '../../hooks/useScrollThreshold';
 import { useAnyInView } from '../../hooks/useAnyInView';
-import { primaryNav, secondaryNav, servicesNav } from '../../data/nav';
+import { primaryNav, secondaryNav } from '../../data/nav';
 import { asset, currentPagePath } from '../../lib/paths';
 
 /** Fallback reveal threshold for the home hero header, used only before the
@@ -28,7 +28,6 @@ export function Header({ variant = 'default' }: HeaderProps) {
   const gradientRangePx = isHomeHero && heroHalfHeight ? heroHalfHeight : undefined;
   const headerRef = useHeaderScroll<HTMLElement>(gradientRangePx);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
   const currentPath = currentPagePath();
   const isPastTop = useScrollThreshold(revealThresholdPx);
 
@@ -37,13 +36,6 @@ export function Header({ variant = 'default' }: HeaderProps) {
 
   function isActive(href: string) {
     return currentPath === href;
-  }
-
-  function handleServicesLinkClick(e: MouseEvent<HTMLAnchorElement>) {
-    if (window.innerWidth <= 900) {
-      e.preventDefault();
-      setIsServicesOpen((open) => !open);
-    }
   }
 
   const servicesActive = currentPath === '/services.html' || currentPath.startsWith('/services/');
@@ -79,24 +71,14 @@ export function Header({ variant = 'default' }: HeaderProps) {
                 </a>
               </li>
             ))}
-            <li className={`has-dropdown${isServicesOpen ? ' is-open' : ''}`}>
+            <li>
               <a
                 className={`nav-link${servicesActive ? ' is-active' : ''}`}
                 href={asset('/services.html')}
-                onClick={handleServicesLinkClick}
                 tabIndex={concealedTabIndex}
               >
                 Services
               </a>
-              <ul className="nav-dropdown">
-                {servicesNav.map((link) => (
-                  <li key={link.href}>
-                    <a href={asset(link.href)} tabIndex={concealedTabIndex}>
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
             </li>
             {secondaryNav.map((link) => (
               <li key={link.href}>

@@ -145,33 +145,6 @@ button { font-family: inherit; }
 }
 .nav-link:hover, .nav-link.is-active { background: rgba(238, 146, 71, 0.16); color: var(--accent-600); }
 
-.nav-dropdown {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  min-width: 280px;
-  background: var(--nav-dark);
-  border: 1px solid var(--border-dark);
-  border-radius: var(--radius-md);
-  padding: 10px;
-  box-shadow: var(--shadow-lg);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(8px);
-  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
-}
-.has-dropdown:hover .nav-dropdown,
-.has-dropdown:focus-within .nav-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
-.nav-dropdown a {
-  display: block;
-  padding: 12px 14px;
-  border-radius: var(--radius-sm);
-  color: var(--sand-100);
-  font-size: 0.92rem;
-  font-weight: 500;
-}
-.nav-dropdown a:hover { background: rgba(238, 146, 71, 0.16); color: var(--accent-400); }
-
 .nav-cta { display: flex; align-items: center; gap: 10px; }
 /* Hidden while a quote button on the page itself is on screen (Header.tsx).
    Faded rather than removed, so the header layout does not shift. */
@@ -482,8 +455,8 @@ button { font-family: inherit; }
 
 /* ---- World map ---- */
 .world-map-section { background: var(--sand-100); }
-/* The map is close to square, so it is sized to fit the screen height rather
-   than the full width: the whole map stays in view at once, centred. */
+/* The map is capped at the screen height as well as the full width, so the
+   whole frame stays in view at once, centred. */
 .world-map { width: 100%; }
 .world-map svg {
   display: block;
@@ -988,16 +961,6 @@ button { font-family: inherit; }
     align-items: stretch;
     gap: 4px;
   }
-  .site-header.is-open .nav-dropdown {
-    position: static;
-    opacity: 1;
-    visibility: visible;
-    transform: none;
-    box-shadow: none;
-    margin-top: 6px;
-    display: none;
-  }
-  .site-header.is-open .has-dropdown.is-open .nav-dropdown { display: block; }
 }
 
 @media (max-width: 640px) {
