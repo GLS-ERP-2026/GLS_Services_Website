@@ -16,16 +16,6 @@ export function Footer() {
               An ISO 9001:2015, ISO 14001:2015 &amp; ISO 45001:2018 certified provider of end-to-end drilling equipment MRO solutions for oil &amp;
               gas drilling contractors across 17+ countries.
             </p>
-            <div className="footer-social">
-              <a
-                href={contactInfo.linkedIn}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GLS Services on LinkedIn"
-              >
-                <LinkedInIcon />
-              </a>
-            </div>
           </div>
           <div>
             <div className="footer-heading">Quick Links</div>
@@ -62,6 +52,17 @@ export function Footer() {
                 <span>
                   <strong>Workshop</strong>
                   {contactInfo.workshop.short}
+                </span>
+              </div>
+              <div className="footer-contact-item">
+                <span className="footer-contact-ico">
+                  <LinkedInIcon />
+                </span>
+                <span>
+                  <strong>LinkedIn</strong>
+                  <a href={contactInfo.linkedIn} target="_blank" rel="noopener noreferrer">
+                    linkedin.com/company/glsserv
+                  </a>
                 </span>
               </div>
               <div className="footer-contact-item">
