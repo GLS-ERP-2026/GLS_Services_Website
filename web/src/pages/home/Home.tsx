@@ -85,9 +85,6 @@ export function Home() {
                 <span className="check-ico">&#10003;</span> End-to-end inspection, repair &amp; overhaul solutions
               </li>
               <li>
-                <span className="check-ico">&#10003;</span> Procedures aligned with applicable API standards
-              </li>
-              <li>
                 <span className="check-ico">&#10003;</span> Experienced, trained field technicians
               </li>
               <li>

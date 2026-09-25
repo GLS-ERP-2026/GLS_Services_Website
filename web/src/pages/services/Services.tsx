@@ -153,13 +153,18 @@ function EquipmentView({ onBack }: { onBack: () => void }) {
   return (
     <>
       <section className="section">
-        <div className="container">
+        {/* The equipment grid runs wider than the rest of the page, so its
+            cards fill the page width; the service cards below keep the
+            standard container. */}
+        <div className="container container-wide">
           <button type="button" className="services-back" onClick={onBack}>
             <span className="arrow">&larr;</span> Back to Overview
           </button>
 
           <EquipmentTabs />
+        </div>
 
+        <div className="container">
           <div className="grid-4 section-block-divided">
             {services.map((service) => (
               <ServiceCard key={service.slug} service={service} description={service.blurb} />
