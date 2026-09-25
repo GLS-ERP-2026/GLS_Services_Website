@@ -17,7 +17,7 @@ export function DrillingEquipmentMro() {
     <Layout>
       <PageBanner
         image="/assets/images/hero/banner-mro.jpg"
-        title="Drilling Equipment MRO"
+        title="Drilling Equipment Services"
         description="Inspection, repair & overhaul for the equipment that keeps your rig running — delivered under ISO 9001:2015, ISO 14001:2015 & ISO 45001:2018 certified processes."
       />
 

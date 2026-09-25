@@ -73,7 +73,7 @@ export function Home() {
           </Reveal>
           <Reveal>
             <span className="eyebrow">Who We Are</span>
-            <h2 className="section-title">Trusted MRO Partner for Drilling Contractors</h2>
+            <h2 className="section-title">Trusted Maintenance &amp; Overhaul Partner for Drilling Contractors</h2>
             <p className="section-sub">
               GLS Services provides servicing and technical support for drilling equipment across the oil &amp; gas
               industry. From inspection and maintenance through to repair and overhaul, our work is focused on

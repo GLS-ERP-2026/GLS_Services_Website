@@ -13,7 +13,7 @@ export function About() {
       <PageBanner
         image="/assets/images/hero/banner-about.jpg"
         title="About GLS Services"
-        description="A trusted ISO-certified partner for drilling equipment MRO, supporting contractors across 17+ countries with disciplined execution, technical capability and a strong safety culture."
+        description="A trusted ISO-certified partner for drilling equipment maintenance, repair and overhaul, supporting contractors across 17+ countries with disciplined execution, technical capability and a strong safety culture."
       />
 
       <section className="section">

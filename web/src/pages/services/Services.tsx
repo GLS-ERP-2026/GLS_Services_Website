@@ -88,7 +88,7 @@ export function Services() {
       <PageBanner
         image="/assets/images/hero/banner-services.jpg"
         title="Our Services"
-        description="Full-scope equipment MRO capabilities for drilling contractors — from rig-floor equipment to crane certification and used equipment sourcing."
+        description="Full-scope maintenance, repair and overhaul for drilling contractors — from rig-floor equipment to crane certification and used equipment sourcing."
       />
 
       <div ref={contentRef} className="services-view" key={showEquipment ? 'equipment' : 'overview'}>

@@ -21,7 +21,7 @@ export function Careers() {
         <div className="container grid-2" style={{ alignItems: 'flex-start' }}>
           <Reveal>
             <span className="eyebrow">Why GLS</span>
-            <h2 className="section-title">Build Your Career in Drilling Equipment MRO</h2>
+            <h2 className="section-title">Build Your Career in Drilling Equipment Services</h2>
             <p>
               We're an ISO 9001:2015, ISO 14001:2015, ISO 45001:2018 and API Q2 certified company serving oil &amp; gas drilling
               contractors across 17+ countries. We look for people who share our values of integrity, mindfulness and
