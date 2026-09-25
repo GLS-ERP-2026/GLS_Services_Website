@@ -10,17 +10,12 @@
  * copy across this site said "ISO 45001-2015" / "ISO 45001:2015", which is not a
  * real edition of that standard.
  *
- * `image` is undefined until the real logo file is supplied. While it is unset
- * the row renders a reserved slot at the logo's aspect ratio with the name in
- * it, so the layout is final but no broken image can ever appear. To publish a
- * logo, drop the file at the path below and set `image` — nothing else changes:
- *
- *   web/public/assets/images/certifications/iso-9001.png
- *                                           iso-14001.png
- *                                           iso-45001.png
- *                                           api-q2.png
- *
- * Transparent PNG or SVG reads best on the light background.
+ * `image` is the certification mark, shown on a white tile in both logo rows.
+ * The originals are in content-source/photos/certifications/; the ISO marks
+ * were trimmed of their white margins and scaled to 300px tall, and the API Q2
+ * mark is used as supplied. `width`/`height` are the file's pixel size, so the
+ * row reserves each logo's space before it loads. A badge without `image`
+ * falls back to a slot carrying its name.
  */
 export interface CertificationBadge {
   /** Short label, used on the home page. */
@@ -30,7 +25,7 @@ export interface CertificationBadge {
   /** What the standard governs. Describes the standard, not GLS's performance. */
   description: string;
   icon: 'check' | 'leaf' | 'shield' | 'certificate';
-  image?: string;
+  image?: { src: string; width: number; height: number };
 }
 
 export const certificationBadges: CertificationBadge[] = [
@@ -40,6 +35,7 @@ export const certificationBadges: CertificationBadge[] = [
     description:
       'Quality Management System — consistent, customer-focused quality across every service we deliver.',
     icon: 'check',
+    image: { src: '/assets/images/certifications/iso-9001.jpg', width: 792, height: 300 },
   },
   {
     name: 'ISO 14001',
@@ -47,6 +43,7 @@ export const certificationBadges: CertificationBadge[] = [
     description:
       'Environmental Management System — responsible operations that minimize environmental impact.',
     icon: 'leaf',
+    image: { src: '/assets/images/certifications/iso-14001.jpg', width: 792, height: 300 },
   },
   {
     name: 'ISO 45001',
@@ -54,6 +51,7 @@ export const certificationBadges: CertificationBadge[] = [
     description:
       'Occupational Health & Safety Management — protecting our people on every job, every time.',
     icon: 'shield',
+    image: { src: '/assets/images/certifications/iso-45001.jpg', width: 792, height: 300 },
   },
   {
     name: 'API Q2',
@@ -61,10 +59,11 @@ export const certificationBadges: CertificationBadge[] = [
     description:
       'Quality management for service supply organizations in the petroleum and natural gas industry, covering service execution, personnel competency and contingency planning.',
     icon: 'certificate',
+    image: { src: '/assets/images/certifications/api-q2.jpg', width: 133, height: 160 },
   },
 ];
 
 export const additionalAccreditation = [
   { name: 'ANAB Certified', badge: '/assets/images/certifications/badge-anab.svg' },
-  { name: 'CT Certified', badge: '/assets/images/certifications/badge-ct.svg' },
+  { name: 'CT Certified', badge: '/assets/images/certifications/ct-certified.png' },
 ];

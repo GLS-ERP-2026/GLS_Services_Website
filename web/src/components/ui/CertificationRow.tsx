@@ -3,9 +3,10 @@ import type { CertificationBadge } from '../../data/certifications';
 import { asset } from '../../lib/paths';
 
 /**
- * Certification logos under a centred heading. A badge without an `image` set
- * renders a reserved slot at the logo's aspect ratio carrying the name, so the
- * layout is the final one before the artwork arrives.
+ * Certification logos under a centred heading. Every logo sits on a white tile
+ * of the same height and keeps its own width, since the marks differ in shape
+ * (the ISO marks are wide, API Q2 is nearly square). A badge without an
+ * `image` renders a slot carrying its name instead.
  */
 export function CertificationRow({
   badges,
@@ -34,7 +35,15 @@ export function CertificationRow({
           return (
             <li key={badge.name}>
               {badge.image ? (
-                <img src={asset(badge.image)} alt={label} className="cert-logo" />
+                <span className="cert-tile">
+                  <img
+                    src={asset(badge.image.src)}
+                    width={badge.image.width}
+                    height={badge.image.height}
+                    alt={label}
+                    className="cert-logo"
+                  />
+                </span>
               ) : (
                 <span className="cert-slot" aria-label={label}>
                   <span className="cert-slot-name">{label}</span>
