@@ -33,7 +33,7 @@ const capabilities = [
     title: 'Onshore Field Teams',
     description:
       'Dedicated onshore field teams for land rig maintenance, repair, troubleshooting and commissioning, with rapid deployment across MENA, Africa and Asia-Pacific.',
-    image: '/assets/images/services/capability-onshore.jpg',
+    image: '/assets/images/services/capability-onshore.png',
   },
 ];
 
