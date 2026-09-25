@@ -127,18 +127,32 @@ function EquipmentRow({ items, firstIndex }: { items: EquipmentWithPhotos[]; fir
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const intentTimer = useRef<number | null>(null);
   const lingerTimer = useRef<number | null>(null);
+  /** The card the intent timer is about to open. */
+  const pendingIndex = useRef<number | null>(null);
 
   function clearTimers() {
     if (intentTimer.current !== null) window.clearTimeout(intentTimer.current);
     if (lingerTimer.current !== null) window.clearTimeout(lingerTimer.current);
     intentTimer.current = null;
     lingerTimer.current = null;
+    pendingIndex.current = null;
   }
 
+  /**
+   * Called on every real mouse movement over a card, so repeat calls for the
+   * card already open or about to open are no-ops (apart from cancelling a
+   * pending close).
+   */
   function hoverCard(index: number) {
     if (!isSideBySide()) return;
+    if (index === pendingIndex.current) return;
     clearTimers();
-    intentTimer.current = window.setTimeout(() => setActiveIndex(index), HOVER_INTENT_MS);
+    if (index === activeIndex) return;
+    pendingIndex.current = index;
+    intentTimer.current = window.setTimeout(() => {
+      pendingIndex.current = null;
+      setActiveIndex(index);
+    }, HOVER_INTENT_MS);
   }
 
   function leaveRow() {
@@ -185,7 +199,12 @@ function EquipmentRow({ items, firstIndex }: { items: EquipmentWithPhotos[]; fir
           <article
             key={item.slug}
             className={`equip-card${isActive ? ' is-active' : ''}`}
-            onMouseEnter={() => hoverCard(i)}
+            // Opens on real pointer movement, not mouseenter: content scrolling
+            // under a still cursor (after "View Equipment & Scope" scrolls the
+            // page, or while the wheel scrolls past the grid) fires mouseenter
+            // and zero-movement mouse events too, and that alone must not open
+            // a card.
+            onMouseMove={(e) => (e.movementX !== 0 || e.movementY !== 0) && hoverCard(i)}
           >
             <div className="equip-media">
               <EquipmentSlideshow
