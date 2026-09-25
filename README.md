@@ -50,6 +50,8 @@ Real GLS photos (logo, equipment, rig backgrounds) live in `content-source/photo
 3. Update the corresponding image reference in the relevant page under `web/src/pages/` (or in `web/src/data/services.ts` / `certifications.ts` for images driven from shared data).
 4. Rebuild and republish per "Making changes" above.
 
+**Services page equipment cards** (Mechanical / Electrical / Offshore tabs) work differently. Their photos are resized automatically, with no manual step. Drop full-quality originals into `content-source/equipment/<tab>/<equipment>/`, and the build (`npm run build`, or `npm run photos` on its own) writes the web-sized copies to `web/public/assets/images/equipment/`. See [`content-source/equipment/README.md`](content-source/equipment/README.md). The card text (names, scopes, descriptions) lives in `web/src/data/equipment.ts`.
+
 A handful of slots still use the original **SVG placeholders** (gradient + icon + caption naming the file it stands in for), because no matching photo was provided yet:
 - `web/public/assets/images/services/service-jacking-skidding.svg` — Skidding System subservice (no dedicated skidding photo yet; Jacking System already uses a real photo)
 - `web/public/assets/images/services/service-cranes.svg` — Cranes "Repair & Overhaul" subservice (Cranes "Inspection" already uses a real photo)

@@ -1,0 +1,1 @@
+import{r}from"./global-CY9dg0YP.js";function u(e,t,n=0){const[a,c]=r.useState({activeIndex:0,prevIndex:null});return r.useEffect(()=>{if(e<=1)return;const d=()=>c(o=>({activeIndex:(o.activeIndex+1)%e,prevIndex:o.activeIndex}));let i;const s=window.setTimeout(()=>{d(),i=window.setInterval(d,t)},t+n);return()=>{window.clearTimeout(s),window.clearInterval(i)}},[e,t,n]),a}export{u};

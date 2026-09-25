@@ -711,6 +711,211 @@ button { font-family: inherit; }
   }
 }
 
+/* ---- Equipment tabs (Services page) ----
+   Mobile-first like the service expander above: below 1081px the cards sit in
+   a plain grid and an opened card shows its description underneath. The
+   sideways stage lives in the min-width: 1081px block further down. */
+.equip-tablist {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 48px;
+  padding: 6px;
+  gap: 4px;
+  background: var(--surface);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+}
+.equip-tab {
+  border: none;
+  background: none;
+  padding: 12px 32px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--ink-500);
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.equip-tab:hover { color: var(--accent-600); }
+.equip-tab.is-active { background: var(--accent-600); color: var(--white); }
+
+.equip-grid {
+  --exp-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+/* Rows only matter to the desktop stage; here the cards flow as one grid. */
+.equip-row { display: contents; }
+
+.equip-card {
+  position: relative;
+  min-width: 0;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.equip-card.is-active { box-shadow: var(--shadow-md); }
+
+.equip-media { height: 220px; overflow: hidden; background: var(--panel-light); }
+.equip-slides { position: relative; width: 100%; height: 100%; }
+.equip-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+}
+.equip-slide--active { opacity: 1; z-index: 2; }
+.equip-slide--leaving { z-index: 1; }
+.equip-slides--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--panel-light), var(--sand-200));
+  color: var(--ink-300);
+}
+.equip-slides--empty .svg-ico { width: 56px; height: 56px; stroke-width: 1.2; }
+
+.equip-summary { padding: 22px 22px 24px; }
+.equip-toggle {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+}
+.equip-card h3 { font-size: 1.2rem; margin: 0; }
+
+/* The light rule between the name and the scopes is the list's top border. */
+.equip-scopes {
+  display: grid;
+  gap: 9px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.equip-scopes li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.93rem;
+  color: var(--ink-700);
+}
+.equip-scopes .svg-ico { width: 15px; height: 15px; flex: none; margin-top: 4px; color: var(--accent-600); }
+
+.equip-card p { color: var(--ink-500); font-size: 0.95rem; }
+.equip-card .service-card-link { margin-top: 4px; }
+
+.equip-more { display: grid; grid-template-rows: 0fr; opacity: 0; visibility: hidden; }
+.equip-card.is-active .equip-more { grid-template-rows: 1fr; opacity: 1; visibility: visible; }
+.equip-clip { overflow: hidden; min-height: 0; }
+.equip-more p { margin: 16px 0 0; }
+.equip-detail { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .equip-grid { animation: equip-grid-in 0.5s ease both; }
+  .equip-slide { transition: opacity 1.2s ease; }
+  .equip-more { transition: grid-template-rows 0.8s var(--exp-ease), opacity 0.5s ease, visibility 0s linear 0.8s; }
+  .equip-card.is-active .equip-more {
+    transition: grid-template-rows 0.8s var(--exp-ease), opacity 0.5s ease, visibility 0s linear 0s;
+  }
+}
+@keyframes equip-grid-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-width: 640px) {
+  .equip-grid { grid-template-columns: minmax(0, 1fr); }
+  .equip-tablist { margin-bottom: 36px; }
+  .equip-tab { padding: 10px 18px; font-size: 0.95rem; }
+}
+
+/* ---- Desktop: the sideways stage ----
+   Rows of three. Hovering a card opens it across its row:
+
+     photo      full width x 220px on top  ->  left 55% x full card height
+     text       summary fades out; the detail column fades in on the right
+     neighbours shrink to --sliver-wide strips showing only their photo
+
+   Every card holds both layouts at once — summary and detail share one grid
+   cell, and each is pinned to the width it has when visible — so a card's
+   height is the same open or closed. A row therefore never grows or shrinks
+   when a card opens, and the rows below never move under the cursor.
+
+   Widths animate via flex-basis (see the service expander for why not grid
+   columns). cqw resolves against the row; --row-count is set inline, since a
+   last row can hold fewer than three cards. */
+@media (min-width: 1081px) {
+  .equip-grid { display: flex; flex-direction: column; gap: 24px; }
+  .equip-row {
+    --sliver: 56px;
+    --idle-w: calc((100cqw - 40px) / 3);
+    --open-w: calc(100cqw - (var(--row-count) - 1) * (var(--sliver) + 20px));
+    display: flex;
+    gap: 20px;
+    container-type: inline-size;
+  }
+
+  .equip-card { flex: 0 0 var(--idle-w); display: grid; grid-template-columns: minmax(0, 1fr); }
+  .equip-row[data-active] .equip-card { flex-basis: var(--sliver); }
+  .equip-row[data-active] .equip-card.is-active { flex-basis: var(--open-w); }
+
+  .equip-media { position: absolute; top: 0; left: 0; z-index: 1; width: 100%; height: 220px; }
+  .equip-card.is-active .equip-media { width: 55%; height: 100%; }
+  .equip-row[data-active] .equip-card:not(.is-active) .equip-media { height: 100%; }
+
+  .equip-summary,
+  .equip-detail { grid-area: 1 / 1; }
+  .equip-summary { width: var(--idle-w); padding-top: calc(220px + 22px); }
+  .equip-more { display: none; }
+
+  .equip-detail {
+    display: block;
+    width: calc(var(--open-w) * 0.45);
+    margin-left: calc(var(--open-w) * 0.55);
+    padding: 30px 34px 32px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .equip-detail h3 { font-size: 1.45rem; }
+  .equip-detail p { margin: 18px 0 14px; }
+
+  .equip-card.is-active .equip-summary,
+  .equip-row[data-active] .equip-card:not(.is-active) .equip-summary { opacity: 0; visibility: hidden; }
+  .equip-card.is-active .equip-detail { opacity: 1; visibility: visible; }
+}
+
+@media (min-width: 1081px) and (prefers-reduced-motion: no-preference) {
+  /* Timings match the home page expander: each property takes the timing of
+     the state it is moving to — open values on the open rules, close values
+     on the base. */
+  .equip-card { transition: flex-basis 1.5s var(--exp-ease), box-shadow 0.6s ease; }
+  .equip-row[data-active] .equip-card { transition: flex-basis 2s var(--exp-ease), box-shadow 0.6s ease; }
+  .equip-media { transition: width 1.5s var(--exp-ease), height 1.5s var(--exp-ease); }
+  .equip-row[data-active] .equip-media { transition: width 2s var(--exp-ease), height 2s var(--exp-ease); }
+
+  /* Appearing text waits until its card has mostly reached its new shape, so
+     it isn't seen squeezed; disappearing text goes at once. */
+  .equip-summary,
+  .equip-card.is-active .equip-detail {
+    transition: opacity 0.8s ease 0.5s, visibility 0s linear 0s;
+  }
+  .equip-detail,
+  .equip-card.is-active .equip-summary,
+  .equip-row[data-active] .equip-card:not(.is-active) .equip-summary {
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  }
+}
+
 .value-card {
   background: var(--surface);
   border: 1px solid var(--border);

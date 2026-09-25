@@ -1,5 +1,6 @@
 import { Layout } from '../../components/layout/Layout';
 import { PageBanner } from '../../components/layout/PageBanner';
+import { EquipmentTabs } from '../../components/ui/EquipmentTabs';
 import { Reveal } from '../../components/ui/Reveal';
 import { ServiceCard } from '../../components/ui/ServiceCard';
 import { ValueCard } from '../../components/ui/ValueCard';
@@ -24,7 +25,9 @@ export function Services() {
 
       <section className="section">
         <div className="container">
-          <div className="grid-4">
+          <EquipmentTabs />
+
+          <div className="grid-4 section-block-divided">
             {services.map((service) => (
               <ServiceCard key={service.slug} service={service} description={service.blurb} />
             ))}

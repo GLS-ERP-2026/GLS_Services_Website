@@ -1,0 +1,130 @@
+{
+  "mechanical/crown-block": [
+    {
+      "sources": [
+        {
+          "src": "/assets/images/equipment/mechanical/crown-block/1-5c2c1eec-1000.jpg",
+          "width": 1000
+        },
+        {
+          "src": "/assets/images/equipment/mechanical/crown-block/1-5c2c1eec-1364.jpg",
+          "width": 1364
+        }
+      ],
+      "width": 1364,
+      "height": 909
+    }
+  ],
+  "mechanical/deadline-anchor": [
+    {
+      "sources": [
+        {
+          "src": "/assets/images/equipment/mechanical/deadline-anchor/1-7e0f1f4c-717.jpg",
+          "width": 717
+        }
+      ],
+      "width": 717,
+      "height": 717
+    },
+    {
+      "sources": [
+        {
+          "src": "/assets/images/equipment/mechanical/deadline-anchor/2-4f2ffc18-1000.jpg",
+          "width": 1000
+        }
+      ],
+      "width": 1000,
+      "height": 1000
+    }
+  ],
+  "mechanical/drawworks": [
+    {
+      "sources": [
+        {
+          "src": "/assets/images/equipment/mechanical/drawworks/1-d1cd1282-1152.jpg",
+          "width": 1152
+        }
+      ],
+      "width": 1152,
+      "height": 864
+    }
+  ],
+  "mechanical/iron-roughneck": [
+    {
+      "sources": [
+        {
+          "src": "/assets/images/equipment/mechanical/iron-roughneck/1-99d140e7-1000.jpg",
+          "width": 1000
+        },
+        {
+          "src": "/assets/images/equipment/mechanical/iron-roughneck/1-99d140e7-2200.jpg",
+          "width": 2200
+        }
+      ],
+      "width": 3888,
+      "height": 2592
+    }
+  ],
+  "mechanical/mud-pump": [
+    {
+      "sources": [
+        {
+          "src": "/assets/images/equipment/mechanical/mud-pump/1-4e4546d5-1110.jpg",
+          "width": 1110
+        }
+      ],
+      "width": 1110,
+      "height": 969
+    },
+    {
+      "sources": [
+        {
+          "src": "/assets/images/equipment/mechanical/mud-pump/2-8a65861a-1008.jpg",
+          "width": 1008
+        }
+      ],
+      "width": 1008,
+      "height": 756
+    }
+  ],
+  "mechanical/rotary-table": [
+    {
+      "sources": [
+        {
+          "src": "/assets/images/equipment/mechanical/rotary-table/1-95650d7e-512.jpg",
+          "width": 512
+        }
+      ],
+      "width": 512,
+      "height": 425
+    }
+  ],
+  "mechanical/top-drive": [
+    {
+      "sources": [
+        {
+          "src": "/assets/images/equipment/mechanical/top-drive/1-776fc6c5-1000.jpg",
+          "width": 1000
+        },
+        {
+          "src": "/assets/images/equipment/mechanical/top-drive/1-776fc6c5-1920.jpg",
+          "width": 1920
+        }
+      ],
+      "width": 1920,
+      "height": 1080
+    }
+  ],
+  "mechanical/travelling-block": [
+    {
+      "sources": [
+        {
+          "src": "/assets/images/equipment/mechanical/travelling-block/1-9dac1139-1110.jpg",
+          "width": 1110
+        }
+      ],
+      "width": 1110,
+      "height": 871
+    }
+  ]
+}
