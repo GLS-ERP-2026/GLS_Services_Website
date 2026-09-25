@@ -361,7 +361,7 @@ button { font-family: inherit; }
 .stats-bar { background: var(--panel-light); color: var(--stone-900); }
 .stat-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 32px;
   text-align: center;
 }
@@ -1174,8 +1174,8 @@ button { font-family: inherit; }
 @media (max-width: 1080px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  /* Three stats stay 3-up here; two columns would leave an orphan. */
-  .stat-grid { gap: 40px 24px; }
+  /* Four stats go 2 x 2 here; four across gets too cramped for the labels. */
+  .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 24px; }
   .mini-gallery { grid-template-columns: repeat(3, 1fr); }
 }
 
@@ -1217,7 +1217,7 @@ button { font-family: inherit; }
   .cert-row--lg .cert-slot, .cert-row--lg .cert-logo { width: 140px; height: 84px; }
   .cert-row--lg .cert-slot-name { font-size: 0.95rem; }
   .section { padding: 64px 0; }
-  .stat-grid { grid-template-columns: 1fr; gap: 36px; }
+  .stat-grid { gap: 32px 16px; }
   .cta-banner { padding: 40px 28px; }
   .footer-grid { grid-template-columns: 1fr; gap: 36px; }
   .about-badge { position: static; margin-top: -40px; margin-left: 24px; display: inline-block; }

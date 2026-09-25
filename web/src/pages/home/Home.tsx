@@ -52,8 +52,9 @@ export function Home() {
         <div className="container">
           <div className="stat-grid">
             <StatCounter target={17} suffix="+" label="Countries Served" icon="globe" />
-            <StatCounter target={200} suffix="+" label="Equipment Serviced & Inspected" icon="factory" />
-            <StatCounter target={24} suffix="-Hr" label="Average Response Time" icon="clock" />
+            <StatCounter target={6000} suffix="+" label="Equipment Inspected & Serviced" icon="factory" />
+            <StatCounter target={20} suffix="+" label="Years of Experience" icon="clock" />
+            <StatCounter target={3000} suffix="+" label="Projects Completed" icon="check" />
           </div>
           <Reveal className="cert-bar">
             <CertificationRow badges={certificationBadges} size="sm" useFullName />
