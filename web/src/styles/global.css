@@ -714,7 +714,13 @@ button { font-family: inherit; }
 /* ---- Services page: overview <-> equipment views ----
    The two views swap in place under the banner (see Services.tsx). */
 .services-view { scroll-margin-top: var(--header-h); }
-.services-intro { max-width: 820px; }
+.services-intro { max-width: 820px; margin-bottom: 0; }
+/* Full-width band with a faded photo behind the overview intro. The photo sits
+   on the page background at reduced opacity, so it reads as a light wash and
+   the dark heading and text stay legible over it. */
+.services-intro-band { position: relative; isolation: isolate; overflow: hidden; }
+.services-intro-bg { position: absolute; inset: 0; z-index: -1; }
+.services-intro-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
 /* The capability cards aren't links, so they don't lift on hover like the
    service cards they borrow their look from. */
 .capability-card:hover { transform: none; }

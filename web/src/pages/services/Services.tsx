@@ -100,19 +100,26 @@ export function Services() {
 
 function OverviewView({ onNext }: { onNext: () => void }) {
   return (
-    <section className="section">
-      <div className="container">
-        <Reveal className="section-head center services-intro">
-          <span className="eyebrow">Our Expertise</span>
-          <h2 className="section-title">Asset Life Cycle Management Experts</h2>
-          <p className="section-sub">
-            GLS is an API Q2 and ABS ISO-certified service provider in the drilling industry, delivering comprehensive
-            maintenance, repair, overhaul and technical consultancy for offshore and onshore drilling operations. Our
-            ground teams are led by supervisors with a minimum of 20 years of hands-on experience.
-          </p>
-        </Reveal>
+    <>
+      <section className="section services-intro-band">
+        <div className="services-intro-bg" aria-hidden="true">
+          <img src={asset('/assets/images/services/services-intro-bg.jpg')} alt="" />
+        </div>
+        <div className="container">
+          <Reveal className="section-head center services-intro">
+            <span className="eyebrow">Our Expertise</span>
+            <h2 className="section-title">Asset Life Cycle Management Experts</h2>
+            <p className="section-sub">
+              GLS is an API Q2 and ABS ISO-certified service provider in the drilling industry, delivering
+              comprehensive maintenance, repair, overhaul and technical consultancy for offshore and onshore drilling
+              operations. Our ground teams are led by supervisors with a minimum of 20 years of hands-on experience.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
-        <div className="section-block-divided">
+      <section className="section">
+        <div className="container">
           <Reveal className="section-head center">
             <span className="eyebrow">What We Deliver</span>
             <h2 className="section-title">Offshore and Onshore Operational Capabilities</h2>
@@ -137,8 +144,8 @@ function OverviewView({ onNext }: { onNext: () => void }) {
             </button>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 
